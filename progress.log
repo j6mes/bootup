@@ -1,0 +1,3 @@
+[2014-11-22 01:57:51] START
+[2014-11-22 01:58:00] DELETE bootup/models/db.py: -27
+[2014-11-22 01:58:03] DELETE bootup/models/menu.py: -116

@@ -1,0 +1,837 @@
+(dp1
+S'output'
+p2
+S"<type 'exceptions.ValueError'> invalid literal for int() with base 10: ''"
+p3
+sS'layer'
+p4
+S'/Users/james/Documents/Dropbox/Uni/Year 4/iapt/assessment/web2py-2.9.11/web2py/applications/bootup/controllers/project.py'
+p5
+sS'code'
+p6
+S'from applications.bootup.forms.bootupform import BOOTUPFORM\n\n@auth.requires_login\ndef create():\n    form=BOOTUPFORM(db.project)\n    message=""\n    if form.process().accepted:\n        message = \'form accepted\'\n    elif form.errors:\n        message = \'form has errors\'\n    return dict(form=form,message=message)\n\ndef img():\n    return response.download(request, db)\n\ndef index():\n    closest = db(openprojects).select(db.project.ALL)\n    return dict(closest=closest)\nresponse._vars=response._caller(index)\n'
+p7
+sS'snapshot'
+p8
+(dp9
+S'exception'
+p10
+(dp11
+S'__hash__'
+p12
+S"<method-wrapper '__hash__' of exceptions.ValueError object>"
+p13
+sS'__setattr__'
+p14
+S"<method-wrapper '__setattr__' of exceptions.ValueError object>"
+p15
+sS'__reduce_ex__'
+p16
+S'<built-in method __reduce_ex__ of exceptions.ValueError object>'
+p17
+sS'__getslice__'
+p18
+S"<method-wrapper '__getslice__' of exceptions.ValueError object>"
+p19
+sS'__getitem__'
+p20
+S"<method-wrapper '__getitem__' of exceptions.ValueError object>"
+p21
+sS'__setstate__'
+p22
+S'<built-in method __setstate__ of exceptions.ValueError object>'
+p23
+sS'args'
+p24
+S'("invalid literal for int() with base 10: \'\'",)'
+p25
+sS'__reduce__'
+p26
+S'<built-in method __reduce__ of exceptions.ValueError object>'
+p27
+sS'__str__'
+p28
+S"<method-wrapper '__str__' of exceptions.ValueError object>"
+p29
+sS'__format__'
+p30
+S'<built-in method __format__ of exceptions.ValueError object>'
+p31
+sS'__getattribute__'
+p32
+S"<method-wrapper '__getattribute__' of exceptions.ValueError object>"
+p33
+sS'__class__'
+p34
+S"<type 'exceptions.ValueError'>"
+p35
+sS'__unicode__'
+p36
+S'<built-in method __unicode__ of exceptions.ValueError object>'
+p37
+sS'__delattr__'
+p38
+S"<method-wrapper '__delattr__' of exceptions.ValueError object>"
+p39
+sS'__subclasshook__'
+p40
+S'<built-in method __subclasshook__ of type object>'
+p41
+sS'__repr__'
+p42
+S"<method-wrapper '__repr__' of exceptions.ValueError object>"
+p43
+sS'__dict__'
+p44
+S'{}'
+p45
+sS'__sizeof__'
+p46
+S'<built-in method __sizeof__ of exceptions.ValueError object>'
+p47
+sS'__doc__'
+p48
+S"'Inappropriate argument value (of correct type).'"
+p49
+sS'__init__'
+p50
+S"<method-wrapper '__init__' of exceptions.ValueError object>"
+p51
+sS'__new__'
+p52
+S'<built-in method __new__ of type object>'
+p53
+ssS'evalue'
+p54
+S"invalid literal for int() with base 10: ''"
+p55
+sS'request'
+p56
+cgluon.html
+XML_unpickle
+p57
+(S's\x88[\x00\x00<div><table><tr><td style="font-weight:bold;vertical-align:top;">ajax</td><td style="vertical-align:top;">:</td><td><div>False</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">application</td><td style="vertical-align:top;">:</td><td><div>bootup</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">args</td><td style="vertical-align:top;">:</td><td><div><table></table></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">cid</td><td style="vertical-align:top;">:</td><td><div>None</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">client</td><td style="vertical-align:top;">:</td><td><div>127.0.0.1</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">controller</td><td style="vertical-align:top;">:</td><td><div>project</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">cookies</td><td style="vertical-align:top;">:</td><td><div><table><tr><td style="font-weight:bold;vertical-align:top;">session_id_admin</td><td style="vertical-align:top;">:</td><td><div>127.0.0.1-c6eb8487-31da-4875-8c1f-a328e7b74b90<table><tr><td style="font-weight:bold;vertical-align:top;">comment</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">domain</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">expires</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">httponly</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">max-age</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">path</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">secure</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">version</td><td style="vertical-align:top;">:</td><td><div></div></td></tr></table></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">session_id_bootup</td><td style="vertical-align:top;">:</td><td><div>127.0.0.1-1e3d36db-2208-4dda-bac4-0199f432aa4d<table><tr><td style="font-weight:bold;vertical-align:top;">comment</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">domain</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">expires</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">httponly</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">max-age</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">path</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">secure</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">version</td><td style="vertical-align:top;">:</td><td><div></div></td></tr></table></div></td></tr></table></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">env</td><td style="vertical-align:top;">:</td><td><div><table><tr><td style="font-weight:bold;vertical-align:top;">HTTP_ACCEPT</td><td style="vertical-align:top;">:</td><td><div>text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">HTTP_ACCEPT_ENCODING</td><td style="vertical-align:top;">:</td><td><div>gzip,deflate,sdch</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">HTTP_ACCEPT_LANGUAGE</td><td style="vertical-align:top;">:</td><td><div>en-US,en;q=0.8</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">HTTP_CACHE_CONTROL</td><td style="vertical-align:top;">:</td><td><div>max-age=0</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">HTTP_CONNECTION</td><td style="vertical-align:top;">:</td><td><div>keep-alive</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">HTTP_COOKIE</td><td style="vertical-align:top;">:</td><td><div>session_id_bootup=127.0.0.1-1e3d36db-2208-4dda-bac4-0199f432aa4d; session_id_admin=127.0.0.1-c6eb8487-31da-4875-8c1f-a328e7b74b90</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">HTTP_HOST</td><td style="vertical-align:top;">:</td><td><div>127.0.0.1:8000</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">HTTP_USER_AGENT</td><td style="vertical-align:top;">:</td><td><div>Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/38.0.2125.122 Safari/537.36</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">PATH_INFO</td><td style="vertical-align:top;">:</td><td><div>/bootup/project/index</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">QUERY_STRING</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">REMOTE_ADDR</td><td style="vertical-align:top;">:</td><td><div>127.0.0.1</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">REMOTE_PORT</td><td style="vertical-align:top;">:</td><td><div>57433</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">REQUEST_METHOD</td><td style="vertical-align:top;">:</td><td><div>GET</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">SCRIPT_NAME</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">SERVER_NAME</td><td style="vertical-align:top;">:</td><td><div>jt-mbp.local</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">SERVER_PORT</td><td style="vertical-align:top;">:</td><td><div>8000</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">SERVER_PROTOCOL</td><td style="vertical-align:top;">:</td><td><div>HTTP/1.1</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">SERVER_SOFTWARE</td><td style="vertical-align:top;">:</td><td><div>Rocket 1.2.6</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">app_folders</td><td style="vertical-align:top;">:</td><td><div>set([&#x27;/Users/james/Documents/Dropbox/Uni/Year 4/iapt/assessment/web2py-2.9.11/web2py/applications/admin/&#x27;, &#x27;/Users/james/Documents/Dropbox/Uni/Year 4/iapt/assessment/web2py-2.9.11/web2py/applications/bootup/&#x27;])</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">applications_parent</td><td style="vertical-align:top;">:</td><td><div>/Users/james/Documents/Dropbox/Uni/Year 4/iapt/assessment/web2py-2.9.11/web2py</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">cmd_args</td><td style="vertical-align:top;">:</td><td><div><table></table></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">cmd_options</td><td style="vertical-align:top;">:</td><td><div>&lt;Values at 0x10dd162d8: {&#x27;verbose&#x27;: False, &#x27;ip&#x27;: &#x27;127.0.0.1&#x27;, &#x27;debuglevel&#x27;: 30, &#x27;with_scheduler&#x27;: False, &#x27;ips&#x27;: [&#x27;192.168.1.205&#x27;, &#x27;192.168.1.105&#x27;, &#x27;fe80::82e6:50ff:fe13:c80c%en0&#x27;, &#x27;fe80::82e6:50ff:fe13:c80c%en4&#x27;, &#x27;fe80::e4d:e9ff:feaf:c666%en4&#x27;, &#x27;fe80::e4d:e9ff:feaf:c666%en0&#x27;], &#x27;shutdown_timeout&#x27;: 5, &#x27;taskbar&#x27;: False, &#x27;with_coverage&#x27;: False, &#x27;scheduler_groups&#x27;: None, &#x27;port&#x27;: 8000, &#x27;maxthreads&#x27;: None, &#x27;softcron&#x27;: False, &#x27;server_name&#x27;: &#x27;jt-mbp.local&#x27;, &#x27;bpython&#x27;: False, &#x27;nogui&#x27;: False, &#x27;pid_filename&#x27;: &#x27;httpserver.pid&#x27;, &#x27;extcron&#x27;: False, &#x27;runcron&#x27;: False, &#x27;run_system_tests&#x27;: False, &#x27;test&#x27;: None, &#x27;folder&#x27;: &#x27;/Users/james/Documents/Dropbox/Uni/Year 4/iapt/assessment/web2py-2.9.11/web2py&#x27;, &#x27;config&#x27;: &#x27;&#x27;, &#x27;minthreads&#x27;: None, &#x27;shell&#x27;: None, &#x27;run&#x27;: &#x27;&#x27;, &#x27;log_filename&#x27;: &#x27;httpserver.log&#x27;, &#x27;profiler_dir&#x27;: None, &#x27;args&#x27;: [&#x27;&#x27;], &#x27;socket_timeout&#x27;: 5, &#x27;ssl_ca_certificate&#x27;: None, &#x27;scheduler&#x27;: None, &#x27;interfaces&#x27;: None, &#x27;ssl_private_key&#x27;: &#x27;&#x27;, &#x27;gae&#x27;: None, &#x27;password&#x27;: &#x27;&lt;ask&gt;&#x27;, &#x27;request_queue_size&#x27;: 5, &#x27;ssl_certificate&#x27;: &#x27;&#x27;, &#x27;cronjob&#x27;: False, &#x27;numthreads&#x27;: None, &#x27;quiet&#x27;: False, &#x27;import_models&#x27;: False, &#x27;timeout&#x27;: 10, &#x27;plain&#x27;: False, &#x27;nobanner&#x27;: False}&gt;</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">db_sessions</td><td style="vertical-align:top;">:</td><td><div>set([])</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">debugging</td><td style="vertical-align:top;">:</td><td><div>False</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">gluon_parent</td><td style="vertical-align:top;">:</td><td><div>/Users/james/Documents/Dropbox/Uni/Year 4/iapt/assessment/web2py-2.9.11/web2py</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">http_accept</td><td style="vertical-align:top;">:</td><td><div>text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">http_accept_encoding</td><td style="vertical-align:top;">:</td><td><div>gzip,deflate,sdch</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">http_accept_language</td><td style="vertical-align:top;">:</td><td><div>en-US,en;q=0.8</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">http_cache_control</td><td style="vertical-align:top;">:</td><td><div>max-age=0</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">http_connection</td><td style="vertical-align:top;">:</td><td><div>keep-alive</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">http_cookie</td><td style="vertical-align:top;">:</td><td><div>session_id_bootup=127.0.0.1-1e3d36db-2208-4dda-bac4-0199f432aa4d; session_id_admin=127.0.0.1-c6eb8487-31da-4875-8c1f-a328e7b74b90</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">http_host</td><td style="vertical-align:top;">:</td><td><div>127.0.0.1:8000</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">http_user_agent</td><td style="vertical-align:top;">:</td><td><div>Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/38.0.2125.122 Safari/537.36</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">is_jython</td><td style="vertical-align:top;">:</td><td><div>False</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">is_pypy</td><td style="vertical-align:top;">:</td><td><div>False</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">is_source</td><td style="vertical-align:top;">:</td><td><div>True</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">local_hosts</td><td style="vertical-align:top;">:</td><td><div><table><tr><td><div>jt-mbp.local</div></td></tr><tr><td><div>192.168.1.205</div></td></tr><tr><td><div>192.168.1.105</div></td></tr><tr><td><div>::1</div></td></tr><tr><td><div>::ffff:127.0.0.1</div></td></tr><tr><td><div>fe80::82e6:50ff:fe13:c80c%en0</div></td></tr><tr><td><div>fe80::82e6:50ff:fe13:c80c%en4</div></td></tr><tr><td><div>fe80::e4d:e9ff:feaf:c666%en4</div></td></tr><tr><td><div>fe80::e4d:e9ff:feaf:c666%en0</div></td></tr><tr><td><div>127.0.0.1</div></td></tr></table></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">path_info</td><td style="vertical-align:top;">:</td><td><div>/bootup/project/index</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">query_string</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">remote_addr</td><td style="vertical-align:top;">:</td><td><div>127.0.0.1</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">remote_port</td><td style="vertical-align:top;">:</td><td><div>57433</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">request_method</td><td style="vertical-align:top;">:</td><td><div>GET</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">request_uri</td><td style="vertical-align:top;">:</td><td><div>/bootup/project/index</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">script_name</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">server_name</td><td style="vertical-align:top;">:</td><td><div>jt-mbp.local</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">server_port</td><td style="vertical-align:top;">:</td><td><div>8000</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">server_protocol</td><td style="vertical-align:top;">:</td><td><div>HTTP/1.1</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">server_software</td><td style="vertical-align:top;">:</td><td><div>Rocket 1.2.6</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">web2py_path</td><td style="vertical-align:top;">:</td><td><div>/Users/james/Documents/Dropbox/Uni/Year 4/iapt/assessment/web2py-2.9.11/web2py</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">web2py_version</td><td style="vertical-align:top;">:</td><td><div>2.9.11-stable+timestamp.2014.09.15.23.35.11</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">wsgi.errors</td><td style="vertical-align:top;">:</td><td><div>&lt;open file &#x27;&lt;stderr&gt;&#x27;, mode &#x27;w&#x27; at 0x10ce351e0&gt;</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">wsgi.file_wrapper</td><td style="vertical-align:top;">:</td><td><div>&lt;class wsgiref.util.FileWrapper at 0x10da48e20&gt;</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">wsgi.input</td><td style="vertical-align:top;">:</td><td><div>&lt;socket._fileobject object at 0x117f1d2d0&gt;</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">wsgi.multiprocess</td><td style="vertical-align:top;">:</td><td><div>False</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">wsgi.multithread</td><td style="vertical-align:top;">:</td><td><div>True</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">wsgi.run_once</td><td style="vertical-align:top;">:</td><td><div>False</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">wsgi.url_scheme</td><td style="vertical-align:top;">:</td><td><div>http</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">wsgi.version</td><td style="vertical-align:top;">:</td><td><div><table><tr><td><div>1</div></td></tr><tr><td><div>0</div></td></tr></table></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">wsgi_errors</td><td style="vertical-align:top;">:</td><td><div>&lt;open file &#x27;&lt;stderr&gt;&#x27;, mode &#x27;w&#x27; at 0x10ce351e0&gt;</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">wsgi_file_wrapper</td><td style="vertical-align:top;">:</td><td><div>&lt;class wsgiref.util.FileWrapper at 0x10da48e20&gt;</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">wsgi_input</td><td style="vertical-align:top;">:</td><td><div>&lt;socket._fileobject object at 0x117f1d2d0&gt;</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">wsgi_multiprocess</td><td style="vertical-align:top;">:</td><td><div>False</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">wsgi_multithread</td><td style="vertical-align:top;">:</td><td><div>True</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">wsgi_run_once</td><td style="vertical-align:top;">:</td><td><div>False</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">wsgi_url_scheme</td><td style="vertical-align:top;">:</td><td><div>http</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">wsgi_version</td><td style="vertical-align:top;">:</td><td><div><table><tr><td><div>1</div></td></tr><tr><td><div>0</div></td></tr></table></div></td></tr></table></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">extension</td><td style="vertical-align:top;">:</td><td><div>html</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">folder</td><td style="vertical-align:top;">:</td><td><div>/Users/james/Documents/Dropbox/Uni/Year 4/iapt/assessment/web2py-2.9.11/web2py/applications/bootup/</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">function</td><td style="vertical-align:top;">:</td><td><div>index</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">global_settings</td><td style="vertical-align:top;">:</td><td><div><table><tr><td style="font-weight:bold;vertical-align:top;">app_folders</td><td style="vertical-align:top;">:</td><td><div>set([&#x27;/Users/james/Documents/Dropbox/Uni/Year 4/iapt/assessment/web2py-2.9.11/web2py/applications/admin/&#x27;, &#x27;/Users/james/Documents/Dropbox/Uni/Year 4/iapt/assessment/web2py-2.9.11/web2py/applications/bootup/&#x27;])</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">applications_parent</td><td style="vertical-align:top;">:</td><td><div>/Users/james/Documents/Dropbox/Uni/Year 4/iapt/assessment/web2py-2.9.11/web2py</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">cmd_args</td><td style="vertical-align:top;">:</td><td><div><table></table></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">cmd_options</td><td style="vertical-align:top;">:</td><td><div>&lt;Values at 0x10dd162d8: {&#x27;verbose&#x27;: False, &#x27;ip&#x27;: &#x27;127.0.0.1&#x27;, &#x27;debuglevel&#x27;: 30, &#x27;with_scheduler&#x27;: False, &#x27;ips&#x27;: [&#x27;192.168.1.205&#x27;, &#x27;192.168.1.105&#x27;, &#x27;fe80::82e6:50ff:fe13:c80c%en0&#x27;, &#x27;fe80::82e6:50ff:fe13:c80c%en4&#x27;, &#x27;fe80::e4d:e9ff:feaf:c666%en4&#x27;, &#x27;fe80::e4d:e9ff:feaf:c666%en0&#x27;], &#x27;shutdown_timeout&#x27;: 5, &#x27;taskbar&#x27;: False, &#x27;with_coverage&#x27;: False, &#x27;scheduler_groups&#x27;: None, &#x27;port&#x27;: 8000, &#x27;maxthreads&#x27;: None, &#x27;softcron&#x27;: False, &#x27;server_name&#x27;: &#x27;jt-mbp.local&#x27;, &#x27;bpython&#x27;: False, &#x27;nogui&#x27;: False, &#x27;pid_filename&#x27;: &#x27;httpserver.pid&#x27;, &#x27;extcron&#x27;: False, &#x27;runcron&#x27;: False, &#x27;run_system_tests&#x27;: False, &#x27;test&#x27;: None, &#x27;folder&#x27;: &#x27;/Users/james/Documents/Dropbox/Uni/Year 4/iapt/assessment/web2py-2.9.11/web2py&#x27;, &#x27;config&#x27;: &#x27;&#x27;, &#x27;minthreads&#x27;: None, &#x27;shell&#x27;: None, &#x27;run&#x27;: &#x27;&#x27;, &#x27;log_filename&#x27;: &#x27;httpserver.log&#x27;, &#x27;profiler_dir&#x27;: None, &#x27;args&#x27;: [&#x27;&#x27;], &#x27;socket_timeout&#x27;: 5, &#x27;ssl_ca_certificate&#x27;: None, &#x27;scheduler&#x27;: None, &#x27;interfaces&#x27;: None, &#x27;ssl_private_key&#x27;: &#x27;&#x27;, &#x27;gae&#x27;: None, &#x27;password&#x27;: &#x27;&lt;ask&gt;&#x27;, &#x27;request_queue_size&#x27;: 5, &#x27;ssl_certificate&#x27;: &#x27;&#x27;, &#x27;cronjob&#x27;: False, &#x27;numthreads&#x27;: None, &#x27;quiet&#x27;: False, &#x27;import_models&#x27;: False, &#x27;timeout&#x27;: 10, &#x27;plain&#x27;: False, &#x27;nobanner&#x27;: False}&gt;</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">db_sessions</td><td style="vertical-align:top;">:</td><td><div>set([])</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">debugging</td><td style="vertical-align:top;">:</td><td><div>False</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">gluon_parent</td><td style="vertical-align:top;">:</td><td><div>/Users/james/Documents/Dropbox/Uni/Year 4/iapt/assessment/web2py-2.9.11/web2py</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">is_jython</td><td style="vertical-align:top;">:</td><td><div>False</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">is_pypy</td><td style="vertical-align:top;">:</td><td><div>False</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">is_source</td><td style="vertical-align:top;">:</td><td><div>True</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">local_hosts</td><td style="vertical-align:top;">:</td><td><div><table><tr><td><div>jt-mbp.local</div></td></tr><tr><td><div>192.168.1.205</div></td></tr><tr><td><div>192.168.1.105</div></td></tr><tr><td><div>::1</div></td></tr><tr><td><div>::ffff:127.0.0.1</div></td></tr><tr><td><div>fe80::82e6:50ff:fe13:c80c%en0</div></td></tr><tr><td><div>fe80::82e6:50ff:fe13:c80c%en4</div></td></tr><tr><td><div>fe80::e4d:e9ff:feaf:c666%en4</div></td></tr><tr><td><div>fe80::e4d:e9ff:feaf:c666%en0</div></td></tr><tr><td><div>127.0.0.1</div></td></tr></table></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">web2py_version</td><td style="vertical-align:top;">:</td><td><div>2.9.11-stable+timestamp.2014.09.15.23.35.11</div></td></tr></table></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">is_https</td><td style="vertical-align:top;">:</td><td><div>False</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">is_local</td><td style="vertical-align:top;">:</td><td><div>True</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">is_restful</td><td style="vertical-align:top;">:</td><td><div>False</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">is_sheduler</td><td style="vertical-align:top;">:</td><td><div>None</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">is_shell</td><td style="vertical-align:top;">:</td><td><div>None</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">now</td><td style="vertical-align:top;">:</td><td><div>datetime.datetime(2014, 11, 23, 1, 21, 10, 459711)</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">raw_args</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">raw_extension</td><td style="vertical-align:top;">:</td><td><div>None</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">url</td><td style="vertical-align:top;">:</td><td><div>/bootup/project/index</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">utcnow</td><td style="vertical-align:top;">:</td><td><div>datetime.datetime(2014, 11, 23, 1, 21, 10, 459735)</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">uuid</td><td style="vertical-align:top;">:</td><td><div>bootup/127.0.0.1.2014-11-23.01-21-10.213d017a-abe5-43be-ad5a-66bcc98d86fd</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">wsgi</td><td style="vertical-align:top;">:</td><td><div>&lt;gluon.main.LazyWSGI object at 0x113bbccd0&gt;</div></td></tr></table></div>'
+tRp58
+sS'frames'
+p59
+(lp60
+(dp61
+S'file'
+p62
+S'/Users/james/Documents/Dropbox/Uni/Year 4/iapt/assessment/web2py-2.9.11/web2py/gluon/restricted.py'
+p63
+sS'dump'
+p64
+(dp65
+S'environment'
+p66
+S"{'A': <class 'gluon.html.A'>, 'ANY_OF': <class 'gluon.validators.ANY_OF'>, 'ASSIGNJS': <function ASSIGNJS>, 'B': <class 'gluon.html.B'>, 'BEAUTIFY': <class 'gluon.html.BEAUTIFY'>, 'BODY': <class 'gluon.html.BODY'>, 'BOOTUPFORM': <class 'applications.bootup.forms.bootupform.BOOTUPFORM'>, 'BR': <class 'gluon.html.BR'>, 'BUTTON': <class 'gluon.html.BUTTON'>, 'BootUpAuth': <class __restricted__.BootUpAuth>, ...}"
+p67
+sS'ccode'
+p68
+S'<code object <module> at 0x113d723b0, file "/Use...lications/bootup/controllers/project.py", line 1>'
+p69
+ssS'lnum'
+p70
+I224
+sS'lines'
+p71
+(dp72
+I224
+S'        exec ccode in environment'
+p73
+sI225
+S'    except HTTP:'
+p74
+sI226
+S'        raise'
+p75
+sI227
+S'    except RestrictedError:'
+p76
+sI228
+S'        # do not encapsulate (obfuscate) the original RestrictedError'
+p77
+sI219
+S'    try:'
+p78
+sI220
+S'        if isinstance(code, types.CodeType):'
+p79
+sI221
+S'            ccode = code'
+p80
+sI222
+S'        else:'
+p81
+sI223
+S'            ccode = compile2(code, layer)'
+p82
+ssS'call'
+p83
+S"(code='from applications.bootup.forms.bootupform import...=closest)\\nresponse._vars=response._caller(index)\\n', environment={'A': <class 'gluon.html.A'>, 'ANY_OF': <class 'gluon.validators.ANY_OF'>, 'ASSIGNJS': <function ASSIGNJS>, 'B': <class 'gluon.html.B'>, 'BEAUTIFY': <class 'gluon.html.BEAUTIFY'>, 'BODY': <class 'gluon.html.BODY'>, 'BOOTUPFORM': <class 'applications.bootup.forms.bootupform.BOOTUPFORM'>, 'BR': <class 'gluon.html.BR'>, 'BUTTON': <class 'gluon.html.BUTTON'>, 'BootUpAuth': <class __restricted__.BootUpAuth>, ...}, layer='/Users/james/Documents/Dropbox/Uni/Year 4/iapt/a...web2py/applications/bootup/controllers/project.py')"
+p84
+sS'func'
+p85
+S'restricted'
+p86
+sa(dp87
+g62
+S'/Users/james/Documents/Dropbox/Uni/Year 4/iapt/assessment/web2py-2.9.11/web2py/applications/bootup/controllers/project.py'
+p88
+sg64
+(dp89
+sg70
+I19
+sg71
+(dp90
+I9
+S'    elif form.errors:'
+p91
+sI10
+S"        message = 'form has errors'"
+p92
+sI11
+S'    return dict(form=form,message=message)'
+p93
+sI12
+S''
+sI13
+S'def img():'
+p94
+sI14
+S'    return response.download(request, db)'
+p95
+sI15
+S''
+sI16
+S'def index():'
+p96
+sI17
+S'    closest = db(openprojects).select(db.project.ALL)'
+p97
+sI18
+S'    return dict(closest=closest)'
+p98
+ssg83
+S'()'
+p99
+sg85
+S'<module>'
+p100
+sa(dp101
+g62
+S'/Users/james/Documents/Dropbox/Uni/Year 4/iapt/assessment/web2py-2.9.11/web2py/gluon/globals.py'
+p102
+sg64
+(dp103
+S'self'
+p104
+S'undefined'
+p105
+sS'f'
+S'<function index>'
+p106
+ssg70
+I392
+sg71
+(dp107
+I387
+S"        self.flash = ''            # used by the default view layout"
+p108
+sI388
+S'        self.meta = Storage()      # used by web2py_ajax.html'
+p109
+sI389
+S'        self.menu = []             # used by the default view layout'
+p110
+sI390
+S'        self.files = []            # used by web2py_ajax.html'
+p111
+sI391
+S'        self._vars = None'
+p112
+sI392
+S'        self._caller = lambda f: f()'
+p113
+sI393
+S'        self._view_environment = None'
+p114
+sI394
+S'        self._custom_commit = None'
+p115
+sI395
+S'        self._custom_rollback = None'
+p116
+sI396
+S"        self.generic_patterns = ['*']"
+p117
+ssg83
+S'(f=<function index>)'
+p118
+sg85
+S'<lambda>'
+p119
+sa(dp120
+g62
+S'/Users/james/Documents/Dropbox/Uni/Year 4/iapt/assessment/web2py-2.9.11/web2py/applications/bootup/controllers/project.py'
+p121
+sg64
+(dp122
+S'db.project'
+p123
+S'<Table project (idproject,title,shortdescription...iption,story,goal,categoryid,managerid,imageurl)>'
+p124
+sS'global openprojects'
+p125
+S'<Query ((project.idproject IN (SELECT  openproje...osedproject.openprojectid FROM closedproject))))>'
+p126
+sS'closest'
+p127
+g105
+sS').select'
+p128
+g105
+sS'global db'
+p129
+S'<DAL uri="sqlite://bootup.db">'
+p130
+sS'db.project.ALL'
+p131
+S'<gluon.dal.SQLALL object>'
+p132
+ssg70
+I17
+sg71
+(dp133
+I9
+S'    elif form.errors:'
+p134
+sI10
+S"        message = 'form has errors'"
+p135
+sI11
+S'    return dict(form=form,message=message)'
+p136
+sI12
+S''
+sI13
+S'def img():'
+p137
+sI14
+S'    return response.download(request, db)'
+p138
+sI15
+S''
+sI16
+S'def index():'
+p139
+sI17
+S'    closest = db(openprojects).select(db.project.ALL)'
+p140
+sI18
+S'    return dict(closest=closest)'
+p141
+ssg83
+S'()'
+p142
+sg85
+S'index'
+p143
+sa(dp144
+g62
+S'/Users/james/Documents/Dropbox/Uni/Year 4/iapt/assessment/web2py-2.9.11/web2py/gluon/dal.py'
+p145
+sg64
+(dp146
+S'self.query'
+p147
+S'<Query ((project.idproject IN (SELECT  openproje...osedproject.openprojectid FROM closedproject))))>'
+p148
+sS'adapter.select'
+p149
+S'<bound method SQLiteAdapter.select of <gluon.dal.SQLiteAdapter object>>'
+p150
+sS'fields'
+p151
+S'[<gluon.dal.Field object>, <gluon.dal.Field object>, <gluon.dal.Field object>, <gluon.dal.Field object>, <gluon.dal.Field object>, <gluon.dal.Field object>, <gluon.dal.Field object>, <gluon.dal.Field object>, <gluon.dal.Field object>]'
+p152
+sS'adapter'
+p153
+S'<gluon.dal.SQLiteAdapter object>'
+p154
+sS'attributes'
+p155
+g45
+sS'self'
+p156
+S'<Set ((project.idproject IN (SELECT  openproject...osedproject.openprojectid FROM closedproject))))>'
+p157
+ssg70
+I10749
+sg71
+(dp158
+I10752
+S'        return Expression(self.db, self._select(*fields, **attributes))'
+p159
+sI10753
+S''
+sI10744
+S"                                    attributes.get('join', None),"
+p160
+sI10745
+S"                                    attributes.get('left', None),"
+p161
+sI10746
+S"                                    attributes.get('orderby', None),"
+p162
+sI10747
+S"                                    attributes.get('groupby', None))"
+p163
+sI10748
+S'        fields = adapter.expand_all(fields, tablenames)'
+p164
+sI10749
+S'        return adapter.select(self.query, fields, attributes)'
+p165
+sI10750
+S''
+sI10751
+S'    def nested_select(self, *fields, **attributes):'
+p166
+ssg83
+S'(self=<Set ((project.idproject IN (SELECT  openproject...osedproject.openprojectid FROM closedproject))))>, *fields=[<gluon.dal.Field object>, <gluon.dal.Field object>, <gluon.dal.Field object>, <gluon.dal.Field object>, <gluon.dal.Field object>, <gluon.dal.Field object>, <gluon.dal.Field object>, <gluon.dal.Field object>, <gluon.dal.Field object>], **attributes={})'
+p167
+sg85
+S'select'
+p168
+sa(dp169
+g62
+S'/Users/james/Documents/Dropbox/Uni/Year 4/iapt/assessment/web2py-2.9.11/web2py/gluon/dal.py'
+p170
+sg64
+(dp171
+S'fields'
+p172
+S'[<gluon.dal.Field object>, <gluon.dal.Field object>, <gluon.dal.Field object>, <gluon.dal.Field object>, <gluon.dal.Field object>, <gluon.dal.Field object>, <gluon.dal.Field object>, <gluon.dal.Field object>, <gluon.dal.Field object>]'
+p173
+sS'self'
+p174
+S'<gluon.dal.SQLiteAdapter object>'
+p175
+sS').select'
+p176
+S'<bound method SQLiteAdapter.select of <gluon.dal.SQLiteAdapter object>>'
+p177
+sS'attributes'
+p178
+g45
+sS'global SQLiteAdapter'
+p179
+S"<class 'gluon.dal.SQLiteAdapter'>"
+p180
+sS'query'
+p181
+S'<Query ((project.idproject IN (SELECT  openproje...osedproject.openprojectid FROM closedproject))))>'
+p182
+sS'builtinsuper'
+p183
+S"<type 'super'>"
+p184
+ssg70
+I2472
+sg71
+(dp185
+I2467
+S'        Note that the entire database, rather than one record, is locked'
+p186
+sI2468
+S'        (it will be locked eventually anyway by the following UPDATE).'
+p187
+sI2469
+S'        """'
+p188
+sI2470
+S"        if attributes.get('for_update', False) and not 'cache' in attributes:"
+p189
+sI2471
+S"            self.execute('BEGIN IMMEDIATE TRANSACTION;')"
+p190
+sI2472
+S'        return super(SQLiteAdapter, self).select(query, fields, attributes)'
+p191
+sI2473
+S''
+sI2474
+S''
+sI2475
+S'class SpatiaLiteAdapter(SQLiteAdapter):'
+p192
+sI2476
+S"    drivers = ('sqlite3', 'sqlite2')"
+p193
+ssg83
+S'(self=<gluon.dal.SQLiteAdapter object>, query=<Query ((project.idproject IN (SELECT  openproje...osedproject.openprojectid FROM closedproject))))>, fields=[<gluon.dal.Field object>, <gluon.dal.Field object>, <gluon.dal.Field object>, <gluon.dal.Field object>, <gluon.dal.Field object>, <gluon.dal.Field object>, <gluon.dal.Field object>, <gluon.dal.Field object>, <gluon.dal.Field object>], attributes={})'
+p194
+sg85
+g168
+sa(dp195
+g62
+S'/Users/james/Documents/Dropbox/Uni/Year 4/iapt/assessment/web2py-2.9.11/web2py/gluon/dal.py'
+p196
+sg64
+(dp197
+S'fields'
+p198
+S'[<gluon.dal.Field object>, <gluon.dal.Field object>, <gluon.dal.Field object>, <gluon.dal.Field object>, <gluon.dal.Field object>, <gluon.dal.Field object>, <gluon.dal.Field object>, <gluon.dal.Field object>, <gluon.dal.Field object>]'
+p199
+sS'self'
+p200
+S'<gluon.dal.SQLiteAdapter object>'
+p201
+sS'attributes'
+p202
+g45
+sS'self._select_aux'
+p203
+S'<bound method SQLiteAdapter._select_aux of <gluon.dal.SQLiteAdapter object>>'
+p204
+sS'sql'
+p205
+S"'SELECT  project.idproject, project.title, projec...osedproject.openprojectid FROM closedproject))));'"
+p206
+ssg70
+I1881
+sg71
+(dp207
+I1876
+S'            return cache_model('
+p208
+sI1877
+S'                key,'
+p209
+sI1878
+S'                lambda self=self, args=args: self._select_aux(*args),'
+p210
+sI1879
+S'                time_expire)'
+p211
+sI1880
+S'        else:'
+p212
+sI1881
+S'            return self._select_aux(sql, fields, attributes)'
+p213
+sI1882
+S''
+sI1883
+S'    def _count(self, query, distinct=None):'
+p214
+sI1884
+S'        tablenames = self.tables(query)'
+p215
+sI1885
+S'        if query:'
+p216
+ssg83
+S'(self=<gluon.dal.SQLiteAdapter object>, query=<Query ((project.idproject IN (SELECT  openproje...osedproject.openprojectid FROM closedproject))))>, fields=[<gluon.dal.Field object>, <gluon.dal.Field object>, <gluon.dal.Field object>, <gluon.dal.Field object>, <gluon.dal.Field object>, <gluon.dal.Field object>, <gluon.dal.Field object>, <gluon.dal.Field object>, <gluon.dal.Field object>], attributes={})'
+p217
+sg85
+g168
+sa(dp218
+g62
+S'/Users/james/Documents/Dropbox/Uni/Year 4/iapt/assessment/web2py-2.9.11/web2py/gluon/dal.py'
+p219
+sg64
+(dp220
+S'rows'
+p221
+S"[(1, u'Test new project', u'testing 123', u'testing123', u'this is the story', 1, 1, 1, u'project.imageurl.b34348144f2a7359.323031312d30392d31302031302e35372e34302e336770.3gp'), (2, u'0k7grwx3bqk917fw', u'8k1d', u'pm72d8366fuh1opl1', u'owqsrg73rmdw5', 5.4, 8, 1, u'oro11rronwkeq7'), (3, u'y2kbu', u'vsmj9m8jww4pqk2', u'd4hln4ysjo0cfpc9', u'96do2ei8a', 1.1, 3, 1, u'ndn38pz'), (4, u'ask9vp3vd', u'6093s6vczpsm', u'4wjiy', u'p5ipyd83can7i', 3, 2, 1, u'iu37qr5i6fmqjvn'), (5, u'sz2pqgdu2lii98', u'acbtuaiejdu1e6g7f', u'pcj59b1ihj1dnxk4', u'1ypo1vmf15v2', 4, 2, 1, u'vixbgcs3ff9m'), (6, u'hkbs7usdv5p27f6', u'8kvvu710hk', u'45jqix', u'k2tjod8p', 5, 7, 1, u'drynt8i0wkfjlzax'), (7, u'ev7z2zsto1yzfk67', u'coyakvm7ug', u'y064j07oljm3enn5', u'l7s58', 6, 8, 1, u'sk7scaooydr2bpeo'), (8, u'v6v92d40gwsqmn2', u'mrg7', u'nsc0wbqsx253zye8zu', u'5soypfkq32y1nzkb', 7, 8, 1, u'02sdfgppd2lxk'), (9, u'bcof1vsrg1n6w7w', u'qvvua4d', u'u94xv5fa01ye6o86', u'iagfaq2dp0c9bzod', 8, 6, 1, u'ggsfjsnq2zhspi'), (10, u'8o51d', u'zbzeh7x', u'18pnrh6', u'69lua9oz44dq', 9, 2, 1, u'byrm28oc')]"
+p222
+sS'fields'
+p223
+S'[<gluon.dal.Field object>, <gluon.dal.Field object>, <gluon.dal.Field object>, <gluon.dal.Field object>, <gluon.dal.Field object>, <gluon.dal.Field object>, <gluon.dal.Field object>, <gluon.dal.Field object>, <gluon.dal.Field object>]'
+p224
+sS'self'
+p225
+S'<gluon.dal.SQLiteAdapter object>'
+p226
+sS'cacheable'
+p227
+S'False'
+p228
+sS'self._colnames'
+p229
+S"['project.idproject', 'project.title', 'project.shortdescription', 'project.longdescription', 'project.story', 'project.goal', 'project.categoryid', 'project.managerid', 'project.imageurl']"
+p230
+sS'processor'
+p231
+S'<bound method SQLiteAdapter.parse of <gluon.dal.SQLiteAdapter object>>'
+p232
+ssg70
+I1862
+sg71
+(dp233
+I1857
+S'            rows = list(rows)'
+p234
+sI1858
+S"        limitby = args_get('limitby', None) or (0, )"
+p235
+sI1859
+S'        rows = self.rowslice(rows, limitby[0], None)'
+p236
+sI1860
+S"        processor = args_get('processor', self.parse)"
+p237
+sI1861
+S"        cacheable = args_get('cacheable', False)"
+p238
+sI1862
+S'        return processor(rows, fields, self._colnames, cacheable=cacheable)'
+p239
+sI1863
+S''
+sI1864
+S'    def select(self, query, fields, attributes):'
+p240
+sI1865
+S'        """'
+p241
+sI1866
+S'        Always returns a Rows object, possibly empty.'
+p242
+ssg83
+S"(self=<gluon.dal.SQLiteAdapter object>, sql='SELECT  project.idproject, project.title, projec...osedproject.openprojectid FROM closedproject))));', fields=[<gluon.dal.Field object>, <gluon.dal.Field object>, <gluon.dal.Field object>, <gluon.dal.Field object>, <gluon.dal.Field object>, <gluon.dal.Field object>, <gluon.dal.Field object>, <gluon.dal.Field object>, <gluon.dal.Field object>], attributes={})"
+p243
+sg85
+S'_select_aux'
+p244
+sa(dp245
+g62
+S'/Users/james/Documents/Dropbox/Uni/Year 4/iapt/assessment/web2py-2.9.11/web2py/gluon/dal.py'
+p246
+sg64
+(dp247
+S'blob_decode'
+p248
+S'True'
+p249
+sS'self'
+p250
+S'<gluon.dal.SQLiteAdapter object>'
+p251
+sS'ft'
+p252
+S"'decimal'"
+p253
+sS'value'
+p254
+S'1'
+sS'self.parse_value'
+p255
+S'<bound method SQLiteAdapter.parse_value of <gluon.dal.SQLiteAdapter object>>'
+p256
+ssg70
+I2246
+sg71
+(dp257
+I2241
+S'                    colset = new_row.get(tablename, None)'
+p258
+sI2242
+S'                    if colset is None:'
+p259
+sI2243
+S'                        colset = new_row[tablename] = Row()'
+p260
+sI2244
+S'                        if tablename not in virtualtables:'
+p261
+sI2245
+S'                            virtualtables.append(tablename)'
+p262
+sI2246
+S'                    value = self.parse_value(value, ft, blob_decode)'
+p263
+sI2247
+S'                    if field.filter_out:'
+p264
+sI2248
+S'                        value = field.filter_out(value)'
+p265
+sI2249
+S'                    colset[fieldname] = value'
+p266
+sI2250
+S''
+ssg83
+S"(self=<gluon.dal.SQLiteAdapter object>, rows=[(1, u'Test new project', u'testing 123', u'testing123', u'this is the story', 1, 1, 1, u'project.imageurl.b34348144f2a7359.323031312d30392d31302031302e35372e34302e336770.3gp'), (2, u'0k7grwx3bqk917fw', u'8k1d', u'pm72d8366fuh1opl1', u'owqsrg73rmdw5', 5.4, 8, 1, u'oro11rronwkeq7'), (3, u'y2kbu', u'vsmj9m8jww4pqk2', u'd4hln4ysjo0cfpc9', u'96do2ei8a', 1.1, 3, 1, u'ndn38pz'), (4, u'ask9vp3vd', u'6093s6vczpsm', u'4wjiy', u'p5ipyd83can7i', 3, 2, 1, u'iu37qr5i6fmqjvn'), (5, u'sz2pqgdu2lii98', u'acbtuaiejdu1e6g7f', u'pcj59b1ihj1dnxk4', u'1ypo1vmf15v2', 4, 2, 1, u'vixbgcs3ff9m'), (6, u'hkbs7usdv5p27f6', u'8kvvu710hk', u'45jqix', u'k2tjod8p', 5, 7, 1, u'drynt8i0wkfjlzax'), (7, u'ev7z2zsto1yzfk67', u'coyakvm7ug', u'y064j07oljm3enn5', u'l7s58', 6, 8, 1, u'sk7scaooydr2bpeo'), (8, u'v6v92d40gwsqmn2', u'mrg7', u'nsc0wbqsx253zye8zu', u'5soypfkq32y1nzkb', 7, 8, 1, u'02sdfgppd2lxk'), (9, u'bcof1vsrg1n6w7w', u'qvvua4d', u'u94xv5fa01ye6o86', u'iagfaq2dp0c9bzod', 8, 6, 1, u'ggsfjsnq2zhspi'), (10, u'8o51d', u'zbzeh7x', u'18pnrh6', u'69lua9oz44dq', 9, 2, 1, u'byrm28oc')], fields=[<gluon.dal.Field object>, <gluon.dal.Field object>, <gluon.dal.Field object>, <gluon.dal.Field object>, <gluon.dal.Field object>, <gluon.dal.Field object>, <gluon.dal.Field object>, <gluon.dal.Field object>, <gluon.dal.Field object>], colnames=['project.idproject', 'project.title', 'project.shortdescription', 'project.longdescription', 'project.story', 'project.goal', 'project.categoryid', 'project.managerid', 'project.imageurl'], blob_decode=True, cacheable=False)"
+p267
+sg85
+S'parse'
+p268
+sa(dp269
+g62
+S'/Users/james/Documents/Dropbox/Uni/Year 4/iapt/assessment/web2py-2.9.11/web2py/gluon/dal.py'
+p270
+sg64
+(dp271
+S'field_type'
+p272
+S"'decimal'"
+p273
+sS'self'
+p274
+S'<gluon.dal.SQLiteAdapter object>'
+p275
+sS'self.parsemap'
+p276
+S"{'bigint': <bound method SQLiteAdapter.parse_integer of <gluon.dal.SQLiteAdapter object>>, 'blob': <bound method SQLiteAdapter.parse_blob of <gluon.dal.SQLiteAdapter object>>, 'boolean': <bound method SQLiteAdapter.parse_boolean of <gluon.dal.SQLiteAdapter object>>, 'date': <bound method SQLiteAdapter.parse_date of <gluon.dal.SQLiteAdapter object>>, 'datetime': <bound method SQLiteAdapter.parse_datetime of <gluon.dal.SQLiteAdapter object>>, 'decimal': <bound method SQLiteAdapter.parse_decimal of <gluon.dal.SQLiteAdapter object>>, 'double': <bound method SQLiteAdapter.parse_double of <gluon.dal.SQLiteAdapter object>>, 'float': <bound method SQLiteAdapter.parse_double of <gluon.dal.SQLiteAdapter object>>, 'id': <bound method SQLiteAdapter.parse_id of <gluon.dal.SQLiteAdapter object>>, 'integer': <bound method SQLiteAdapter.parse_integer of <gluon.dal.SQLiteAdapter object>>, ...}"
+p277
+sS'value'
+p278
+S'1'
+sS'key'
+p279
+S"'decimal'"
+p280
+ssg70
+I2096
+sg71
+(dp281
+I2091
+S'            return value'
+p282
+sI2092
+S"        elif field_type == 'blob' and not blob_decode:"
+p283
+sI2093
+S'            return value'
+p284
+sI2094
+S'        else:'
+p285
+sI2095
+S'            key = REGEX_TYPE.match(field_type).group(0)'
+p286
+sI2096
+S'            return self.parsemap[key](value, field_type)'
+p287
+sI2097
+S''
+sI2098
+S'    def parse_reference(self, value, field_type):'
+p288
+sI2099
+S'        referee = field_type[10:].strip()'
+p289
+sI2100
+S"        if not '.' in referee:"
+p290
+ssg83
+S"(self=<gluon.dal.SQLiteAdapter object>, value=1, field_type='decimal', blob_decode=True)"
+p291
+sg85
+S'parse_value'
+p292
+sa(dp293
+g62
+S'/Users/james/Documents/Dropbox/Uni/Year 4/iapt/assessment/web2py-2.9.11/web2py/gluon/dal.py'
+p294
+sg64
+(dp295
+S'field_type'
+p296
+S"'decimal'"
+p297
+sS'builtinint'
+p298
+S"<type 'int'>"
+p299
+sS'decimals'
+p300
+g105
+sS'].split'
+p301
+S'<built-in method split of str object>'
+p302
+ssg70
+I2154
+sg71
+(dp303
+I2149
+S''
+sI2150
+S'    def parse_blob(self, value, field_type):'
+p304
+sI2151
+S'        return base64.b64decode(str(value))'
+p305
+sI2152
+S''
+sI2153
+S'    def parse_decimal(self, value, field_type):'
+p306
+sI2154
+S"        decimals = int(field_type[8:-1].split(',')[-1])"
+p307
+sI2155
+S"        if self.dbengine in ('sqlite', 'spatialite'):"
+p308
+sI2156
+S"            value = ('%.' + str(decimals) + 'f') % value"
+p309
+sI2157
+S'        if not isinstance(value, decimal.Decimal):'
+p310
+sI2158
+S'            value = decimal.Decimal(str(value))'
+p311
+ssg83
+S"(self=<gluon.dal.SQLiteAdapter object>, value=1, field_type='decimal')"
+p312
+sg85
+S'parse_decimal'
+p313
+sasS'pyver'
+p314
+S'Python 2.7.5: /usr/bin/python (prefix: /System/Library/Frameworks/Python.framework/Versions/2.7)'
+p315
+sS'session'
+p316
+g57
+(S's\x1a\x00\x00\x00<div><table></table></div>'
+tRp317
+sS'etype'
+p318
+S"<type 'exceptions.ValueError'>"
+p319
+sS'date'
+p320
+S'Sun Nov 23 01:21:10 2014'
+p321
+sS'response'
+p322
+g57
+(S'sX\x18\x00\x00<div><table><tr><td style="font-weight:bold;vertical-align:top;">body</td><td style="vertical-align:top;">:</td><td><div>&lt;cStringIO.StringO object at 0x10d8e24c8&gt;</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">cookies</td><td style="vertical-align:top;">:</td><td><div><table><tr><td style="font-weight:bold;vertical-align:top;">session_id_bootup</td><td style="vertical-align:top;">:</td><td><div>127.0.0.1-1e3d36db-2208-4dda-bac4-0199f432aa4d<table><tr><td style="font-weight:bold;vertical-align:top;">comment</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">domain</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">expires</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">httponly</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">max-age</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">path</td><td style="vertical-align:top;">:</td><td><div>/</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">secure</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">version</td><td style="vertical-align:top;">:</td><td><div></div></td></tr></table></div></td></tr></table></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">delimiters</td><td style="vertical-align:top;">:</td><td><div><table><tr><td><div>{{</div></td></tr><tr><td><div>}}</div></td></tr></table></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">files</td><td style="vertical-align:top;">:</td><td><div><table></table></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">flash</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">form_label_separator</td><td style="vertical-align:top;">:</td><td><div>: </div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">formstyle</td><td style="vertical-align:top;">:</td><td><div>table3cols</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">generic_patterns</td><td style="vertical-align:top;">:</td><td><div><table><tr><td><div>*</div></td></tr></table></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">headers</td><td style="vertical-align:top;">:</td><td><div><table><tr><td style="font-weight:bold;vertical-align:top;">X-Powered-By</td><td style="vertical-align:top;">:</td><td><div>web2py</div></td></tr></table></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">menu</td><td style="vertical-align:top;">:</td><td><div><table></table></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">meta</td><td style="vertical-align:top;">:</td><td><div><table></table></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">models_to_run</td><td style="vertical-align:top;">:</td><td><div><table><tr><td><div>^\\w+\\.py$</div></td></tr><tr><td><div>^project/\\w+\\.py$</div></td></tr><tr><td><div>^project/index/\\w+\\.py$</div></td></tr></table></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">postprocessing</td><td style="vertical-align:top;">:</td><td><div><table></table></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">session_client</td><td style="vertical-align:top;">:</td><td><div>127.0.0.1</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">session_cookie_compression_level</td><td style="vertical-align:top;">:</td><td><div>None</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">session_cookie_expires</td><td style="vertical-align:top;">:</td><td><div>None</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">session_cookie_key</td><td style="vertical-align:top;">:</td><td><div>None</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">session_data_name</td><td style="vertical-align:top;">:</td><td><div>session_data_bootup</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">session_file</td><td style="vertical-align:top;">:</td><td><div>&lt;open file &#x27;/Users/james/Documents/Dropbox/Uni/Year 4/iapt/assessment/web2py-2.9.11/web2py/applications/bootup/sessions/1a3/190/127.0.0.1-1e3d36db-2208-4dda-bac4-0199f432aa4d&#x27;, mode &#x27;rb+&#x27; at 0x10dcef6f0&gt;</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">session_filename</td><td style="vertical-align:top;">:</td><td><div>/Users/james/Documents/Dropbox/Uni/Year 4/iapt/assessment/web2py-2.9.11/web2py/applications/bootup/sessions/127.0.0.1-1e3d36db-2208-4dda-bac4-0199f432aa4d</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">session_hash</td><td style="vertical-align:top;">:</td><td><div>516812d67a9e70348ca7444a09101cf5</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">session_id</td><td style="vertical-align:top;">:</td><td><div>127.0.0.1-1e3d36db-2208-4dda-bac4-0199f432aa4d</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">session_id_name</td><td style="vertical-align:top;">:</td><td><div>session_id_bootup</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">session_locked</td><td style="vertical-align:top;">:</td><td><div>True</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">session_masterapp</td><td style="vertical-align:top;">:</td><td><div>bootup</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">session_new</td><td style="vertical-align:top;">:</td><td><div>False</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">session_storage_type</td><td style="vertical-align:top;">:</td><td><div>file</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">status</td><td style="vertical-align:top;">:</td><td><div>200</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">view</td><td style="vertical-align:top;">:</td><td><div>project/index.html</div></td></tr></table></div>'
+tRp323
+sS'locals'
+p324
+(dp325
+S'field_type'
+p326
+S"'decimal'"
+p327
+sS'self'
+p328
+S'<gluon.dal.SQLiteAdapter object>'
+p329
+sS'value'
+p330
+S'1'
+sssS'traceback'
+p331
+S'Traceback (most recent call last):\n  File "/Users/james/Documents/Dropbox/Uni/Year 4/iapt/assessment/web2py-2.9.11/web2py/gluon/restricted.py", line 224, in restricted\n    exec ccode in environment\n  File "/Users/james/Documents/Dropbox/Uni/Year 4/iapt/assessment/web2py-2.9.11/web2py/applications/bootup/controllers/project.py", line 19, in <module>\n  File "/Users/james/Documents/Dropbox/Uni/Year 4/iapt/assessment/web2py-2.9.11/web2py/gluon/globals.py", line 392, in <lambda>\n    self._caller = lambda f: f()\n  File "/Users/james/Documents/Dropbox/Uni/Year 4/iapt/assessment/web2py-2.9.11/web2py/applications/bootup/controllers/project.py", line 17, in index\n    closest = db(openprojects).select(db.project.ALL)\n  File "/Users/james/Documents/Dropbox/Uni/Year 4/iapt/assessment/web2py-2.9.11/web2py/gluon/dal.py", line 10749, in select\n    return adapter.select(self.query, fields, attributes)\n  File "/Users/james/Documents/Dropbox/Uni/Year 4/iapt/assessment/web2py-2.9.11/web2py/gluon/dal.py", line 2472, in select\n    return super(SQLiteAdapter, self).select(query, fields, attributes)\n  File "/Users/james/Documents/Dropbox/Uni/Year 4/iapt/assessment/web2py-2.9.11/web2py/gluon/dal.py", line 1881, in select\n    return self._select_aux(sql, fields, attributes)\n  File "/Users/james/Documents/Dropbox/Uni/Year 4/iapt/assessment/web2py-2.9.11/web2py/gluon/dal.py", line 1862, in _select_aux\n    return processor(rows, fields, self._colnames, cacheable=cacheable)\n  File "/Users/james/Documents/Dropbox/Uni/Year 4/iapt/assessment/web2py-2.9.11/web2py/gluon/dal.py", line 2246, in parse\n    value = self.parse_value(value, ft, blob_decode)\n  File "/Users/james/Documents/Dropbox/Uni/Year 4/iapt/assessment/web2py-2.9.11/web2py/gluon/dal.py", line 2096, in parse_value\n    return self.parsemap[key](value, field_type)\n  File "/Users/james/Documents/Dropbox/Uni/Year 4/iapt/assessment/web2py-2.9.11/web2py/gluon/dal.py", line 2154, in parse_decimal\n    decimals = int(field_type[8:-1].split(\',\')[-1])\nValueError: invalid literal for int() with base 10: \'\'\n'
+p332
+s.

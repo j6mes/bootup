@@ -1,0 +1,20 @@
+{{extend 'bootup.html'}}
+         <h2>Bootable Manager Dashboard</h2>
+        <div class="row">
+            <div class="col-xs-12 col-sm-8 col-md-8 col-lg-8">
+
+                <div class="project_list">
+                    {{for record in projects:}}
+                        {{include 'partial/project/owner.html'}}
+                    {{pass}}
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+                <h4>Filter</h4>
+                {{=A("All",_href=URL('bootup','user','projects'))}}<br />
+                {{=A("Not Started",_href=URL('bootup','user','projects',args=['not_started']))}}<br />
+                {{=A("Open",_href=URL('bootup','user','projects',args=['opened']))}}<br />
+                {{=A("Funded",_href=URL('bootup','user','projects',args=['funded']))}}<br />
+                {{=A("Not Funded",_href=URL('bootup','user','projects',args=['not_funded']))}}<br />
+            </div>
+        </div>

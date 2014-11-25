@@ -1,0 +1,25 @@
+{{extend 'bootup.html'}}
+         <h2>My Account</h2>
+        <div class="row">
+            <div class="col-xs-12 col-sm-8 col-md-8 col-lg-8">
+
+                <div class="project_list">
+                    <h3>Projects I've contributed to</h3>
+
+                    {{for project,rewards in projects:}}
+                        {{include 'partial/project/reward.html'}}
+                    {{pass}}
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+                <h4>Manage my account</h4>
+                {{=A("Personal Information",_href=URL('bootups','user','edit'))}}<br />
+                {{=A("Change Password",_href=URL('bootups','user','password'))}}<br />
+                {{=A("Address",_href=URL('bootups','address','index'))}}<br />
+                {{=A("Credit Cards",_href=URL('bootups','card','index'))}}<br />
+
+                <h4>BootUps Dashboard</h4>
+                {{=A("Create Project",_href=URL('bootup','project','create'))}}<br />
+                {{=A("Dashboard",_href=URL('bootup','user','projects'))}}<br />
+            </div>
+        </div>

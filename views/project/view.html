@@ -1,0 +1,38 @@
+{{extend 'bootup.html'}}
+
+{{=H2(record.project.title)}}
+<div class="row">
+
+    <div class="col-md-8 col-sm-8 col-lg-8 col-xs-12">
+        {{=record.project.shortdescription}}
+
+
+
+
+        <h3>Project Backers</h3>
+            {{for username, expectedrewards in record.project.expectedrewards():}}
+                {{rewards = list(expectedrewards)}}
+
+                {{=H5(username  + ' ' + rewards[0].expectedrewards.pledgedescription + ' £'+ str(rewards[0].expectedrewards.value))}}
+                    {{for reward in rewards:}}
+                        {{=reward.expectedrewards.rewarddescription}}<br />
+                    {{pass}}
+            {{pass}}
+
+    </div>
+
+    <div class="col-md-4 col-sm-4 col-lg-4 col-xs-12">
+        <h1>&pound;{{=record.projectstat.totalvalue}} raised</h1>
+        <h1>&pound;{{=record.project.goal}} goal</h1>
+        <h1>{{=record.projectstat.bootings}} bootings</h1>
+        {{if record.project.hascontributed(): }}
+            You have contributed to this project
+        {{pass}}
+        <h4>Rewards</h4>
+        {{for pledge in record.project.pledges():}}
+            {{include 'partial/pledge/summary.html'}}
+        {{pass}}
+    </div>
+</div>
+
+

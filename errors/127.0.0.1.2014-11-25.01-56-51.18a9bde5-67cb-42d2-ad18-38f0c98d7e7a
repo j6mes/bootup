@@ -1,0 +1,788 @@
+(dp1
+S'output'
+p2
+S'<class \'sqlite3.OperationalError\'> near "LIMIT": syntax error'
+p3
+sS'layer'
+p4
+S'/Users/james/Documents/Dropbox/Uni/Year 4/iapt/assessment/web2py-2.9.11/web2py/applications/bootup/controllers/pledge.py'
+p5
+sS'code'
+p6
+S'from applications.bootup.forms.bootupform import BOOTUPFORM\n\n@auth.requires_login\ndef view():\n    projectid = request.args(0)\n\n    if projectid is None:\n        raise HTTP(404,"No project specified")\n\n    project = db(myprojects & (db.project.idproject==projectid)).select(db.project.ALL).first()\n\n    if project is None:\n        raise HTTP(404,"Project does not exist")\n\n    if not project.canedit():\n        raise HTTP(403, "Cannot edit this project")\n\n    return dict(project=project)\n\n\n\n@auth.requires_login\ndef create():\n    projectid = request.args(0)\n\n    if projectid is None:\n        raise HTTP(404,"No project specified")\n\n    project = db(myprojects & (db.project.idproject==projectid)).select(db.project.ALL).first()\n\n    if project is None:\n        raise HTTP(404,"Project does not exist")\n\n    if not project.canedit():\n        raise HTTP(403, "Cannot edit this project")\n\n    form = BOOTUPFORM.factory(db.pledge,Field(\'rewards\',requires=IS_IN_DB(db(db.reward.projectid==projectid),db.reward.idreward,\'%(description)s\',multiple=[1,9999], error_message="Please select at least one reward")))\n\n\n\n    if( form.process().accepted):\n\n        pledgeid = db.pledge.insert(idpledge=None,description=form.vars.description, value=form.vars.value, projectid=projectid)\n\n        for reward in form.vars.rewards:\n            reward = int(reward)\n            dbreward = db(db.reward.idreward==reward).select(db.reward.ALL).first()\n            if int(dbreward.projectid) is int(projectid):\n                db.rewardpledge.insert(rewardid=reward, pledgeid=pledgeid)\n\n\n        redirect(URL(\'bootup\',\'pledge\',\'view\',args=[projectid]))\n    return dict(project=project, form=form)\n\n\n@auth.requires_login\ndef edit():\n    pledgeid = request.args(0)\n\n    if pledgeid is None:\n        raise HTTP(404,"No project specified")\n\n    pledge = db((db.pledge.idpledge == pledgeid) & myprojects & (db.project.idproject==db.pledge.projectid)).select(db.project.ALL,db.pledge.ALL).first()\n\n    if pledge is None:\n        raise HTTP(404,"Reward does not exist")\n\n    if not pledge.project.canedit():\n        raise HTTP(403, "Cannot edit this project")\n\n    record = dict(description=pledge.pledge.description, value=pledge.pledge.value,rewards=pledge.pledge.rewardids(),projectid=pledge.pledge.projectid,id=13)\n    form = BOOTUPFORM.factory(db.pledge,\n                      Field(\'rewards\',requires=IS_IN_DB(db(db.reward.projectid==pledge.pledge.projectid),db.reward.idreward,\'%(description)s\',multiple=[1,9999], error_message="Please select at least one reward")),\n                      record=record)\n    if( form.process().accepted):\n        for reward in pledge.pledge.rewardids():\n\n            db((db.rewardpledge.pledgeid==int(pledge.pledge.idpledge)) & (db.rewardpledge.rewardid==int(reward))).select(db.rewardpledge.ALL).first().rawdelete()\n\n        for reward in form.vars.rewards:\n            reward = int(reward)\n            dbreward = db(db.reward.idreward==reward).select(db.reward.ALL).first()\n            if int(dbreward.projectid) is int(pledge.pledge.projectid):\n                db.rewardpledge.insert(rewardid=reward, pledgeid=pledgeid)\n\n        redirect(URL(\'bootup\',\'pledge\',\'view\',args=[pledge.pledge.projectid]))\n    return dict(form=form)\n\n@auth.requires_login\ndef delete():\n    rewardid = request.args(0)\n\n    if rewardid is None:\n        raise HTTP(404,"No project specified")\n\n    reward = db((db.reward.idreward == rewardid) & myprojects & (db.project.idproject==db.reward.projectid)).select(db.project.ALL,db.reward.ALL).first()\n\n    if reward is None:\n        raise HTTP(404,"Reward does not exist")\n\n    if not reward.project.canedit():\n        raise HTTP(403, "Cannot edit this project")\n\n\n    form = FORM.confirm(\'Delete\',{\'Back\':URL(request.env.http_referrer)})\n    projectid = reward.reward.projectid\n\n\n    if form.accepted:\n        db(db.reward.idreward == rewardid).delete()\n        redirect(URL(\'bootup\',\'reward\',\'view\',args=[projectid]))\n\n    return dict(form=form)\n\nresponse._vars=response._caller(edit)\n'
+p7
+sS'snapshot'
+p8
+(dp9
+S'exception'
+p10
+(dp11
+S'__module__'
+p12
+S"'sqlite3'"
+p13
+sS'__getslice__'
+p14
+S"<method-wrapper '__getslice__' of OperationalError object>"
+p15
+sS'__str__'
+p16
+S"<method-wrapper '__str__' of OperationalError object>"
+p17
+sS'__reduce__'
+p18
+S'<built-in method __reduce__ of OperationalError object>'
+p19
+sS'__dict__'
+p20
+S'{}'
+p21
+sS'__sizeof__'
+p22
+S'<built-in method __sizeof__ of OperationalError object>'
+p23
+sS'__weakref__'
+p24
+S'None'
+p25
+sS'__init__'
+p26
+S"<method-wrapper '__init__' of OperationalError object>"
+p27
+sS'__setattr__'
+p28
+S"<method-wrapper '__setattr__' of OperationalError object>"
+p29
+sS'__reduce_ex__'
+p30
+S'<built-in method __reduce_ex__ of OperationalError object>'
+p31
+sS'__new__'
+p32
+S'<built-in method __new__ of type object>'
+p33
+sS'__format__'
+p34
+S'<built-in method __format__ of OperationalError object>'
+p35
+sS'__class__'
+p36
+S"<class 'sqlite3.OperationalError'>"
+p37
+sS'__doc__'
+p38
+S'None'
+p39
+sS'__getitem__'
+p40
+S"<method-wrapper '__getitem__' of OperationalError object>"
+p41
+sS'__setstate__'
+p42
+S'<built-in method __setstate__ of OperationalError object>'
+p43
+sS'__getattribute__'
+p44
+S"<method-wrapper '__getattribute__' of OperationalError object>"
+p45
+sS'args'
+p46
+S'(\'near "LIMIT": syntax error\',)'
+p47
+sS'__subclasshook__'
+p48
+S'<built-in method __subclasshook__ of type object>'
+p49
+sS'__unicode__'
+p50
+S'<built-in method __unicode__ of OperationalError object>'
+p51
+sS'__delattr__'
+p52
+S"<method-wrapper '__delattr__' of OperationalError object>"
+p53
+sS'__repr__'
+p54
+S"<method-wrapper '__repr__' of OperationalError object>"
+p55
+sS'__hash__'
+p56
+S"<method-wrapper '__hash__' of OperationalError object>"
+p57
+ssS'evalue'
+p58
+S'near "LIMIT": syntax error'
+p59
+sS'request'
+p60
+cgluon.html
+XML_unpickle
+p61
+(S's\xf7_\x00\x00<div><table><tr><td style="font-weight:bold;vertical-align:top;">ajax</td><td style="vertical-align:top;">:</td><td><div>False</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">application</td><td style="vertical-align:top;">:</td><td><div>bootup</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">args</td><td style="vertical-align:top;">:</td><td><div><table><tr><td><div>13</div></td></tr></table></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">cid</td><td style="vertical-align:top;">:</td><td><div>None</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">client</td><td style="vertical-align:top;">:</td><td><div>127.0.0.1</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">controller</td><td style="vertical-align:top;">:</td><td><div>pledge</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">cookies</td><td style="vertical-align:top;">:</td><td><div><table><tr><td style="font-weight:bold;vertical-align:top;">session_id_admin</td><td style="vertical-align:top;">:</td><td><div>127.0.0.1-d5f035ce-fe78-483c-907e-4bbdee1f8d57<table><tr><td style="font-weight:bold;vertical-align:top;">comment</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">domain</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">expires</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">httponly</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">max-age</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">path</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">secure</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">version</td><td style="vertical-align:top;">:</td><td><div></div></td></tr></table></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">session_id_bootup</td><td style="vertical-align:top;">:</td><td><div>127.0.0.1-6543c37b-0e7c-4341-b2b0-67667ed320d5<table><tr><td style="font-weight:bold;vertical-align:top;">comment</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">domain</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">expires</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">httponly</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">max-age</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">path</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">secure</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">version</td><td style="vertical-align:top;">:</td><td><div></div></td></tr></table></div></td></tr></table></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">env</td><td style="vertical-align:top;">:</td><td><div><table><tr><td style="font-weight:bold;vertical-align:top;">CONTENT_LENGTH</td><td style="vertical-align:top;">:</td><td><div>775</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">CONTENT_TYPE</td><td style="vertical-align:top;">:</td><td><div>multipart/form-data; boundary=----WebKitFormBoundaryPIqOFJJtyuiFJAgy</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">HTTP_ACCEPT</td><td style="vertical-align:top;">:</td><td><div>text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">HTTP_ACCEPT_ENCODING</td><td style="vertical-align:top;">:</td><td><div>gzip,deflate</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">HTTP_ACCEPT_LANGUAGE</td><td style="vertical-align:top;">:</td><td><div>en-US,en;q=0.8</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">HTTP_CACHE_CONTROL</td><td style="vertical-align:top;">:</td><td><div>max-age=0</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">HTTP_CONNECTION</td><td style="vertical-align:top;">:</td><td><div>keep-alive</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">HTTP_CONTENT_LENGTH</td><td style="vertical-align:top;">:</td><td><div>775</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">HTTP_CONTENT_TYPE</td><td style="vertical-align:top;">:</td><td><div>multipart/form-data; boundary=----WebKitFormBoundaryPIqOFJJtyuiFJAgy</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">HTTP_COOKIE</td><td style="vertical-align:top;">:</td><td><div>session_id_bootup=127.0.0.1-6543c37b-0e7c-4341-b2b0-67667ed320d5; session_id_admin=127.0.0.1-d5f035ce-fe78-483c-907e-4bbdee1f8d57</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">HTTP_HOST</td><td style="vertical-align:top;">:</td><td><div>127.0.0.1:8000</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">HTTP_ORIGIN</td><td style="vertical-align:top;">:</td><td><div>http://127.0.0.1:8000</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">HTTP_REFERER</td><td style="vertical-align:top;">:</td><td><div>http://127.0.0.1:8000/bootup/pledge/edit/13</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">HTTP_USER_AGENT</td><td style="vertical-align:top;">:</td><td><div>Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/38.0.2125.122 Safari/537.36</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">PATH_INFO</td><td style="vertical-align:top;">:</td><td><div>/bootup/pledge/edit/13</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">QUERY_STRING</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">REMOTE_ADDR</td><td style="vertical-align:top;">:</td><td><div>127.0.0.1</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">REMOTE_PORT</td><td style="vertical-align:top;">:</td><td><div>53227</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">REQUEST_METHOD</td><td style="vertical-align:top;">:</td><td><div>POST</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">SCRIPT_NAME</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">SERVER_NAME</td><td style="vertical-align:top;">:</td><td><div>jt-mbp.default</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">SERVER_PORT</td><td style="vertical-align:top;">:</td><td><div>8000</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">SERVER_PROTOCOL</td><td style="vertical-align:top;">:</td><td><div>HTTP/1.1</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">SERVER_SOFTWARE</td><td style="vertical-align:top;">:</td><td><div>Rocket 1.2.6</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">app_folders</td><td style="vertical-align:top;">:</td><td><div>set([&#x27;/Users/james/Documents/Dropbox/Uni/Year 4/iapt/assessment/web2py-2.9.11/web2py/applications/admin/&#x27;, &#x27;/Users/james/Documents/Dropbox/Uni/Year 4/iapt/assessment/web2py-2.9.11/web2py/applications/bootup/&#x27;])</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">applications_parent</td><td style="vertical-align:top;">:</td><td><div>/Users/james/Documents/Dropbox/Uni/Year 4/iapt/assessment/web2py-2.9.11/web2py</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">cmd_args</td><td style="vertical-align:top;">:</td><td><div><table></table></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">cmd_options</td><td style="vertical-align:top;">:</td><td><div>&lt;Values at 0x10522e2d8: {&#x27;verbose&#x27;: False, &#x27;ip&#x27;: &#x27;127.0.0.1&#x27;, &#x27;debuglevel&#x27;: 30, &#x27;with_scheduler&#x27;: False, &#x27;ips&#x27;: [&#x27;192.168.1.105&#x27;], &#x27;shutdown_timeout&#x27;: 5, &#x27;taskbar&#x27;: False, &#x27;with_coverage&#x27;: False, &#x27;scheduler_groups&#x27;: None, &#x27;port&#x27;: 8000, &#x27;maxthreads&#x27;: None, &#x27;softcron&#x27;: False, &#x27;server_name&#x27;: &#x27;jt-mbp.default&#x27;, &#x27;bpython&#x27;: False, &#x27;nogui&#x27;: False, &#x27;pid_filename&#x27;: &#x27;httpserver.pid&#x27;, &#x27;extcron&#x27;: False, &#x27;runcron&#x27;: False, &#x27;run_system_tests&#x27;: False, &#x27;test&#x27;: None, &#x27;folder&#x27;: &#x27;/Users/james/Documents/Dropbox/Uni/Year 4/iapt/assessment/web2py-2.9.11/web2py&#x27;, &#x27;config&#x27;: &#x27;&#x27;, &#x27;minthreads&#x27;: None, &#x27;shell&#x27;: None, &#x27;run&#x27;: &#x27;&#x27;, &#x27;log_filename&#x27;: &#x27;httpserver.log&#x27;, &#x27;profiler_dir&#x27;: None, &#x27;args&#x27;: [&#x27;&#x27;], &#x27;socket_timeout&#x27;: 5, &#x27;ssl_ca_certificate&#x27;: None, &#x27;scheduler&#x27;: None, &#x27;interfaces&#x27;: None, &#x27;ssl_private_key&#x27;: &#x27;&#x27;, &#x27;gae&#x27;: None, &#x27;password&#x27;: &#x27;&lt;ask&gt;&#x27;, &#x27;request_queue_size&#x27;: 5, &#x27;ssl_certificate&#x27;: &#x27;&#x27;, &#x27;cronjob&#x27;: False, &#x27;numthreads&#x27;: None, &#x27;quiet&#x27;: False, &#x27;import_models&#x27;: False, &#x27;timeout&#x27;: 10, &#x27;plain&#x27;: False, &#x27;nobanner&#x27;: False}&gt;</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">content_length</td><td style="vertical-align:top;">:</td><td><div>775</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">content_type</td><td style="vertical-align:top;">:</td><td><div>multipart/form-data; boundary=----WebKitFormBoundaryPIqOFJJtyuiFJAgy</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">db_sessions</td><td style="vertical-align:top;">:</td><td><div>set([])</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">debugging</td><td style="vertical-align:top;">:</td><td><div>False</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">gluon_parent</td><td style="vertical-align:top;">:</td><td><div>/Users/james/Documents/Dropbox/Uni/Year 4/iapt/assessment/web2py-2.9.11/web2py</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">http_accept</td><td style="vertical-align:top;">:</td><td><div>text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">http_accept_encoding</td><td style="vertical-align:top;">:</td><td><div>gzip,deflate</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">http_accept_language</td><td style="vertical-align:top;">:</td><td><div>en-US,en;q=0.8</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">http_cache_control</td><td style="vertical-align:top;">:</td><td><div>max-age=0</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">http_connection</td><td style="vertical-align:top;">:</td><td><div>keep-alive</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">http_content_length</td><td style="vertical-align:top;">:</td><td><div>775</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">http_content_type</td><td style="vertical-align:top;">:</td><td><div>multipart/form-data; boundary=----WebKitFormBoundaryPIqOFJJtyuiFJAgy</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">http_cookie</td><td style="vertical-align:top;">:</td><td><div>session_id_bootup=127.0.0.1-6543c37b-0e7c-4341-b2b0-67667ed320d5; session_id_admin=127.0.0.1-d5f035ce-fe78-483c-907e-4bbdee1f8d57</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">http_host</td><td style="vertical-align:top;">:</td><td><div>127.0.0.1:8000</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">http_origin</td><td style="vertical-align:top;">:</td><td><div>http://127.0.0.1:8000</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">http_referer</td><td style="vertical-align:top;">:</td><td><div>http://127.0.0.1:8000/bootup/pledge/edit/13</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">http_user_agent</td><td style="vertical-align:top;">:</td><td><div>Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/38.0.2125.122 Safari/537.36</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">is_jython</td><td style="vertical-align:top;">:</td><td><div>False</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">is_pypy</td><td style="vertical-align:top;">:</td><td><div>False</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">is_source</td><td style="vertical-align:top;">:</td><td><div>True</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">local_hosts</td><td style="vertical-align:top;">:</td><td><div><table><tr><td><div>jt-mbp.default</div></td></tr><tr><td><div>::1</div></td></tr><tr><td><div>::ffff:127.0.0.1</div></td></tr><tr><td><div>127.0.0.1</div></td></tr><tr><td><div>192.168.1.105</div></td></tr></table></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">path_info</td><td style="vertical-align:top;">:</td><td><div>/bootup/pledge/edit/13</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">query_string</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">remote_addr</td><td style="vertical-align:top;">:</td><td><div>127.0.0.1</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">remote_port</td><td style="vertical-align:top;">:</td><td><div>53227</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">request_method</td><td style="vertical-align:top;">:</td><td><div>POST</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">request_uri</td><td style="vertical-align:top;">:</td><td><div>/bootup/pledge/edit/13</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">script_name</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">server_name</td><td style="vertical-align:top;">:</td><td><div>jt-mbp.default</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">server_port</td><td style="vertical-align:top;">:</td><td><div>8000</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">server_protocol</td><td style="vertical-align:top;">:</td><td><div>HTTP/1.1</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">server_software</td><td style="vertical-align:top;">:</td><td><div>Rocket 1.2.6</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">web2py_path</td><td style="vertical-align:top;">:</td><td><div>/Users/james/Documents/Dropbox/Uni/Year 4/iapt/assessment/web2py-2.9.11/web2py</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">web2py_version</td><td style="vertical-align:top;">:</td><td><div>2.9.11-stable+timestamp.2014.09.15.23.35.11</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">wsgi.errors</td><td style="vertical-align:top;">:</td><td><div>&lt;open file &#x27;&lt;stderr&gt;&#x27;, mode &#x27;w&#x27; at 0x103b221e0&gt;</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">wsgi.file_wrapper</td><td style="vertical-align:top;">:</td><td><div>&lt;class wsgiref.util.FileWrapper at 0x104734e20&gt;</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">wsgi.input</td><td style="vertical-align:top;">:</td><td><div>&lt;socket._fileobject object at 0x10ac0f1d0&gt;</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">wsgi.multiprocess</td><td style="vertical-align:top;">:</td><td><div>False</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">wsgi.multithread</td><td style="vertical-align:top;">:</td><td><div>True</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">wsgi.run_once</td><td style="vertical-align:top;">:</td><td><div>False</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">wsgi.url_scheme</td><td style="vertical-align:top;">:</td><td><div>http</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">wsgi.version</td><td style="vertical-align:top;">:</td><td><div><table><tr><td><div>1</div></td></tr><tr><td><div>0</div></td></tr></table></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">wsgi_errors</td><td style="vertical-align:top;">:</td><td><div>&lt;open file &#x27;&lt;stderr&gt;&#x27;, mode &#x27;w&#x27; at 0x103b221e0&gt;</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">wsgi_file_wrapper</td><td style="vertical-align:top;">:</td><td><div>&lt;class wsgiref.util.FileWrapper at 0x104734e20&gt;</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">wsgi_input</td><td style="vertical-align:top;">:</td><td><div>&lt;socket._fileobject object at 0x10ac0f1d0&gt;</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">wsgi_multiprocess</td><td style="vertical-align:top;">:</td><td><div>False</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">wsgi_multithread</td><td style="vertical-align:top;">:</td><td><div>True</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">wsgi_run_once</td><td style="vertical-align:top;">:</td><td><div>False</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">wsgi_url_scheme</td><td style="vertical-align:top;">:</td><td><div>http</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">wsgi_version</td><td style="vertical-align:top;">:</td><td><div><table><tr><td><div>1</div></td></tr><tr><td><div>0</div></td></tr></table></div></td></tr></table></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">extension</td><td style="vertical-align:top;">:</td><td><div>html</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">folder</td><td style="vertical-align:top;">:</td><td><div>/Users/james/Documents/Dropbox/Uni/Year 4/iapt/assessment/web2py-2.9.11/web2py/applications/bootup/</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">function</td><td style="vertical-align:top;">:</td><td><div>edit</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">global_settings</td><td style="vertical-align:top;">:</td><td><div><table><tr><td style="font-weight:bold;vertical-align:top;">app_folders</td><td style="vertical-align:top;">:</td><td><div>set([&#x27;/Users/james/Documents/Dropbox/Uni/Year 4/iapt/assessment/web2py-2.9.11/web2py/applications/admin/&#x27;, &#x27;/Users/james/Documents/Dropbox/Uni/Year 4/iapt/assessment/web2py-2.9.11/web2py/applications/bootup/&#x27;])</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">applications_parent</td><td style="vertical-align:top;">:</td><td><div>/Users/james/Documents/Dropbox/Uni/Year 4/iapt/assessment/web2py-2.9.11/web2py</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">cmd_args</td><td style="vertical-align:top;">:</td><td><div><table></table></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">cmd_options</td><td style="vertical-align:top;">:</td><td><div>&lt;Values at 0x10522e2d8: {&#x27;verbose&#x27;: False, &#x27;ip&#x27;: &#x27;127.0.0.1&#x27;, &#x27;debuglevel&#x27;: 30, &#x27;with_scheduler&#x27;: False, &#x27;ips&#x27;: [&#x27;192.168.1.105&#x27;], &#x27;shutdown_timeout&#x27;: 5, &#x27;taskbar&#x27;: False, &#x27;with_coverage&#x27;: False, &#x27;scheduler_groups&#x27;: None, &#x27;port&#x27;: 8000, &#x27;maxthreads&#x27;: None, &#x27;softcron&#x27;: False, &#x27;server_name&#x27;: &#x27;jt-mbp.default&#x27;, &#x27;bpython&#x27;: False, &#x27;nogui&#x27;: False, &#x27;pid_filename&#x27;: &#x27;httpserver.pid&#x27;, &#x27;extcron&#x27;: False, &#x27;runcron&#x27;: False, &#x27;run_system_tests&#x27;: False, &#x27;test&#x27;: None, &#x27;folder&#x27;: &#x27;/Users/james/Documents/Dropbox/Uni/Year 4/iapt/assessment/web2py-2.9.11/web2py&#x27;, &#x27;config&#x27;: &#x27;&#x27;, &#x27;minthreads&#x27;: None, &#x27;shell&#x27;: None, &#x27;run&#x27;: &#x27;&#x27;, &#x27;log_filename&#x27;: &#x27;httpserver.log&#x27;, &#x27;profiler_dir&#x27;: None, &#x27;args&#x27;: [&#x27;&#x27;], &#x27;socket_timeout&#x27;: 5, &#x27;ssl_ca_certificate&#x27;: None, &#x27;scheduler&#x27;: None, &#x27;interfaces&#x27;: None, &#x27;ssl_private_key&#x27;: &#x27;&#x27;, &#x27;gae&#x27;: None, &#x27;password&#x27;: &#x27;&lt;ask&gt;&#x27;, &#x27;request_queue_size&#x27;: 5, &#x27;ssl_certificate&#x27;: &#x27;&#x27;, &#x27;cronjob&#x27;: False, &#x27;numthreads&#x27;: None, &#x27;quiet&#x27;: False, &#x27;import_models&#x27;: False, &#x27;timeout&#x27;: 10, &#x27;plain&#x27;: False, &#x27;nobanner&#x27;: False}&gt;</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">db_sessions</td><td style="vertical-align:top;">:</td><td><div>set([])</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">debugging</td><td style="vertical-align:top;">:</td><td><div>False</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">gluon_parent</td><td style="vertical-align:top;">:</td><td><div>/Users/james/Documents/Dropbox/Uni/Year 4/iapt/assessment/web2py-2.9.11/web2py</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">is_jython</td><td style="vertical-align:top;">:</td><td><div>False</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">is_pypy</td><td style="vertical-align:top;">:</td><td><div>False</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">is_source</td><td style="vertical-align:top;">:</td><td><div>True</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">local_hosts</td><td style="vertical-align:top;">:</td><td><div><table><tr><td><div>jt-mbp.default</div></td></tr><tr><td><div>::1</div></td></tr><tr><td><div>::ffff:127.0.0.1</div></td></tr><tr><td><div>127.0.0.1</div></td></tr><tr><td><div>192.168.1.105</div></td></tr></table></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">web2py_version</td><td style="vertical-align:top;">:</td><td><div>2.9.11-stable+timestamp.2014.09.15.23.35.11</div></td></tr></table></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">is_https</td><td style="vertical-align:top;">:</td><td><div>False</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">is_local</td><td style="vertical-align:top;">:</td><td><div>True</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">is_restful</td><td style="vertical-align:top;">:</td><td><div>False</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">is_sheduler</td><td style="vertical-align:top;">:</td><td><div>None</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">is_shell</td><td style="vertical-align:top;">:</td><td><div>None</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">now</td><td style="vertical-align:top;">:</td><td><div>datetime.datetime(2014, 11, 25, 1, 56, 51, 779399)</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">raw_args</td><td style="vertical-align:top;">:</td><td><div>13</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">raw_extension</td><td style="vertical-align:top;">:</td><td><div>None</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">url</td><td style="vertical-align:top;">:</td><td><div>/bootup/pledge/edit/13</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">utcnow</td><td style="vertical-align:top;">:</td><td><div>datetime.datetime(2014, 11, 25, 1, 56, 51, 779406)</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">uuid</td><td style="vertical-align:top;">:</td><td><div>bootup/127.0.0.1.2014-11-25.01-56-51.18a9bde5-67cb-42d2-ad18-38f0c98d7e7a</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">wsgi</td><td style="vertical-align:top;">:</td><td><div>&lt;gluon.main.LazyWSGI object at 0x10ab66950&gt;</div></td></tr></table></div>'
+tRp62
+sS'frames'
+p63
+(lp64
+(dp65
+S'file'
+p66
+S'/Users/james/Documents/Dropbox/Uni/Year 4/iapt/assessment/web2py-2.9.11/web2py/gluon/restricted.py'
+p67
+sS'dump'
+p68
+(dp69
+S'environment'
+p70
+S"{'A': <class 'gluon.html.A'>, 'ANY_OF': <class 'gluon.validators.ANY_OF'>, 'ASSIGNJS': <function ASSIGNJS>, 'B': <class 'gluon.html.B'>, 'BEAUTIFY': <class 'gluon.html.BEAUTIFY'>, 'BODY': <class 'gluon.html.BODY'>, 'BOOTUPFORM': <class 'applications.bootup.forms.bootupform.BOOTUPFORM'>, 'BR': <class 'gluon.html.BR'>, 'BUTTON': <class 'gluon.html.BUTTON'>, 'BootUpAuth': <class __restricted__.BootUpAuth>, ...}"
+p71
+sS'ccode'
+p72
+S'<code object <module> at 0x10ab71830, file "/Use...plications/bootup/controllers/pledge.py", line 1>'
+p73
+ssS'lnum'
+p74
+I224
+sS'lines'
+p75
+(dp76
+I224
+S'        exec ccode in environment'
+p77
+sI225
+S'    except HTTP:'
+p78
+sI226
+S'        raise'
+p79
+sI227
+S'    except RestrictedError:'
+p80
+sI228
+S'        # do not encapsulate (obfuscate) the original RestrictedError'
+p81
+sI219
+S'    try:'
+p82
+sI220
+S'        if isinstance(code, types.CodeType):'
+p83
+sI221
+S'            ccode = code'
+p84
+sI222
+S'        else:'
+p85
+sI223
+S'            ccode = compile2(code, layer)'
+p86
+ssS'call'
+p87
+S"(code='from applications.bootup.forms.bootupform import...orm=form)\\n\\nresponse._vars=response._caller(edit)\\n', environment={'A': <class 'gluon.html.A'>, 'ANY_OF': <class 'gluon.validators.ANY_OF'>, 'ASSIGNJS': <function ASSIGNJS>, 'B': <class 'gluon.html.B'>, 'BEAUTIFY': <class 'gluon.html.BEAUTIFY'>, 'BODY': <class 'gluon.html.BODY'>, 'BOOTUPFORM': <class 'applications.bootup.forms.bootupform.BOOTUPFORM'>, 'BR': <class 'gluon.html.BR'>, 'BUTTON': <class 'gluon.html.BUTTON'>, 'BootUpAuth': <class __restricted__.BootUpAuth>, ...}, layer='/Users/james/Documents/Dropbox/Uni/Year 4/iapt/a.../web2py/applications/bootup/controllers/pledge.py')"
+p88
+sS'func'
+p89
+S'restricted'
+p90
+sa(dp91
+g66
+S'/Users/james/Documents/Dropbox/Uni/Year 4/iapt/assessment/web2py-2.9.11/web2py/applications/bootup/controllers/pledge.py'
+p92
+sg68
+(dp93
+sg74
+I115
+sg75
+(dp94
+I104
+S''
+sI105
+S"    form = FORM.confirm('Delete',{'Back':URL(request.env.http_referrer)})"
+p95
+sI106
+S'    projectid = reward.reward.projectid'
+p96
+sI107
+S''
+sI108
+S''
+sI109
+S'    if form.accepted:'
+p97
+sI110
+S'        db(db.reward.idreward == rewardid).delete()'
+p98
+sI111
+S"        redirect(URL('bootup','reward','view',args=[projectid]))"
+p99
+sI112
+S''
+sI113
+S'    return dict(form=form)'
+p100
+ssg87
+S'()'
+p101
+sg89
+S'<module>'
+p102
+sa(dp103
+g66
+S'/Users/james/Documents/Dropbox/Uni/Year 4/iapt/assessment/web2py-2.9.11/web2py/gluon/globals.py'
+p104
+sg68
+(dp105
+S'self'
+p106
+S'undefined'
+p107
+sS'f'
+S'<function _a>'
+p108
+ssg74
+I392
+sg75
+(dp109
+I387
+S"        self.flash = ''            # used by the default view layout"
+p110
+sI388
+S'        self.meta = Storage()      # used by web2py_ajax.html'
+p111
+sI389
+S'        self.menu = []             # used by the default view layout'
+p112
+sI390
+S'        self.files = []            # used by web2py_ajax.html'
+p113
+sI391
+S'        self._vars = None'
+p114
+sI392
+S'        self._caller = lambda f: f()'
+p115
+sI393
+S'        self._view_environment = None'
+p116
+sI394
+S'        self._custom_commit = None'
+p117
+sI395
+S'        self._custom_rollback = None'
+p118
+sI396
+S"        self.generic_patterns = ['*']"
+p119
+ssg87
+S'(f=<function _a>)'
+p120
+sg89
+S'<lambda>'
+p121
+sa(dp122
+g66
+S'/Users/james/Documents/Dropbox/Uni/Year 4/iapt/assessment/web2py-2.9.11/web2py/applications/bootup/models/auth.py'
+p123
+sg68
+(dp124
+S'fn'
+p125
+S'<function edit>'
+p126
+ssg74
+I20
+sg75
+(dp127
+I13
+S''
+sI14
+S''
+sI15
+S'    def requires_login(self, fn):'
+p128
+sI16
+S'        def _a():'
+p129
+sI17
+S'            if not self.is_logged_in():'
+p130
+sI18
+S"                redirect(URL('bootup','user','login'))"
+p131
+sI19
+S'                return'
+p132
+sI20
+S'            return fn()'
+p133
+sI21
+S'        return _a'
+p134
+sI22
+S''
+ssg87
+S'()'
+p135
+sg89
+S'_a'
+p136
+sa(dp137
+g66
+S'/Users/james/Documents/Dropbox/Uni/Year 4/iapt/assessment/web2py-2.9.11/web2py/applications/bootup/controllers/pledge.py'
+p138
+sg68
+(dp139
+S'db.rewardpledge.rewardid'
+p140
+S'<gluon.dal.Field object>'
+p141
+sS'pledge'
+p142
+S"<Row {'project': {'categoryid': 8L, 'managerid':...L, 'value': 1000.0, 'idpledge': 13L, 'id': 13L}}>"
+p143
+sS'db.rewardpledge.ALL'
+p144
+S'<gluon.dal.SQLALL object>'
+p145
+sS'db.rewardpledge'
+p146
+S'<Table rewardpledge (rewardid,pledgeid)>'
+p147
+sS').select'
+p148
+g107
+sS'db.rewardpledge.pledgeid'
+p149
+S'<gluon.dal.Field object>'
+p150
+sS'pledge.pledge.idpledge'
+p151
+S'13L'
+p152
+sS'global db'
+p153
+S'<DAL uri="sqlite://bootup.db">'
+p154
+sS'builtinint'
+p155
+S"<type 'int'>"
+p156
+sS'reward'
+p157
+S'9L'
+p158
+sS'pledge.pledge'
+p159
+S"<Row {'description': 'tetstesteststes', 'project...1L, 'value': 1000.0, 'idpledge': 13L, 'id': 13L}>"
+p160
+sS').first'
+p161
+g107
+ssg74
+I78
+sg75
+(dp162
+I73
+S'                      Field(\'rewards\',requires=IS_IN_DB(db(db.reward.projectid==pledge.pledge.projectid),db.reward.idreward,\'%(description)s\',multiple=[1,9999], error_message="Please select at least one reward")),'
+p163
+sI74
+S'                      record=record)'
+p164
+sI75
+S'    if( form.process().accepted):'
+p165
+sI76
+S'        for reward in pledge.pledge.rewardids():'
+p166
+sI77
+S''
+sI78
+S'            db((db.rewardpledge.pledgeid==int(pledge.pledge.idpledge)) & (db.rewardpledge.rewardid==int(reward))).select(db.rewardpledge.ALL).first().rawdelete()'
+p167
+sI79
+S''
+sI80
+S'        for reward in form.vars.rewards:'
+p168
+sI81
+S'            reward = int(reward)'
+p169
+sI82
+S'            dbreward = db(db.reward.idreward==reward).select(db.reward.ALL).first()'
+p170
+ssg87
+S'()'
+p171
+sg89
+S'edit'
+p172
+sa(dp173
+g66
+S'/Users/james/Documents/Dropbox/Uni/Year 4/iapt/assessment/web2py-2.9.11/web2py/gluon/dal.py'
+p174
+sg68
+(dp175
+S'self.row'
+p176
+S"<Row {'rewardpledge': {'pledgeid': 13L, 'rewardid': 9L}}>"
+p177
+sS'self'
+p178
+S'<gluon.dal.VirtualCommand object>'
+p179
+sS'args'
+p180
+S'()'
+p181
+sS'self.method'
+p182
+S'<function <lambda>>'
+p183
+sS'kwargs'
+p184
+g21
+ssg74
+I10958
+sg75
+(dp185
+I10953
+S'class VirtualCommand(object):'
+p186
+sI10954
+S'    def __init__(self, method, row):'
+p187
+sI10955
+S'        self.method=method'
+p188
+sI10956
+S'        self.row=row'
+p189
+sI10957
+S'    def __call__(self, *args, **kwargs):'
+p190
+sI10958
+S'        return self.method(self.row, *args, **kwargs)'
+p191
+sI10959
+S''
+sI10960
+S''
+sI10961
+S'def lazy_virtualfield(f):'
+p192
+sI10962
+S'    f.__lazy__ = True'
+p193
+ssg87
+S'(self=<gluon.dal.VirtualCommand object>, *args=(), **kwargs={})'
+p194
+sg89
+S'__call__'
+p195
+sa(dp196
+g66
+S'/Users/james/Documents/Dropbox/Uni/Year 4/iapt/assessment/web2py-2.9.11/web2py/applications/bootup/models/db.py'
+p197
+sg68
+(dp198
+S'db.executesql'
+p199
+S'<bound method DAL.executesql of <DAL uri="sqlite://bootup.db">>'
+p200
+sS'row.rewardpledge'
+p201
+S"<Row {'pledgeid': 13L, 'rewardid': 9L}>"
+p202
+sS'row.rewardpledge.rewardid'
+p203
+S'9L'
+p204
+sS'global Field'
+p205
+S"<class 'gluon.dal.Field'>"
+p206
+sS"'DELETE FROM rewardpledge WHERE rewardid={0} AND pledgeid={1} LIMIT 1'.format"
+p207
+g107
+sS'Field.Method'
+p208
+S"<class 'gluon.dal.FieldMethod'>"
+p209
+sS'global db'
+p210
+S'<DAL uri="sqlite://bootup.db">'
+p211
+sS'row.rewardpledge.pledgeid'
+p212
+S'13L'
+p213
+sS'row'
+p214
+S"<Row {'rewardpledge': {'pledgeid': 13L, 'rewardid': 9L}}>"
+p215
+ssg74
+I206
+sg75
+(dp216
+I201
+S'#i hate web2py'
+p217
+sI202
+S''
+sI203
+S"db.define_table('rewardpledge',"
+p218
+sI204
+S"                Field('rewardid',type='integer', requires=IS_IN_DB(db,db.reward.idreward,'%(description)s')),"
+p219
+sI205
+S"                Field('pledgeid',type='integer', requires=IS_IN_DB(db,db.pledge.idpledge,'\xc2\xa3%(value)s %(description)s')),"
+p220
+sI206
+S"                Field.Method('rawdelete',lambda row: db.executesql('DELETE FROM rewardpledge WHERE rewardid={0} AND pledgeid={1} LIMIT 1'.format(row.rewardpledge.rewardid,row.rewardpledge.pledgeid))),"
+p221
+sI207
+S"                primarykey=['rewardid','pledgeid'])"
+p222
+sI208
+S''
+sI209
+S''
+sI210
+S"db.define_table('pledgestat',"
+p223
+ssg87
+S"(row=<Row {'rewardpledge': {'pledgeid': 13L, 'rewardid': 9L}}>)"
+p224
+sg89
+g121
+sa(dp225
+g66
+S'/Users/james/Documents/Dropbox/Uni/Year 4/iapt/assessment/web2py-2.9.11/web2py/gluon/dal.py'
+p226
+sg68
+(dp227
+S'query'
+p228
+S"'DELETE FROM rewardpledge WHERE rewardid=9 AND pledgeid=13 LIMIT 1'"
+p229
+sS'adapter'
+p230
+S'<gluon.dal.SQLiteAdapter object>'
+p231
+sS'adapter.execute'
+p232
+S'<bound method SQLiteAdapter.execute of <gluon.dal.SQLiteAdapter object>>'
+p233
+ssg74
+I8618
+sg75
+(dp234
+I8613
+S'        """'
+p235
+sI8614
+S'        adapter = self._adapter'
+p236
+sI8615
+S'        if placeholders:'
+p237
+sI8616
+S'            adapter.execute(query, placeholders)'
+p238
+sI8617
+S'        else:'
+p239
+sI8618
+S'            adapter.execute(query)'
+p240
+sI8619
+S'        if as_dict or as_ordered_dict:'
+p241
+sI8620
+S"            if not hasattr(adapter.cursor, 'description'):"
+p242
+sI8621
+S'                raise RuntimeError("database does not support executesql(...,as_dict=True)")'
+p243
+sI8622
+S'            # Non-DAL legacy db query, converts cursor results to dict.'
+p244
+ssg87
+S'(self=<DAL uri="sqlite://bootup.db">, query=\'DELETE FROM rewardpledge WHERE rewardid=9 AND pledgeid=13 LIMIT 1\', placeholders=None, as_dict=False, fields=None, colnames=None, as_ordered_dict=False)'
+p245
+sg89
+S'executesql'
+p246
+sa(dp247
+g66
+S'/Users/james/Documents/Dropbox/Uni/Year 4/iapt/assessment/web2py-2.9.11/web2py/gluon/dal.py'
+p248
+sg68
+(dp249
+S'a'
+S"('DELETE FROM rewardpledge WHERE rewardid=9 AND pledgeid=13 LIMIT 1',)"
+p250
+sS'self'
+p251
+S'<gluon.dal.SQLiteAdapter object>'
+p252
+sS'b'
+g21
+sS'self.log_execute'
+p253
+S'<bound method SQLiteAdapter.log_execute of <gluon.dal.SQLiteAdapter object>>'
+p254
+ssg74
+I1967
+sg75
+(dp255
+I1962
+S'        self.db._timings.append((command, time.time()-t0))'
+p256
+sI1963
+S'        del self.db._timings[:-TIMINGSSIZE]'
+p257
+sI1964
+S'        return ret'
+p258
+sI1965
+S''
+sI1966
+S'    def execute(self, *a, **b):'
+p259
+sI1967
+S'        return self.log_execute(*a, **b)'
+p260
+sI1968
+S''
+sI1969
+S'    def represent(self, obj, fieldtype):'
+p261
+sI1970
+S'        field_is_type = fieldtype.startswith'
+p262
+sI1971
+S'        if isinstance(obj, CALLABLETYPES):'
+p263
+ssg87
+S"(self=<gluon.dal.SQLiteAdapter object>, *a=('DELETE FROM rewardpledge WHERE rewardid=9 AND pledgeid=13 LIMIT 1',), **b={})"
+p264
+sg89
+S'execute'
+p265
+sa(dp266
+g66
+S'/Users/james/Documents/Dropbox/Uni/Year 4/iapt/assessment/web2py-2.9.11/web2py/gluon/dal.py'
+p267
+sg68
+(dp268
+S'a'
+S"('DELETE FROM rewardpledge WHERE rewardid=9 AND pledgeid=13 LIMIT 1',)"
+p269
+sS'b'
+g21
+sS'self'
+p270
+S'<gluon.dal.SQLiteAdapter object>'
+p271
+sS'ret'
+p272
+g107
+sS'self.cursor'
+p273
+S'<sqlite3.Cursor object>'
+p274
+sS'command'
+p275
+S"'DELETE FROM rewardpledge WHERE rewardid=9 AND pledgeid=13 LIMIT 1'"
+p276
+sS'self.cursor.execute'
+p277
+S'<built-in method execute of sqlite3.Cursor object>'
+p278
+ssg74
+I1961
+sg75
+(dp279
+I1956
+S'            command = self.filter_sql_command(command)'
+p280
+sI1957
+S'        if self.db._debug:'
+p281
+sI1958
+S"            LOGGER.debug('SQL: %s' % command)"
+p282
+sI1959
+S'        self.db._lastsql = command'
+p283
+sI1960
+S'        t0 = time.time()'
+p284
+sI1961
+S'        ret = self.cursor.execute(command, *a[1:], **b)'
+p285
+sI1962
+S'        self.db._timings.append((command, time.time()-t0))'
+p286
+sI1963
+S'        del self.db._timings[:-TIMINGSSIZE]'
+p287
+sI1964
+S'        return ret'
+p288
+sI1965
+S''
+ssg87
+S"(self=<gluon.dal.SQLiteAdapter object>, *a=('DELETE FROM rewardpledge WHERE rewardid=9 AND pledgeid=13 LIMIT 1',), **b={})"
+p289
+sg89
+S'log_execute'
+p290
+sasS'pyver'
+p291
+S'Python 2.7.5: /usr/bin/python (prefix: /System/Library/Frameworks/Python.framework/Versions/2.7)'
+p292
+sS'session'
+p293
+g61
+(S's\x99\x00\x00\x00<div><table><tr><td style="font-weight:bold;vertical-align:top;">user</td><td style="vertical-align:top;">:</td><td><div>1L</div></td></tr></table></div>'
+tRp294
+sS'etype'
+p295
+S"<class 'sqlite3.OperationalError'>"
+p296
+sS'date'
+p297
+S'Tue Nov 25 01:56:51 2014'
+p298
+sS'response'
+p299
+g61
+(S's[\x18\x00\x00<div><table><tr><td style="font-weight:bold;vertical-align:top;">body</td><td style="vertical-align:top;">:</td><td><div>&lt;cStringIO.StringO object at 0x10ab3dbc8&gt;</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">cookies</td><td style="vertical-align:top;">:</td><td><div><table><tr><td style="font-weight:bold;vertical-align:top;">session_id_bootup</td><td style="vertical-align:top;">:</td><td><div>127.0.0.1-6543c37b-0e7c-4341-b2b0-67667ed320d5<table><tr><td style="font-weight:bold;vertical-align:top;">comment</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">domain</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">expires</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">httponly</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">max-age</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">path</td><td style="vertical-align:top;">:</td><td><div>/</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">secure</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">version</td><td style="vertical-align:top;">:</td><td><div></div></td></tr></table></div></td></tr></table></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">delimiters</td><td style="vertical-align:top;">:</td><td><div><table><tr><td><div>{{</div></td></tr><tr><td><div>}}</div></td></tr></table></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">files</td><td style="vertical-align:top;">:</td><td><div><table></table></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">flash</td><td style="vertical-align:top;">:</td><td><div>Success!</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">form_label_separator</td><td style="vertical-align:top;">:</td><td><div>: </div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">formstyle</td><td style="vertical-align:top;">:</td><td><div>table3cols</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">generic_patterns</td><td style="vertical-align:top;">:</td><td><div><table><tr><td><div>*</div></td></tr></table></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">headers</td><td style="vertical-align:top;">:</td><td><div><table><tr><td style="font-weight:bold;vertical-align:top;">X-Powered-By</td><td style="vertical-align:top;">:</td><td><div>web2py</div></td></tr></table></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">menu</td><td style="vertical-align:top;">:</td><td><div><table></table></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">meta</td><td style="vertical-align:top;">:</td><td><div><table></table></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">models_to_run</td><td style="vertical-align:top;">:</td><td><div><table><tr><td><div>^\\w+\\.py$</div></td></tr><tr><td><div>^pledge/\\w+\\.py$</div></td></tr><tr><td><div>^pledge/edit/\\w+\\.py$</div></td></tr></table></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">postprocessing</td><td style="vertical-align:top;">:</td><td><div><table></table></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">session_client</td><td style="vertical-align:top;">:</td><td><div>127.0.0.1</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">session_cookie_compression_level</td><td style="vertical-align:top;">:</td><td><div>None</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">session_cookie_expires</td><td style="vertical-align:top;">:</td><td><div>None</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">session_cookie_key</td><td style="vertical-align:top;">:</td><td><div>None</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">session_data_name</td><td style="vertical-align:top;">:</td><td><div>session_data_bootup</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">session_file</td><td style="vertical-align:top;">:</td><td><div>&lt;open file &#x27;/Users/james/Documents/Dropbox/Uni/Year 4/iapt/assessment/web2py-2.9.11/web2py/applications/bootup/sessions/1dd/1f1/127.0.0.1-6543c37b-0e7c-4341-b2b0-67667ed320d5&#x27;, mode &#x27;rb+&#x27; at 0x10df04c00&gt;</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">session_filename</td><td style="vertical-align:top;">:</td><td><div>/Users/james/Documents/Dropbox/Uni/Year 4/iapt/assessment/web2py-2.9.11/web2py/applications/bootup/sessions/127.0.0.1-6543c37b-0e7c-4341-b2b0-67667ed320d5</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">session_hash</td><td style="vertical-align:top;">:</td><td><div>3775a6da3c1a214a29b2f80f9e96d3a1</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">session_id</td><td style="vertical-align:top;">:</td><td><div>127.0.0.1-6543c37b-0e7c-4341-b2b0-67667ed320d5</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">session_id_name</td><td style="vertical-align:top;">:</td><td><div>session_id_bootup</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">session_locked</td><td style="vertical-align:top;">:</td><td><div>True</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">session_masterapp</td><td style="vertical-align:top;">:</td><td><div>bootup</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">session_new</td><td style="vertical-align:top;">:</td><td><div>False</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">session_storage_type</td><td style="vertical-align:top;">:</td><td><div>file</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">status</td><td style="vertical-align:top;">:</td><td><div>200</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">view</td><td style="vertical-align:top;">:</td><td><div>pledge/edit.html</div></td></tr></table></div>'
+tRp300
+sS'locals'
+p301
+(dp302
+S'a'
+S"('DELETE FROM rewardpledge WHERE rewardid=9 AND pledgeid=13 LIMIT 1',)"
+p303
+sS'self'
+p304
+S'<gluon.dal.SQLiteAdapter object>'
+p305
+sS'b'
+g21
+sS'command'
+p306
+S"'DELETE FROM rewardpledge WHERE rewardid=9 AND pledgeid=13 LIMIT 1'"
+p307
+sS't0'
+p308
+S'1416880611.794078'
+p309
+sssS'traceback'
+p310
+S'Traceback (most recent call last):\n  File "/Users/james/Documents/Dropbox/Uni/Year 4/iapt/assessment/web2py-2.9.11/web2py/gluon/restricted.py", line 224, in restricted\n    exec ccode in environment\n  File "/Users/james/Documents/Dropbox/Uni/Year 4/iapt/assessment/web2py-2.9.11/web2py/applications/bootup/controllers/pledge.py", line 115, in <module>\n  File "/Users/james/Documents/Dropbox/Uni/Year 4/iapt/assessment/web2py-2.9.11/web2py/gluon/globals.py", line 392, in <lambda>\n    self._caller = lambda f: f()\n  File "/Users/james/Documents/Dropbox/Uni/Year 4/iapt/assessment/web2py-2.9.11/web2py/applications/bootup/models/auth.py", line 20, in _a\n    return fn()\n  File "/Users/james/Documents/Dropbox/Uni/Year 4/iapt/assessment/web2py-2.9.11/web2py/applications/bootup/controllers/pledge.py", line 78, in edit\n    db((db.rewardpledge.pledgeid==int(pledge.pledge.idpledge)) & (db.rewardpledge.rewardid==int(reward))).select(db.rewardpledge.ALL).first().rawdelete()\n  File "/Users/james/Documents/Dropbox/Uni/Year 4/iapt/assessment/web2py-2.9.11/web2py/gluon/dal.py", line 10958, in __call__\n    return self.method(self.row, *args, **kwargs)\n  File "/Users/james/Documents/Dropbox/Uni/Year 4/iapt/assessment/web2py-2.9.11/web2py/applications/bootup/models/db.py", line 206, in <lambda>\n    Field.Method(\'rawdelete\',lambda row: db.executesql(\'DELETE FROM rewardpledge WHERE rewardid={0} AND pledgeid={1} LIMIT 1\'.format(row.rewardpledge.rewardid,row.rewardpledge.pledgeid))),\n  File "/Users/james/Documents/Dropbox/Uni/Year 4/iapt/assessment/web2py-2.9.11/web2py/gluon/dal.py", line 8618, in executesql\n    adapter.execute(query)\n  File "/Users/james/Documents/Dropbox/Uni/Year 4/iapt/assessment/web2py-2.9.11/web2py/gluon/dal.py", line 1967, in execute\n    return self.log_execute(*a, **b)\n  File "/Users/james/Documents/Dropbox/Uni/Year 4/iapt/assessment/web2py-2.9.11/web2py/gluon/dal.py", line 1961, in log_execute\n    ret = self.cursor.execute(command, *a[1:], **b)\nOperationalError: near "LIMIT": syntax error\n'
+p311
+s.

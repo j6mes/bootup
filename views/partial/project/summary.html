@@ -1,0 +1,15 @@
+<div class="project_list">
+{{=H3(A(record.project.title, _href=URL('bootup','project','view',args=[record.project.idproject])))}}
+
+<div class="project_stats">&pound;{{=record.project.goal}} goal. &pound;{{=record.projectstat.remaining}} remaining. {{=record.projectstat.progress}}%. {{=record.projectstat.bootings}} bootings. &pound;{{=record.projectstat.remaining}} remaining.</div>
+{{=record.project.shortdescription}}
+
+    {{if record.rewards is not None:}}
+        <h5>{{=record.rewards[0].expectedrewards.pledgedescription}} &pound;{{=record.rewards[0].expectedrewards.value}}</h5>
+
+        {{for reward in record.rewards:}}
+            {{=reward.expectedrewards.rewarddescription}}
+        {{pass}}
+
+    {{pass}}
+</div>

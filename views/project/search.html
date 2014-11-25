@@ -1,0 +1,31 @@
+{{extend 'bootup.html' }}
+        <h2>Search</h2>
+        {{include 'partial/search/form.html'}}
+        {{try: projects
+        except NameError:}}
+
+
+        {{else:}}
+
+        <div class="row">
+            <div class="col-xs-12 col-sm-8 col-md-8 col-lg-8">
+
+                <div class="project_list">
+                    {{if len(projects) == 0:}}
+                        No projects were found
+                    {{else:}}
+                        {{for record in projects:}}
+                            {{include 'partial/project/summary.html'}}
+                        {{pass}}
+                    {{pass}}
+                </div>
+            </div>
+
+
+             <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+                <h4>Filter</h4>
+
+            </div>
+        </div>
+
+        {{pass}}

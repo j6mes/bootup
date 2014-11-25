@@ -1,0 +1,10 @@
+<div class="pledge_summary">
+    <div class="pledge_value">&pound;{{=pledge.pledge.value}}</div>
+    <h5>{{=pledge.pledge.description}}</h5>
+    <ul class="pledge_rewards">
+        {{for reward in pledge.pledge.rewards():}}
+            <li>{{=reward.description}}</li>
+        {{pass}}
+    </ul>
+
+</div>

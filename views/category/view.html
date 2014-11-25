@@ -1,0 +1,8 @@
+{{extend 'bootup.html'}}
+<h2>{{=category.name}}</h2>
+
+        <div class="project_list">
+            {{for record in projects:}}
+                {{include 'partial/project/summary.html'}}
+            {{pass}}
+        </div>

@@ -1,0 +1,17 @@
+{{extend 'bootup.html'}}
+
+        <h2>Pledge Levels for {{=project.title}}</h2>
+        {{pledges = project.pledges()
+
+        if len(pledges) is 0:
+}}
+            This project currently has no pledge levels
+            {{=A('Add Reward',_href=URL('bootup','pledge','create',args=[project.idproject]))}}
+{{
+        else:
+
+            for pledge in pledges:}}
+            <h4>&pound;{{=pledge.pledge.value}} {{=pledge.pledge.description}}</h4>
+            {{=A('Edit',_href=URL('bootup','pledge','edit',args=[pledge.pledge.idpledge]))}} {{=A('Delete',_href=URL('bootup','pledge','delete',args=[pledge.pledge.idpledge]))}}
+            {{pass}}
+        {{pass}}

@@ -1,0 +1,33 @@
+{{extend 'bootup.html'}}
+
+        <div class="column">
+            <h3>Nearly funded</h3>
+            <div class="project_list row">
+                {{for record in closest:}}
+                    {{include 'partial/project/tile.html'}}
+                {{pass}}
+                <div class="project_tile col-xs-6 col-sm-4 col-md-4 col-lg-4">
+                    {{=H3(XML("More &raquo;"))}}
+                </div>
+            </div>
+
+            <h3>Latest projects</h3>
+            <div class="project_list row">
+                {{for record in newest:}}
+                    {{include 'partial/project/tile.html'}}
+                {{pass}}
+
+                <div class="project_tile col-xs-6 col-sm-4 col-md-4 col-lg-4">
+                    {{=H3(XML("More &raquo;"))}}
+                </div>
+            </div>
+
+            <h3>Categories</h3>
+            <div class="project_list row">
+                {{for menucategory in categories:}}
+                <div class="project_tile col-xs-6 col-sm-4 col-md-4 col-lg-4">
+                    {{=menucategory.name}}
+                </div>
+                {{pass}}
+            </div>
+        </div>
