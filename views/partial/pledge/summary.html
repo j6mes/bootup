@@ -1,10 +1,20 @@
 <div class="pledge_summary">
-    <div class="pledge_value">&pound;{{=pledge.pledge.value}}</div>
-    <h5>{{=pledge.pledge.description}}</h5>
-    <ul class="pledge_rewards">
+
+<a href="{{=URL('bootup','pledge','make',args=[pledge.pledge.idpledge])}}">
+
+    <div class="sidebyside">
+    <div class="sidebysideitem pledge_value">&pound;{{=pledge.pledge.value}}</div>
+    <div class="sidebysideitem pledge_rewards">
+        <h4>{{=pledge.pledge.description}}</h4>
+        <ul>
         {{for reward in pledge.pledge.rewards():}}
             <li>{{=reward.description}}</li>
         {{pass}}
-    </ul>
+        </ul>
+    </div>
+        <div class="sidebysideitem">
 
+        </div>
+    </div>
+</a>
 </div>

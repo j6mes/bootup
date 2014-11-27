@@ -36,7 +36,7 @@ def view():
     if projectid is None:
         raise HTTP(404, "Project not found")
 
-    project = db((openprojects | closedprojects | myprojects) & projectstats & includeopendate).select(db.project.ALL,db.projectstat.ALL,db.openproject.ALL).first()
+    project = db((openprojects | closedprojects | myprojects) & projectstats & includeopendate & (db.user.iduser == db.project.managerid) & (db.project.idproject==projectid)).select(db.project.ALL,db.projectstat.ALL,db.openproject.ALL,db.user.ALL).first()
     if project is None:
         raise HTTP(404, "Project not found")
 

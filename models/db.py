@@ -1,5 +1,5 @@
 from itertools import groupby
-
+import math
 db = DAL('sqlite://bootup.db',pool_size=1,check_reserved=['sqlite'],migrate=False)
 auth = BootUpAuth(db)
 
@@ -74,7 +74,7 @@ db.define_table('address',
                     IS_LENGTH(maxsize=100, error_message='Please enter a shorter city name')
                 ]),
                 Field('postcode', label='Post Code', requires=[
-                    IS_MATCH('[a-zA-Z0-9]{4} [a-zA-Z0-9]{3}',error_message='Postcode must be in the format XXXX XXX')
+                    IS_MATCH('^[a-zA-Z0-9]{4} [a-zA-Z0-9]{3}$',error_message='Postcode must be in the format XXXX XXX')
                 ]),
                 Field('countrycode',type='string', requires=IS_IN_DB(db, db.country.code,'%(name)s',
                                    zero='Select A Country',
@@ -156,6 +156,11 @@ db.define_table('project',
                 Field.Method('canclose', lambda row: auth.user_id==row.project.managerid and db(db.openproject.projectid==row.project.idproject).count()==1 and db(db.closedproject.openprojectid==row.project.idproject).count()==0),
                 Field.Method('candelete', lambda row: auth.user_id==row.project.managerid and (db(db.openproject.projectid==row.project.idproject).count()==0 or db(db.closedproject.openprojectid==row.project.idproject).count()==1)),
                 Field.Method('canedit', lambda row: auth.user_id==row.project.managerid and db(db.openproject.projectid==row.project.idproject).count()==0),
+                Field.Method('canpledge', lambda row: row.project.isopen() and not row.project.isclosed()),
+
+                Field.Method('isopen', lambda row: db(db.openproject.projectid==row.project.idproject).count()>0),
+                Field.Method('isclosed', lambda row: db(db.closedproject.openprojectid==row.project.idproject).count()>0),
+
 
                 Field.Method('hascontributed', lambda row: db((db.booting.openprojectid==row.project.idproject) & (db.booting.userid == auth.user_id)).count() > 0),
                 Field.Method('pledges', lambda row: db((db.pledge.projectid==row.project.idproject) & pledgestats).select(db.pledge.ALL,db.pledgestat.ALL, orderby=db.pledge.value)),
@@ -182,7 +187,7 @@ db.define_table('pledge',
                 Field('value',type='decimal(10,2)',requires=[
                     IS_DECIMAL_IN_RANGE(minimum=1, error_message='Please enter a suitable value for this pledge level'),
                     IS_DECIMAL_IN_RANGE(maximum=10000, error_message='The chosen pledge value is too high. Crowd funding relies on lots of people pledging small amounts. Why not choose something a bit lower?')
-                ]),
+                ],filter_out=lambda value: int(math.ceil(value))),
                 Field('projectid', type='reference project', label='Project',writable=False, readable=False, requires=IS_IN_DB(db,db.project.idproject)),
                 Field.Method('rewards',lambda row:
                     db((db.rewardpledge.pledgeid==row.pledge.idpledge)&(db.reward.idreward==db.rewardpledge.rewardid)).select(db.reward.ALL)),
@@ -234,8 +239,33 @@ db.define_table('closedproject',
                 Field('closeddate',type='datetime', default=request.now),
                 primarykey=['openprojectid'])
 
+def my_string_widget(field, value):
+    monthvals =map(lambda val: str(val).zfill(2),range(1,12+1))
+    yearvals = map(lambda val: str(val)[2:], range(request.now.year,request.now.year+7))
 
 
+    if value is not None:
+        value = datetime.strptime(value,'%Y-%m-%d').date()
+        monthvals.insert(0,str(value.month).zfill(2))
+        yearvals.insert(0,str(value.year)[2:])
+
+
+    return DIV(SELECT(monthvals,_name=field.name+"_month"),SELECT(yearvals,_name=field.name+"_year"))
+
+db.define_table('card',
+                Field('idcard',type='id', readable=False,writable=False, default= None),
+                Field('userid', default=auth.user_id, readable=False,writable=False),
+                Field('number', type='string',label='Card Number',requires=[IS_LENGTH(maxsize=12, minsize=12, error_message='Credit Card number must be 12 digits long')]),
+                Field('expdate',type='date',label='Expiry Date',widget=my_string_widget),
+                Field('pin',requires=[IS_LENGTH(minsize=3,maxsize=3,error_message="Pin must be 3 digits long"),IS_MATCH('^[0-9]{3}$',error_message='Pin must be 3 numeric digits')]),
+                Field('addressid',  type='reference address', label='Billing Address',
+                      requires=IS_IN_DB(db(db.address.userid==auth.user_id),
+                                        db.address.idaddress,'%(street)s, %(city)s, %(postcode)s',
+                                   zero='Select an address',
+                                   error_message='Please choose your billing address'
+                                   )),
+
+                migrate=False)
 
 
 
@@ -251,9 +281,12 @@ db.define_table('projectstat',
 
 db.define_table('booting',
                 Field('idbooting',type='id'),
-                Field('userid', type='integer'),
-                Field('openprojectid',type='integer'),
-                Field('pledgeid',type='integer'))
+                Field('userid', type='integer',default=auth.user_id,readable=False,writable=False),
+                Field('openprojectid',type='integer',readable=False,writable=False),
+                Field('pledgeid',type='integer',readable=False,writable=False),
+                Field('addressid',type='integer',requires=IS_IN_DB(db(db.address.userid==auth.user_id),db.address.idaddress,'%(street)s',zero='Select Delivery Address')),
+                Field('cardid',type='integer',requires=IS_IN_DB(db(db.card.userid==auth.user_id),db.card.idcard,'%(number)s',zero='Select Payment Card')),
+                Field('bootingdate',type='datetime'))
 
 
 

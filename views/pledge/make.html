@@ -1,0 +1,9 @@
+{{extend 'bootup.html'}}
+        <h2>Make Pledge</h2>
+        <h3>&pound;{{=pledge.pledge.value}} {{=pledge.pledge.description}}</h3>
+        <h4>Rewards:</h4>
+            {{for reward in pledge.pledge.rewards():}}
+                <h5>{{=reward.description}}</h5>
+            {{pass}}
+
+        {{=form}}

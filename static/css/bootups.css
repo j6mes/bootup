@@ -1,3 +1,7 @@
+body {
+    color:#444444;
+}
+
 h1.logo {
     color:#0E51A7;
    -webkit-text-stroke: 1px #6997D3;
@@ -23,9 +27,7 @@ h1.logo a:hover {
     margin-top:2em;
 }
 
-.project_tile {
-    height:180px;
-}
+
 
 .reward_summary {
     margin-bottom:40px;
@@ -53,4 +55,124 @@ h1.logo a:hover {
 
 #project_imageurl__row  span{
     display: none;
+}
+
+.project_list {
+    margin-top:20px;
+    margin-bottom:70px;
+}
+
+
+.project_tile {
+    margin-bottom:60px;
+}
+
+
+.project_image img {
+    width:100%;
+    z-index:1;
+    position: relative;
+}
+
+.project_name{
+    margin-top:-90px;
+
+}
+
+.project_stats {
+    margin-top:-20px;
+    font-size:11px;
+    color:#999;
+}
+
+.project_name h3 {
+    margin:0;
+}
+
+.project_name h3 a, .project_stats{
+    padding:5px;
+    background: #ffffff;
+    z-index:2;
+    position: relative;
+    display: inline-block;
+}
+
+.project_author {
+    margin-top:5px;
+    color:#999999;
+}
+
+
+
+.project_tag {
+    margin-top:-5px;
+    margin-bottom:50px;
+}
+
+.project_box {
+    border: 10px #fafafa solid;
+    padding:15px;
+    margin-bottom:40px;
+}
+
+.project_box_bigline,.project_box h3 {
+    font-size:2em;
+    margin-bottom:10px;
+    font-weight: normal;
+    padding-top:0; margin-top:0;
+}
+
+.sidebyside {
+    display:table-row;
+}
+
+.sidebysideitem {
+    display: table-cell;
+}
+
+.pledge_summary{
+    border-bottom:2px solid #fafafa;
+    padding-top:10px;
+    padding-bottom:10px;
+}
+
+.pledge_summary ul{
+    margin-left:0; padding-left:15px
+}
+
+.pledge_summary a {
+    color:#444444;
+}
+
+.pledge_summary a:hover {
+    color:#0E51A7;
+    text-decoration: none;
+}
+
+.pledge_summary a:hover:after {
+    content:">";
+    float:right;
+    margin-top:-100px;
+    font-size:5em;
+    opacity:0.8;
+    display: block;
+}
+
+
+.pledge_value {
+    width:60px;
+    font-size:1.6em;
+
+}
+
+.pledge_summary:last-child{
+    border-bottom: none !important;
+}
+
+.project_page .project_column_left {
+    padding-right:30px !important;
+}
+
+.project_page .project_column_right {
+    padding-left:30px !important;
 }

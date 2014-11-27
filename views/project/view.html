@@ -1,13 +1,22 @@
 {{extend 'bootup.html'}}
 
-{{=H2(record.project.title)}}
-<div class="row">
+{{=H1(record.project.title)}}
+<div class="project_tag">{{=record.project.shortdescription}}</div>
 
-    <div class="col-md-8 col-sm-8 col-lg-8 col-xs-12">
-        {{=record.project.shortdescription}}
+<div class="row project_page">
+
+    <div class="project_column_left col-md-8 col-sm-8 col-lg-8 col-xs-12">
 
 
+        <div class="frame project_image">
+            <img src="{{=URL('img',args=record.project.imageurl)}}" />
+        </div>
 
+        <h3>Long Description</h3>
+        {{=record.project.longdescription}}
+
+        <h3>Project Story</h3>
+        {{=record.project.story}}
 
         <h3>Project Backers</h3>
             {{for username, expectedrewards in record.project.expectedrewards():}}
@@ -21,17 +30,23 @@
 
     </div>
 
-    <div class="col-md-4 col-sm-4 col-lg-4 col-xs-12">
-        <h1>&pound;{{=record.projectstat.totalvalue}} raised</h1>
-        <h1>&pound;{{=record.project.goal}} goal</h1>
-        <h1>{{=record.projectstat.bootings}} bootings</h1>
-        {{if record.project.hascontributed(): }}
-            You have contributed to this project
-        {{pass}}
-        <h4>Rewards</h4>
-        {{for pledge in record.project.pledges():}}
-            {{include 'partial/pledge/summary.html'}}
-        {{pass}}
+    <div class="project_column_right col-md-4 col-sm-4 col-lg-4 col-xs-12">
+        <div class="project_box">
+            <div class="project_box_bigline">&pound;{{=record.projectstat.totalvalue}} raised</div>
+            <div class="project_box_bigline">&pound;{{=record.project.goal}} goal</div>
+            <div class="project_box_bigline">{{=record.projectstat.bootings}} bootings</div>
+            {{if record.project.hascontributed(): }}
+                You have contributed to this project
+            {{pass}}
+        </div>
+
+        <h3>Rewards</h3>
+        <div class="project_box">
+
+            {{for pledge in record.project.pledges():}}
+                {{include 'partial/pledge/summary.html'}}
+            {{pass}}
+        </div>
     </div>
 </div>
 

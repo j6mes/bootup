@@ -1,6 +1,31 @@
 from applications.bootup.forms.bootupform import BOOTUPFORM
 
 @auth.requires_login
+def make():
+    pledgeid = request.args(0)
+    if pledgeid is None:
+        raise HTTP(404,'No pledge specified')
+
+    pledge = db((db.pledge.idpledge == pledgeid)&(db.project.idproject==db.pledge.projectid)).select(db.project.ALL,db.pledge.ALL).first()
+
+    if pledge is None:
+        raise HTTP(404,'Pledge level does not exist')
+
+    if not pledge.project.canpledge():
+        raise HTTP(403,'Project is not open for pledges')
+
+    if pledge.project.hascontributed():
+        raise HTTP(403,'Already contributed')
+
+    form = BOOTUPFORM.factory(db.booting)
+    if form.process().accepted:
+        db.booting.insert(openprojectid=pledge.project.idproject,pledgeid=pledgeid, addressid=form.vars.addressid, cardid=form.vars.cardid, bootingdate=request.now,userid=auth.user_id)
+        redirect(URL('bootup','project','view',args=[pledge.project.idproject]))
+
+    return dict(pledge=pledge,form=form)
+
+
+@auth.requires_login
 def view():
     projectid = request.args(0)
 

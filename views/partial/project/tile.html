@@ -1,5 +1,6 @@
-<div class="project_tile col-xs-6 col-sm-4 col-md-4 col-lg-4">
-{{=H3(A(record.project.title, _href=URL('bootups','project','view',args=[record.project.idproject])))}}
-<div class="project_stats">{{=record.projectstat.bootings}} backers. &pound;{{=record.projectstat.progress}}%</div>
-{{=record.project.shortdescription}}
+<div class="project_tile col-xs-6 col-sm-6 col-md-4 col-lg-4">
+
+<div class="project_image"><a href="{{=URL('bootup','project','view',args=[record.project.idproject])}}"><img src="{{=URL('img',args=record.project.imageurl)}}" /></a></div>
+<div class="project_name">{{=H3(A(record.project.title, _href=URL('bootup','project','view',args=[record.project.idproject])))}}
+<div class="project_stats">Goal: &pound;{{=record.projectstat.goal}} - Funded: &pound;{{=record.projectstat.totalvalue}} ({{=record.projectstat.progress}}%) - Bootings: {{=record.projectstat.bootings}}</div></div>
 </div>

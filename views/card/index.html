@@ -1,0 +1,14 @@
+{{extend 'bootup.html'}}
+        <h2>My Cards</h2>
+        {{=A('Add card to account',_href=URL('bootup','card','create'))}}
+        <div class="address_list">
+            {{for record in cards:}}
+            <div class="address_item">
+                {{=DIV(record.number)}}
+                {{=DIV(record.expdate)}}
+                {{=A('Edit',_href=URL('bootup','card','edit',args=[record.idcard]))}}
+                {{=A('Delete',_href=URL('bootup','card','delete',args=[record.idcard]))}}
+            </div>
+            {{pass}}
+
+        </div>
