@@ -1,19 +1,21 @@
 {{title = "Welcome"}}
 {{extend 'bootup.html'}}
 
-        <div class="column">
-            <h3>Nearly funded</h3>
-            <div class="project_list row">
-                {{for record in closest:}}
+<div class="column">
+    <h3>Nearly funded</h3>
+
+    <div class="project_list row">
+    {{for record in closest:}}
                     {{include 'partial/project/tile.html'}}
                 {{pass}}
-            </div>
+    </div>
 
-            <h3>Latest projects</h3>
-            <div class="project_list row">
-                {{for record in newest:}}
+    <h3>Latest projects</h3>
+
+    <div class="project_list row">
+    {{for record in newest:}}
                     {{include 'partial/project/tile.html'}}
                 {{pass}}
-            </div>
+    </div>
 
-        </div>
+</div>

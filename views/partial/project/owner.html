@@ -2,7 +2,7 @@
 {{=H3(A(record.project.title, _href=URL('bootup','project','view',args=[record.project.idproject])))}}
 
 
-<nav>
+    <nav>
     {{if record.project.canedit():}}
         {{=A("Edit",_href=URL('bootup','project','edit', args=[record.project.idproject])) }}
         {{=A("Manage Rewards",_href=URL('bootup','reward','view',args=[record.project.idproject]))}}
@@ -21,8 +21,10 @@
     {{if record.project.canclose():}}
         {{=A("Close",_href=URL('bootup','project','close', args=[record.project.idproject])) }}
     {{pass}}
-</nav>
+    </nav>
 
-<div class="project_stats">&pound;{{=record.project.goal}} goal. &pound;{{=record.projectstat.remaining}} remaining. {{=record.projectstat.progress}}%. {{=record.projectstat.bootings}} bootings.</div>
+    <div class="project_stats">&pound;{{=record.project.goal}} goal. &pound;{{=record.projectstat.remaining}}
+        remaining. {{=record.projectstat.progress}}%. {{=record.projectstat.bootings}} bootings.
+    </div>
 {{=record.project.shortdescription}}
 </div>

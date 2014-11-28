@@ -2,29 +2,29 @@
 
 {{extend 'bootup.html'}}
 
-        <h2>Rewards for {{=project.title}}</h2>
-        <div>{{=A('Add Reward',_href=URL('bootup','reward','create',args=[project.idproject]))}}</div>
-        <div class="col-xs-12 col-sm-8 col-md-8 col-lg-8">
+<h2>Rewards for {{=project.title}}</h2>
+<div>{{=A('Add Reward',_href=URL('bootup','reward','create',args=[project.idproject]))}}</div>
 
-            {{rewards = project.rewards()
-                    if len(rewards) is 0:
-            }}
-                        This project currently has no rewards
+<div class="row">
+    <div class="col-xs-12 col-sm-8 col-md-8 col-lg-8">
 
-            {{
-                    else:
+    {{rewards = project.rewards()
+    if len(rewards) is 0:
+    }}
+        This project currently has no rewards
 
-                        for reward in rewards:}}
-                        <h4>{{=reward.description}}</h4>
-                        {{=A('Edit',_href=URL('bootup','reward','edit',args=[reward.idreward]))}} {{=A('Delete',_href=URL('bootup','reward','delete',args=[reward.idreward]))}}
-                        {{pass}}
-                    {{pass}}
-            </div>
+    {{
+    else:
 
-            <div class="col-xs-12 col-xs-4 col-md-4 col-lg-4">
+    for reward in rewards:}}
+        <h4>{{=reward.description}}</h4>
+    {{=A('Edit',_href=URL('bootup','reward','edit',args=[reward.idreward]))}} {{=A('Delete',_href=URL('bootup','reward','delete',args=[reward.idreward]))}}
+    {{pass}}
+    {{pass}}
+    </div>
 
-                    <div><a href="{{=URL('bootup','project','edit',args=[projectid])}}"><span class="step">1</span>Edit Project</a></div>
-                    <div><a href="{{=URL('bootup','reward','view',args=[projectid])}}"><span class="step">2</span>Manage Rewards</a></div>
-                    <div><a href="{{=URL('bootup','pledge','view',args=[projectid])}}"><span class="step">3</span>Manage Pledge Levels</a></div>
+    <div class="col-xs-12 col-xs-4 col-md-4 col-lg-4">
 
-            </div>
+    {{include='partial/project/stepbystep.html'}}
+    </div>
+</div>

@@ -3,9 +3,9 @@
 {{extend 'bootup.html'}}
 <h3>Close project</h3>
 
-        {{if record.projectstat.funded:}}
-            <p>This project has been completely funded. Once closed it cannot be re-opened</p>
-        {{else:}}
-            <p>This project has not been completely funded. It can be re-opened once closed</p>
-        {{pass}}
+{{if record.projectstat.funded:}}
+<p>This project has been completely funded. Once closed it cannot be re-opened</p>
+{{else:}}
+<p>This project has not been completely funded. It can be re-opened once closed</p>
+{{pass}}
 <div class="confirmation_form">{{=form}}</div>

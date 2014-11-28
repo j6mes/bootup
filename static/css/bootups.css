@@ -1,6 +1,6 @@
 body {
     background-color: #f8f8f8;
-    color:#444444;
+    color: #444444;
     font-family: 'Droid Sans', sans-serif;
 }
 
@@ -9,18 +9,29 @@ body {
 }
 
 .lightbg {
-    background-color:#5382BE
+    background-color: #5382BE
 }
 
-nav,.bootups_nav { margin-bottom: 0 !important; margin-top:0 !important;}
-.bootups_nav h1{padding-top:20px;padding-bottom:20px;}
-.bootups_nav form {padding-top:15px;}
+nav, .bootups_nav {
+    margin-bottom: 0 !important;
+    margin-top: 0 !important;
+}
+
+.bootups_nav h1 {
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+
+.bootups_nav form {
+    padding-top: 15px;
+}
+
 h1.logo a {
-    color:#ffffff;
-   -webkit-text-stroke: 1px #ddd;
+    color: #ffffff;
+    -webkit-text-stroke: 1px #ddd;
     font-family: 'Pacifico', cursive;
-    font-size:1.5em;
-    margin-top:-10px;
+    font-size: 1.5em;
+    margin-top: -10px;
     font-weight: normal;
     display: inline-block;
 }
@@ -30,22 +41,22 @@ h1.logo a:hover {
 }
 
 .navbar ul:first-child {
-    margin-left:-15px;
+    margin-left: -15px;
 }
 
-
-
 .bootups_nav_search {
-    margin-top:2em;
+    margin-top: 2em;
 }
 
 .bumpup {
-    margin-top:-50px;
+    margin-top: -50px;
 
 }
+
 .fullwidth {
-    width:100%;
+    width: 100%;
 }
+
 /*
 Adapted from burst-12 exmaple:
 http://css-tricks.com/examples/ShapesOfCSS/
@@ -55,39 +66,38 @@ http://css-tricks.com/examples/ShapesOfCSS/
     height: 80px;
     position: relative;
     text-align: center;
-    background-color:#5382BE;
-    color:#ffffff !important;
+    background-color: #5382BE;
+    color: #ffffff !important;
     -ms-transform: rotate(-7deg);
     -webkit-transform: rotate(-7deg);
     transform: rotate(-7deg);
-    margin:20px;
-    z-index:3;
+    margin: 20px;
+    z-index: 3;
 
 }
 
 .rosette > div {
-      top: 0;
+    top: 0;
     left: 0;
     height: 80px;
     width: 80px;
     position: absolute;
-    z-index:5;
+    z-index: 5;
 
 }
 
 .rosette .big {
-    margin-top:0px;
-    font-size:2.8em;
+    margin-top: 0px;
+    font-size: 2.8em;
     letter-spacing: -2px;
     font-family: 'Pacifico', cursive;
 
 }
 
 .rosette .small {
-    margin-top:-3px;
-    font-size:.8em
+    margin-top: -3px;
+    font-size: .8em
 }
-
 
 .rosette:before, .rosette:after {
     content: "";
@@ -97,106 +107,106 @@ http://css-tricks.com/examples/ShapesOfCSS/
     height: 80px;
     width: 80px;
     background: #5382BE;
-    padding:20px;
+    padding: 20px;
     z-index: 1;
 }
 
 .rosette:before {
     -webkit-transform: rotate(30deg);
-       -moz-transform: rotate(30deg);
-        -ms-transform: rotate(30deg);
-         -o-transform: rotate(30deg);
+    -moz-transform: rotate(30deg);
+    -ms-transform: rotate(30deg);
+    -o-transform: rotate(30deg);
 
 }
+
 .rosette:after {
     -webkit-transform: rotate(60deg);
-       -moz-transform: rotate(60deg);
-        -ms-transform: rotate(60deg);
-         -o-transform: rotate(60deg);
+    -moz-transform: rotate(60deg);
+    -ms-transform: rotate(60deg);
+    -o-transform: rotate(60deg);
 }
 
-
 .reward_summary {
-    margin-bottom:40px;
-    border:1px solid #eee8d5;
-    padding:10px;
+    margin-bottom: 40px;
+    border: 1px solid #eee8d5;
+    padding: 10px;
 
 }
 
 .reward_summary h5 {
-    margin-top:0px;
-    line-height:140%;
+    margin-top: 0px;
+    line-height: 140%;
     margin-bottom: 20px;
 }
 
 .reward_pill {
     background-color: #eee8d5;
-    border-radius:3px;
-    padding:5px;
-    line-height:100%;
+    border-radius: 3px;
+    padding: 5px;
+    line-height: 100%;
     display: block;
-    float:left;
-    margin:4px;
+    float: left;
+    margin: 4px;
 
 }
 
-#project_imageurl__row  span{
+#project_imageurl__row span {
     display: none;
 }
 
 .project_list {
-    margin-top:20px;
-    margin-bottom:70px;
+    margin-top: 20px;
+    margin-bottom: 70px;
 }
-
 
 .project_tile {
-    margin-bottom:60px;
+    margin-bottom: 60px;
     min-height: 400px;
-
 
 }
 
-
 .project_tile_inner {
-    border:1px solid #ccc;
+    border: 1px solid #ccc;
     max-height: 400px;
 }
 
 .project_tile_text, .project_tile_text p, .project_tile_text .project_stats {
-    padding:10px;
+    padding: 10px;
 }
 
 .project_image img {
-    width:100% !important;
-    z-index:1;
+    width: 100% !important;
+    z-index: 1;
 
     position: relative;
+}
+
+.project_summary_image .project_image img {
+    width: 200px !important;
+    padding-right: 30px;
 }
 
 .project_tile .project_image {
     max-height: 300px;
 }
 
-.project_name{
+.project_name {
     text-align: center;
     font-weight: normal;
 }
 
 .project_stats {
-    font-size:11px;
-    color:#999;
+    font-size: 11px;
+    color: #999;
 }
 
 .project_name h3 {
-    margin:0;
+    margin: 0;
 }
 
-
-
 .project_author {
-    margin-top:5px;
-    color:#999999;
+    margin-top: 5px;
+    color: #999999;
 }
 
 .project_fullwidth {
@@ -204,23 +214,28 @@ http://css-tricks.com/examples/ShapesOfCSS/
 
 }
 
-
-
 .project_box {
     border: 10px #f8f8f8 solid;
-    padding:15px;
-    margin-bottom:40px;
+    padding: 15px;
+    margin-bottom: 40px;
 }
 
-.project_box_bigline,.project_box h3 {
-    font-size:2em;
-    margin-bottom:10px;
+.project_box_bigline, .project_box h3 {
+    font-size: 2em;
+    margin-bottom: 10px;
     font-weight: normal;
-    padding-top:0; margin-top:0;
+    padding-top: 0;
+    margin-top: 0;
+}
+
+.project_box_statusline {
+    text-align: center;
+    padding: 10px;
+    padding-top: 0;
 }
 
 .sidebyside {
-    display:table-row;
+    display: table-row;
 }
 
 .sidebysideitem {
@@ -228,22 +243,27 @@ http://css-tricks.com/examples/ShapesOfCSS/
     vertical-align: middle;
 }
 
-.pledge_summary{
-    border-bottom:2px solid #f8f8f8;
-    padding-top:10px;
-    padding-bottom:10px;
+.project_summary {
+    margin-bottom: 50px;
 }
 
-.pledge_summary ul{
-    margin-left:0; padding-left:15px
+.pledge_summary {
+    border-bottom: 2px solid #f8f8f8;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.pledge_summary ul {
+    margin-left: 0;
+    padding-left: 15px
 }
 
 .pledge_summary a {
-    color:#444444;
+    color: #444444;
 }
 
 .pledge_summary a:hover {
-    color:#0E51A7;
+    color: #0E51A7;
     text-decoration: none;
 }
 
@@ -258,74 +278,73 @@ http://css-tricks.com/examples/ShapesOfCSS/
 }
 */
 
-
 .pledge_value {
-    width:60px;
-    font-size:1.6em;
+    width: 60px;
+    font-size: 1.6em;
 
 }
 
-.pledge_summary:last-child{
+.pledge_summary:last-child {
     border-bottom: none !important;
 }
+
 .project_page {
-    padding-top:20px;
+    padding-top: 20px;
 }
 
-.project_page .project_column_left{
-    padding-left:30px !important;
-    padding-right:30px !important;
+.project_page .project_column_left {
+    padding-left: 30px !important;
+    padding-right: 30px !important;
 }
 
 .project_fullwidth .container {
     background-color: #ffffff;
 }
- .project_top {
-    padding:15px;
 
+.project_top {
+    padding: 15px;
 
- }
+}
 
- .project_top h1 {
-     font-weight: normal;
-     font-size: 3em;
-     letter-spacing: -2px;
-     color: #063066;
-     padding-bottom: 0;
-     margin-bottom:10px;
- }
+.project_top h1 {
+    font-weight: normal;
+    font-size: 3em;
+    letter-spacing: -2px;
+    color: #063066;
+    padding-bottom: 0;
+    margin-bottom: 10px;
+}
 
 .project_page .project_column_right {
-    padding-left:30px !important;
-    padding-right:30px !important;
-
+    padding-left: 30px !important;
+    padding-right: 30px !important;
 
 }
 
 .project_column_right h3 {
-    margin-top:0;
+    margin-top: 0;
 }
 
 .calltoaction {
-    color:#ffffff;
+    color: #ffffff;
     padding: 10px 5px;
     display: block;
-    border-radius:15px;
+    border-radius: 15px;
     font-weight: normal;
-    font-size:1.3em;
+    font-size: 1.3em;
     text-align: center;
     text-transform: uppercase !important;
-    margin:20px;
+    margin: 20px;
 }
 
 .calltoaction:hover {
-    color:#ffffff;
+    color: #ffffff;
     background-color: #3268AD !important;
     text-decoration: none;
 }
 
 .project_wording h3 {
-    color:#063066;
+    color: #063066;
     border-bottom: 1px solid #5382BE;
     padding-bottom: 5px;
 
@@ -336,11 +355,11 @@ http://css-tricks.com/examples/ShapesOfCSS/
 }
 
 .project_progress_bar_shadow {
-    border:1px solid #ddd;
+    border: 1px solid #ddd;
     display: block;
     height: 20px;
     border-radius: 12px;
-    margin-top:10px;
+    margin-top: 10px;
     margin-bottom: 10px;
 }
 
@@ -354,17 +373,18 @@ http://css-tricks.com/examples/ShapesOfCSS/
 .project_progress_bar_complete {
     background-color: #2FC42F !important;
 }
+
 .project_progress {
     width: 100%;
     margin-bottom: 30px;
     color: #5382BE;
-    padding-top:20px;
-    padding-right:20px;
+    padding-top: 20px;
+    padding-right: 20px;
 }
 
 .project_tile_rosette {
-    float:left;
-    height:0;
+    float: left;
+    height: 0;
 
 }
 
@@ -372,18 +392,18 @@ http://css-tricks.com/examples/ShapesOfCSS/
     box-shadow: 0px 0px 8px #ffffff;
 }
 
-.confirmation_form input{
-    margin:10px;
+.confirmation_form input {
+    margin: 10px;
     display: inline-block;
 }
 
 .error {
-    color:#cc0000;
+    color: #cc0000;
 }
 
 .project_preview {
     background-color: #ee4444;
-    padding:15px;
+    padding: 15px;
 
 }
 
@@ -394,11 +414,11 @@ http://css-tricks.com/examples/ShapesOfCSS/
 }
 
 .step {
-    border-radius:40px;
-    width:40px;
+    border-radius: 40px;
+    width: 40px;
     height: 40px;
-    margin:10px;
-    padding:10px;
+    margin: 10px;
+    padding: 10px;
     background-color: #fafafa;
     text-align: center;
     font-weight: bold;

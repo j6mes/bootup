@@ -1,0 +1,14 @@
+<div class="project_box">
+
+    <div class="project_box_bigline">&pound;{{=record.projectstat.totalvalue}} raised</div>
+    <div class="project_box_bigline">&pound;{{=record.project.goal}} goal</div>
+    <div class="project_box_bigline">{{=record.projectstat.bootings}} bootings</div>
+
+{{if record.project.hascontributed(): }}
+    You have contributed to this project
+{{else:}}
+    <a class="calltoaction lightbg" href="{{=URL('bootup','project','pledge',args=[record.project.idproject])}}">Pledge
+        Now</a>
+{{pass}}
+    <div class="project_box_statusline">Project Status: {{=record.project.state()}}</div>
+</div>

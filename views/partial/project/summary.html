@@ -1,15 +1,25 @@
-<div class="project_list">
+<div class="project_summary">
+
 {{=H3(A(record.project.title, _href=URL('bootup','project','view',args=[record.project.idproject])))}}
 
-<div class="project_stats">&pound;{{=record.project.goal}} goal. &pound;{{=record.projectstat.remaining}} remaining. {{=record.projectstat.progress}}%. {{=record.projectstat.bootings}} bootings. &pound;{{=record.projectstat.remaining}} remaining.</div>
-{{=record.project.shortdescription}}
 
-    {{if record.rewards is not None:}}
-        <h5>{{=record.rewards[0].expectedrewards.pledgedescription}} &pound;{{=record.rewards[0].expectedrewards.value}}</h5>
+    <div class="sidebyside">
+        <div class="sidebysideitem project_summary_image">
+            <div class="project_image"><a
+                    href="{{=URL('bootup','project','view',args=[record.project.idproject])}}"><img
+                    src="{{=URL('project','img',args=record.project.imageurl)}}"/></a></div>
+        </div>
 
-        {{for reward in record.rewards:}}
-            {{=reward.expectedrewards.rewarddescription}}
-        {{pass}}
+        <div class="sidebysideitem">
+            <p>{{=record.project.shortdescription}}</p>
 
-    {{pass}}
+            <div class="project_stats">Goal: &pound;{{=record.projectstat.goal}} -
+                Funded: &pound;{{=record.projectstat.totalvalue}} ({{=record.projectstat.progress}}%) -
+                Bootings: {{=record.projectstat.bootings}}<br/>Started: {{=record.openproject.opendate}}.
+                By {{=record.user.username}}</div>
+
+        </div>
+    </div>
+
+
 </div>

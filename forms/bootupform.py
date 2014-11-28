@@ -8,25 +8,26 @@ from gluon.sqlhtml import Field
 from gluon.html import call_as_list
 from gluon import DAL
 from gluon import FORM
+
+
 class LimitTextWidget(FormWidget):
     _class = 'text'
 
     @classmethod
     def widget(cls, field, value, **attributes):
-        size=0
+        size = 0
         requires = field.requires
         if not isinstance(requires, (list, tuple)):
-                requires = [requires]
+            requires = [requires]
         for req in requires:
             if isinstance(req, IS_LENGTH):
-                size=req.maxsize
+                size = req.maxsize
             pass
 
         default = dict(value=value)
         attr = cls._attributes(field, default, **attributes)
 
-
-        if(size>0 and size<500):
+        if (size > 0 and size < 500):
             attr['_rows'] = 3
             attr['_maxlength'] = size
 
@@ -34,31 +35,33 @@ class LimitTextWidget(FormWidget):
 
         return outstr
 
+
 class LimitStringWidget(FormWidget):
     _class = 'input'
 
     @classmethod
     def widget(cls, field, value, **attributes):
-        size=0
+        size = 0
         requires = field.requires
         if not isinstance(requires, (list, tuple)):
-                requires = [requires]
+            requires = [requires]
         for req in requires:
             if isinstance(req, IS_LENGTH):
-                size=req.maxsize
+                size = req.maxsize
             pass
 
         default = dict(value=value)
         attr = cls._attributes(field, default, **attributes)
 
-
-        if(size>0 and size<500):
+        if (size > 0 and size < 500):
             attr['_maxlength'] = size
 
         return INPUT(**attr)
 
+
 class CurrencyWidget(StringWidget):
     _class = 'currency has-feedback-left form-control'
+
     @classmethod
     def widget(self, field, value, **attributes):
         default = dict(
@@ -66,7 +69,7 @@ class CurrencyWidget(StringWidget):
             value=(not value is None and str(value)) or '',
         )
         attr = self._attributes(field, default, **attributes)
-        attr['_maxlength']=10
+        attr['_maxlength'] = 10
         attr['_class'] = self._class
         return INPUT(**attr)
 
@@ -76,29 +79,29 @@ class BOOTUPFORM(SQLFORM):
     SQLFORM.widgets.string = LimitStringWidget
     SQLFORM.widgets.text = LimitTextWidget
 
-    def __init__(self,table,*args,**kwargs):
-        super(BOOTUPFORM,self).__init__(table,*args,formstyle='bootstrap3_stacked', **kwargs)
+    def __init__(self, table, *args, **kwargs):
+        super(BOOTUPFORM, self).__init__(table, *args, formstyle='bootstrap3_stacked', **kwargs)
 
-    def process(self,*args, **kwargs):
-        if('beforevalidation' in kwargs):
+    def process(self, *args, **kwargs):
+        if ('beforevalidation' in kwargs):
             call_as_list(kwargs['beforevalidation'], self)
 
-        return super(BOOTUPFORM,self).process(**kwargs)
+        return super(BOOTUPFORM, self).process(**kwargs)
 
-    def getFieldRequirements(self,fieldname):
+    def getFieldRequirements(self, fieldname):
 
         field = (self.table[fieldname] if fieldname in self.table.fields
-                     else self.extra_fields[fieldname])
+                 else self.extra_fields[fieldname])
         requires = field.requires or []
         if not isinstance(requires, (list, tuple)):
-                requires = [requires]
+            requires = [requires]
         return requires
 
     @staticmethod
-    def factory(*fields,**kwargs):
+    def factory(*fields, **kwargs):
         return BOOTUPFORM(DAL(None).define_table("no_table",
-            *fields
-        ),**kwargs)
+                                                 *fields
+        ), **kwargs)
 
     @staticmethod
     def confirm(text='OK', btntype="btn-default", buttons=None, hidden=None):
@@ -115,6 +118,7 @@ class BOOTUPFORM(SQLFORM):
                          _name=name,
                          _value=value)
                    for name, value in hidden.iteritems()]
-        form = FORM(INPUT(_type='submit', _value=text, _class='btn {0}'.format(btntype)), *inputs,formstyle='bootstrap3_stacked')
+        form = FORM(INPUT(_type='submit', _value=text, _class='btn {0}'.format(btntype)), *inputs,
+                    formstyle='bootstrap3_stacked')
         form.process()
         return form

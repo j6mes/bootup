@@ -1,16 +1,27 @@
 {{title="My Cards"}}
 
 {{extend 'bootup.html'}}
-        <h2>My Cards</h2>
-        {{=A('Add card to account',_href=URL('bootup','card','create'))}}
+<h2>My Cards</h2>
+
+
+<div class="row">
+    <div class="col-xs-12 col-sm-8 col-md-8 col-lg-8">
+    {{=A('Add card to account',_href=URL('bootup','card','create'))}}
         <div class="address_list">
-            {{for record in cards:}}
+        {{for record in cards:}}
             <div class="address_item">
-                {{=DIV(record.number)}}
+            {{=DIV(record.number)}}
                 {{=DIV(record.expdate)}}
                 {{=A('Edit',_href=URL('bootup','card','edit',args=[record.idcard]))}}
                 {{=A('Delete',_href=URL('bootup','card','delete',args=[record.idcard]))}}
             </div>
-            {{pass}}
+        {{pass}}
 
         </div>
+    </div>
+
+
+    <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+    {{include 'partial/user/sidebar.html'}}
+    </div>
+</div>
