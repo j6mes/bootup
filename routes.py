@@ -1,0 +1,1 @@
+routes_onerror = [('bootup/error', '/views/error.html')]

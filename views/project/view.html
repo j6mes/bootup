@@ -1,9 +1,53 @@
+{{nobg=True}}
+{{title = "{0}".format(record.project.title)}}
 {{extend 'bootup.html'}}
 
-{{=H1(record.project.title)}}
-<div class="project_tag">{{=record.project.shortdescription}}</div>
+        {{if preview:}}
+        <div class="project_fullwidth project_preview">
+            <div class="container">
+                This is a preview page of your project. <a href="{{=URL('bootup','project','edit',args=[record.project.idproject])}}">Edit this project</a>
+            </div>
+        </div>
+        {{pass}}
 
-<div class="row project_page">
+        <div class="project_fullwidth ">
+            <div class="container">
+
+            <div class="row ">
+    <div class="col-xs-12 col-sm-8 col-md-8 col-lg-8">
+    <div class="project_top">{{=H1(record.project.title)}}
+        <div class="project_tag">{{=record.project.shortdescription}}</div></div>
+    </div>
+    <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+     <div class="project_progress">
+            <div class="sidebyside fullwidth">
+                <div class="sidebysideitem">
+                    <div class="rosette bumpup">
+                        <div>
+                            <div class="big">{{=record.projectstat.progress}}<sub>%</sub></div>
+                            <div class="small">funded</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="sidebysideitem fullwidth">
+                    <div class="project_progress_bar_shadow">
+                        <div class="project_progress_bar {{if record.projectstat.funded > 0:}}project_progress_bar_complete{{pass}}" style="width:{{=record.projectstat.limitedprogress}}%"></div>
+                    </div>
+                      {{if record.projectstat.totalvalue==0:}}<a href="{{=URL('bootup','project','pledge',args=[record.project.idproject])}}">Why not be the first to pledge &raquo;</a>{{pass}}
+                </div>
+
+
+
+            </div>
+            </div>
+</div>
+</div>
+
+
+            </div>
+            </div>
+<div class="container">
+<div class=" row project_page whitebg">
 
     <div class="project_column_left col-md-8 col-sm-8 col-lg-8 col-xs-12">
 
@@ -12,35 +56,56 @@
             <img src="{{=URL('img',args=record.project.imageurl)}}" />
         </div>
 
-        <h3>Long Description</h3>
-        {{=record.project.longdescription}}
+        <div class="project_wording">
+        <h3>Project Description</h3>
+        {{=XML(record.project.longdescription.replace('\n','<br>'),sanitize=True)}}
 
         <h3>Project Story</h3>
-        {{=record.project.story}}
+        {{=XML(record.project.story.replace('\n','<br>'),sanitize=True)}}
 
         <h3>Project Backers</h3>
             {{for username, expectedrewards in record.project.expectedrewards():}}
                 {{rewards = list(expectedrewards)}}
+                <div class="pledge_summary">
 
-                {{=H5(username  + ' ' + rewards[0].expectedrewards.pledgedescription + ' £'+ str(rewards[0].expectedrewards.value))}}
-                    {{for reward in rewards:}}
-                        {{=reward.expectedrewards.rewarddescription}}<br />
-                    {{pass}}
+                    <div class="sidebyside">
+                    <div class="sidebysideitem pledge_value">&pound;{{=rewards[0].expectedrewards.value}}</div>
+                    <div class="sidebysideitem pledge_rewards">
+                        <h4>{{=rewards[0].expectedrewards.pledgedescription}}</h4>
+                        Purchased by {{=rewards[0].user.username}}<br /><br />
+                        Expected rewards
+                        <ul>
+                        {{for reward in rewards:}}
+                            <li>{{=reward.expectedrewards.rewarddescription}}</li>
+                        {{pass}}
+                        </ul>
+                    </div>
+
+                    </div>
+
+                </div>
+
+
+
             {{pass}}
-
+        </div>
     </div>
 
     <div class="project_column_right col-md-4 col-sm-4 col-lg-4 col-xs-12">
+
         <div class="project_box">
             <div class="project_box_bigline">&pound;{{=record.projectstat.totalvalue}} raised</div>
             <div class="project_box_bigline">&pound;{{=record.project.goal}} goal</div>
             <div class="project_box_bigline">{{=record.projectstat.bootings}} bootings</div>
+
             {{if record.project.hascontributed(): }}
                 You have contributed to this project
+            {{else:}}
+                <a class="calltoaction lightbg" href="{{=URL('bootup','project','pledge',args=[record.project.idproject])}}">Pledge Now</a>
             {{pass}}
         </div>
 
-        <h3>Rewards</h3>
+        <h3>Pledge Levels</h3>
         <div class="project_box">
 
             {{for pledge in record.project.pledges():}}
@@ -50,4 +115,4 @@
     </div>
 </div>
 
-
+</div>

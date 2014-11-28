@@ -1,7 +1,9 @@
 <div class="pledge_summary">
 
-<a href="{{=URL('bootup','pledge','make',args=[pledge.pledge.idpledge])}}">
 
+            {{if not record.project.hascontributed(): }}
+<a href="{{=URL('bootup','pledge','make',args=[pledge.pledge.idpledge])}}">
+            {{pass}}
     <div class="sidebyside">
     <div class="sidebysideitem pledge_value">&pound;{{=pledge.pledge.value}}</div>
     <div class="sidebysideitem pledge_rewards">
@@ -16,5 +18,7 @@
 
         </div>
     </div>
+    {{if not record.project.hascontributed():}}
 </a>
+    {{pass}}
 </div>

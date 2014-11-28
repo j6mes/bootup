@@ -3,7 +3,8 @@
 <html>
 <head lang="en">
     <meta charset="UTF-8">
-    <title>Bootups</title>
+    <title>{{=title}} - Bootups</title>
+    <link href='http://fonts.googleapis.com/css?family=Droid+Sans:400,700' rel='stylesheet' type='text/css'>
     <link href='http://fonts.googleapis.com/css?family=Pacifico' rel='stylesheet' type='text/css' />
     <link rel="stylesheet" href="{{=URL('static','css/bootstrap.min.css')}}" />
     <link rel="stylesheet" href="{{=URL('static','css/bootups.css')}}" />
@@ -12,7 +13,7 @@
     <script src="{{=URL('static','js/bootstrap.min.js')}}"></script>
 </head>
 <body>
-    <div class="bootups_nav navbar">
+    <div class="lightbg bootups_nav navbar">
         <div class="container">
             <div class="navbar-left">
                 <h1 class="logo">{{=A('BootUps',_href=URL('bootup','project','index'))}}</h1>
@@ -52,7 +53,7 @@
 
     </nav>
 
-    <div class="container" role="main">
+    <div class="{{if not 'nobg' in vars():}}container whitebg{{pass}}" role="main">
         {{include}}
     </div>
 

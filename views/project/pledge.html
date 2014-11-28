@@ -1,0 +1,74 @@
+{{title = "Make pledge to {0}".format(record.project.title)}}
+{{nobg=True}}
+{{extend 'bootup.html'}}
+
+        <div class="project_fullwidth ">
+            <div class="container">
+
+            <div class="row ">
+    <div class="col-xs-12 col-sm-8 col-md-8 col-lg-8">
+    <div class="project_top">{{=H1(record.project.title)}}
+        <div class="project_tag">{{=record.project.shortdescription}}</div></div>
+    </div>
+    <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+     <div class="project_progress">
+            <div class="sidebyside fullwidth">
+                <div class="sidebysideitem">
+                    <div class="rosette bumpup">
+                        <div>
+                            <div class="big">{{=record.projectstat.progress}}<sub>%</sub></div>
+                            <div class="small">funded</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="sidebysideitem fullwidth">
+                    <div class="project_progress_bar_shadow">
+                        <div class="project_progress_bar {{if record.projectstat.funded > 0:}}project_progress_bar_complete{{pass}}" style="width:{{=record.projectstat.limitedprogress}}%"></div>
+                    </div>
+                      {{if record.projectstat.totalvalue==0:}}<a href="{{=URL('bootup','project','pledge',args=[record.project.idproject])}}">Why not be the first to pledge &raquo;</a>{{pass}}
+                </div>
+
+
+
+            </div>
+            </div>
+</div>
+</div>
+
+
+            </div>
+            </div>
+<div class="container">
+<div class=" row project_page whitebg">
+
+    <div class="project_column_left col-md-8 col-sm-8 col-lg-8 col-xs-12">
+        <h3>Pledge Levels</h3>
+
+
+        {{for pledge in record.project.pledges():}}
+            {{include 'partial/pledge/summary.html'}}
+        {{pass}}
+
+
+
+    </div>
+
+    <div class="project_column_right col-md-4 col-sm-4 col-lg-4 col-xs-12">
+
+        <div class="project_box">
+            <div class="project_box_bigline">&pound;{{=record.projectstat.totalvalue}} raised</div>
+            <div class="project_box_bigline">&pound;{{=record.project.goal}} goal</div>
+            <div class="project_box_bigline">{{=record.projectstat.bootings}} bootings</div>
+
+            {{if record.project.hascontributed(): }}
+                You have contributed to this project
+            {{else:}}
+                <a class="calltoaction lightbg" href="{{=URL('bootup','project','pledge',args=[record.project.idproject])}}">Pledge Now</a>
+            {{pass}}
+        </div>
+
+
+    </div>
+</div>
+
+</div>

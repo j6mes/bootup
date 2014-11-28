@@ -1,6 +1,22 @@
 <div class="project_tile col-xs-6 col-sm-6 col-md-4 col-lg-4">
+    <div class="project_tile_inner">
 
-<div class="project_image"><a href="{{=URL('bootup','project','view',args=[record.project.idproject])}}"><img src="{{=URL('img',args=record.project.imageurl)}}" /></a></div>
-<div class="project_name">{{=H3(A(record.project.title, _href=URL('bootup','project','view',args=[record.project.idproject])))}}
-<div class="project_stats">Goal: &pound;{{=record.projectstat.goal}} - Funded: &pound;{{=record.projectstat.totalvalue}} ({{=record.projectstat.progress}}%) - Bootings: {{=record.projectstat.bootings}}</div></div>
+
+        <div class="project_tile_rosette">
+            <div class="rosette bumpup">
+                <div>
+                    <div class="big">{{=record.projectstat.progress}}<sub>%</sub></div>
+                    <div class="small">funded</div>
+                </div>
+            </div>
+        </div>
+
+
+    <div class="project_image"><a href="{{=URL('bootup','project','view',args=[record.project.idproject])}}"><img src="{{=URL('img',args=record.project.imageurl)}}" /></a></div>
+        <div class="project_tile_text">
+        <div class="project_name">{{=H3(A(record.project.title, _href=URL('bootup','project','view',args=[record.project.idproject])))}}</div>
+        <p>{{=record.project.shortdescription}}</p>
+        <div class="project_stats">Goal: &pound;{{=record.projectstat.goal}} - Funded: &pound;{{=record.projectstat.totalvalue}} ({{=record.projectstat.progress}}%) - Bootings: {{=record.projectstat.bootings}}<br />Started: {{=record.openproject.opendate}}. By {{=record.user.username}}</div>
+    </div>
+    </div>
 </div>

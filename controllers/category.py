@@ -1,3 +1,6 @@
+from applications.bootup.modules.error import onerror
+
+@onerror
 def view():
     categoryurl = request.args(0)
 

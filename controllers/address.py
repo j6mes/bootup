@@ -1,4 +1,5 @@
 from applications.bootup.forms.bootupform import BOOTUPFORM
+from applications.bootup.modules.error import onerror
 
 def setuserid(form):
     form.vars.userid = auth.user_id
@@ -11,6 +12,7 @@ def create():
 
     return dict(form=form)
 
+@onerror
 @auth.requires_login
 def edit():
     addressid = request.args(0)
@@ -31,6 +33,7 @@ def edit():
 
     return dict(form=form)
 
+@onerror
 @auth.requires_login
 def delete():
     addressid = request.args(0)

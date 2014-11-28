@@ -226,8 +226,8 @@ db.define_table('expectedrewards',
                 Field('pledgeid',type='integer'),
                 Field('rewarddescription'),
                 Field('pledgedescription'),
-                Field('value',type='decimal(10,2)'),
-                primarykey=['userid','projectid'])
+                Field('value',type='decimal(10,2)',filter_out=lambda value: int(math.ceil(value))),
+                 primarykey=['userid','projectid'])
 
 db.define_table('openproject',
                 Field('projectid', type='reference project', requires=IS_IN_DB(db,db.project.idproject)),
@@ -273,6 +273,7 @@ db.define_table('projectstat',
                 Field('idproject', type='id'),
                 Field('goal',type='decimal(10,2)'),
                 Field('progress', type='integer'),
+                Field('limitedprogress',type='integer'),
                 Field('funded',type='integer'),
                 Field('bootings'),
                 Field('totalvalue',type='decimal(10,2)'),
@@ -284,9 +285,9 @@ db.define_table('booting',
                 Field('userid', type='integer',default=auth.user_id,readable=False,writable=False),
                 Field('openprojectid',type='integer',readable=False,writable=False),
                 Field('pledgeid',type='integer',readable=False,writable=False),
-                Field('addressid',type='integer',requires=IS_IN_DB(db(db.address.userid==auth.user_id),db.address.idaddress,'%(street)s',zero='Select Delivery Address')),
-                Field('cardid',type='integer',requires=IS_IN_DB(db(db.card.userid==auth.user_id),db.card.idcard,'%(number)s',zero='Select Payment Card')),
-                Field('bootingdate',type='datetime'))
+                Field('addressid',type='integer', label="Delivery Address", requires=IS_IN_DB(db(db.address.userid==auth.user_id),db.address.idaddress,'%(street)s',zero='Select Delivery Address')),
+                Field('cardid',type='integer', label="Payment Card",requires=IS_IN_DB(db(db.card.userid==auth.user_id),db.card.idcard,'%(number)s',zero='Select Payment Card')),
+                Field('bootingdate',type='datetime',readable=False,writable=False,default=request.now))
 
 
 

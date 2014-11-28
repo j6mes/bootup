@@ -1,4 +1,19 @@
+{{title = "Delete Pledge"}}
+
 {{extend 'bootup.html'}}
 
+
         <h2>Delete Pledge</h2>
+
+        <div class="col-xs-12 col-sm-8 col-md-8 col-lg-8">
         {{=form}}
+
+        </div>
+
+        <div class="col-xs-12 col-xs-4 col-md-4 col-lg-4">
+
+                <div><a href="{{=URL('bootup','project','edit',args=[projectid])}}"><span class="step">1</span>Edit Project</a></div>
+                <div><a href="{{=URL('bootup','reward','view',args=[projectid])}}"><span class="step">2</span>Manage Rewards</a></div>
+                <div><a href="{{=URL('bootup','pledge','view',args=[projectid])}}"><span class="step">3</span>Manage Pledge Levels</a></div>
+
+        </div>

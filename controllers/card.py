@@ -1,6 +1,7 @@
 import calendar
 from datetime import date, datetime
 from applications.bootup.forms.bootupform import BOOTUPFORM
+from applications.bootup.modules.error import onerror
 
 def computedate(form):
     form.vars.expdate = date(int(str(request.now.year)[0:2]+form.vars.expdate_year), int(form.vars.expdate_month), calendar.monthrange(int(str(request.now.year)[0:2]+form.vars.expdate_year), int(form.vars.expdate_month))[1])
@@ -19,6 +20,7 @@ def create():
 
     return dict(form=form)
 
+@onerror
 @auth.requires_login
 def edit():
     cardid=request.args(0)
@@ -36,7 +38,8 @@ def edit():
         redirect(URL('bootup','card','index'))
     return dict(form=form)
 
-
+@onerror
+@auth.requires_login
 def delete():
     cardid=request.args(0)
 

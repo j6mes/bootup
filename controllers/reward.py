@@ -1,5 +1,7 @@
 from applications.bootup.forms.bootupform import BOOTUPFORM
+from applications.bootup.modules.error import onerror
 
+@onerror
 @auth.requires_login
 def view():
     projectid = request.args(0)
@@ -16,8 +18,9 @@ def view():
         raise HTTP(403, "Cannot edit this project")
 
 
-    return dict(project=project)
+    return dict(project=project,projectid=projectid)
 
+@onerror
 @auth.requires_login
 def create():
     projectid = request.args(0)
@@ -37,9 +40,9 @@ def create():
     if( form.process().accepted):
         db.reward.insert(description=form.vars.description, projectid=projectid)
         redirect(URL('bootup','reward','view',args=[projectid]))
-    return dict(project=project, form=form)
+    return dict(project=project, form=form,projectid=projectid)
 
-
+@onerror
 @auth.requires_login
 def edit():
     rewardid = request.args(0)
@@ -58,8 +61,9 @@ def edit():
     form = BOOTUPFORM(db.reward,record=reward.reward)
     if( form.process().accepted):
         redirect(URL('bootup','reward','view',args=[reward.reward.projectid]))
-    return dict(form=form)
+    return dict(form=form,projectid=reward.reward.projectid)
 
+@onerror
 @auth.requires_login
 def delete():
     rewardid = request.args(0)
@@ -84,4 +88,4 @@ def delete():
         db(db.reward.idreward == rewardid).delete()
         redirect(URL('bootup','reward','view',args=[projectid]))
 
-    return dict(form=form)
+    return dict(form=form,projectid=projectid)

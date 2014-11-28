@@ -1,5 +1,7 @@
 from applications.bootup.forms.bootupform import BOOTUPFORM
+from applications.bootup.modules.error import onerror
 
+@onerror
 @auth.requires_login
 def make():
     pledgeid = request.args(0)
@@ -24,7 +26,7 @@ def make():
 
     return dict(pledge=pledge,form=form)
 
-
+@onerror
 @auth.requires_login
 def view():
     projectid = request.args(0)
@@ -40,10 +42,10 @@ def view():
     if not project.canedit():
         raise HTTP(403, "Cannot edit this project")
 
-    return dict(project=project)
+    return dict(project=project,projectid=projectid)
 
 
-
+@onerror
 @auth.requires_login
 def create():
     projectid = request.args(0)
@@ -75,12 +77,13 @@ def create():
 
 
         redirect(URL('bootup','pledge','view',args=[projectid]))
-    return dict(project=project, form=form)
+    return dict(project=project, form=form,projectid=projectid)
 
-
+@onerror
 @auth.requires_login
 def edit():
     pledgeid = request.args(0)
+
 
     if pledgeid is None:
         raise HTTP(404,"No project specified")
@@ -110,8 +113,10 @@ def edit():
         db(db.pledge.idpledge==pledgeid).update(description=form.vars.description,value=form.vars.value)
 
         redirect(URL('bootup','pledge','view',args=[pledge.pledge.projectid]))
-    return dict(form=form)
+    return dict(form=form,projectid=projectid)
 
+
+@onerror
 @auth.requires_login
 def delete():
     rewardid = request.args(0)
@@ -136,4 +141,4 @@ def delete():
         db(db.reward.idreward == rewardid).delete()
         redirect(URL('bootup','reward','view',args=[projectid]))
 
-    return dict(form=form)
+    return dict(form=form,projectid=projectid)

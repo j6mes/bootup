@@ -7,7 +7,7 @@ from gluon.sqlhtml import formstyle_bootstrap3_stacked
 from gluon.sqlhtml import Field
 from gluon.html import call_as_list
 from gluon import DAL
-
+from gluon import FORM
 class LimitTextWidget(FormWidget):
     _class = 'text'
 
@@ -99,3 +99,22 @@ class BOOTUPFORM(SQLFORM):
         return BOOTUPFORM(DAL(None).define_table("no_table",
             *fields
         ),**kwargs)
+
+    @staticmethod
+    def confirm(text='OK', btntype="btn-default", buttons=None, hidden=None):
+        if not buttons:
+            buttons = {}
+        if not hidden:
+            hidden = {}
+        inputs = [INPUT(_type='button',
+                        _value=name,
+                        _class='btn btn-default',
+                        _onclick=FORM.REDIRECT_JS % link)
+                  for name, link in buttons.iteritems()]
+        inputs += [INPUT(_type='hidden',
+                         _name=name,
+                         _value=value)
+                   for name, value in hidden.iteritems()]
+        form = FORM(INPUT(_type='submit', _value=text, _class='btn {0}'.format(btntype)), *inputs,formstyle='bootstrap3_stacked')
+        form.process()
+        return form

@@ -13,10 +13,10 @@ class BootUpAuth:
 
 
     def requires_login(self, fn):
-        def _a():
+        def _a(*args,**kwargs):
             if not self.is_logged_in():
                 redirect(URL('bootup','user','login'))
                 return
-            return fn()
+            return fn(*args,**kwargs)
         return _a
 
