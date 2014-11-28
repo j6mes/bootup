@@ -319,7 +319,7 @@ sS'TH'
 p148
 S"<class 'gluon.html.TH'>"
 p149
-sS'URL'
+sS'URL('
 p150
 S'<function URL>'
 p151
@@ -668,9 +668,9 @@ sS'TD'
 p321
 S"<class 'gluon.html.TD'>"
 p322
-sS'IS_URL'
+sS'IS_URL('
 p323
-S"<class 'gluon.validators.IS_URL'>"
+S"<class 'gluon.validators.IS_URL('>"
 p324
 sS'A'
 S"<class 'gluon.html.A'>"

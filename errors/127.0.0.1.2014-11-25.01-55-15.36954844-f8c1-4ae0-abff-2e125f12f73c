@@ -203,7 +203,7 @@ sI110
 S'        db(db.reward.idreward == rewardid).delete()'
 p93
 sI111
-S"        redirect(URL('bootup','reward','view',args=[projectid]))"
+S"        redirect(URL('reward','view',args=[projectid]))"
 p94
 sI112
 S''
@@ -297,7 +297,7 @@ sI17
 S'            if not self.is_logged_in():'
 p125
 sI18
-S"                redirect(URL('bootup','user','login'))"
+S"                redirect(URL('user','login'))"
 p126
 sI19
 S'                return'

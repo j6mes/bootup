@@ -1,0 +1,3 @@
+{{for menucategory in categories: }}
+<li>{{=A(menucategory.name, _href=URL('bootup','category','view',args=[menucategory.url])) }}</li>
+{{pass}}

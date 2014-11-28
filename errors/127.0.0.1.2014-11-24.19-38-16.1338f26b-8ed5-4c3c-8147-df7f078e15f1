@@ -194,13 +194,13 @@ I42
 sg75
 (dp94
 I33
-S"    response.write(A('Login',_href=URL('bootup','user','login')))"
+S"    response.write(A('Login',_href=URL('user','login')))"
 p95
 sI34
 S"    response.write('</li>\\n                    <li>', escape=False)"
 p96
 sI35
-S"    response.write(A('Register',_href=URL('bootup','user','register')))"
+S"    response.write(A('Register',_href=URL('user','register')))"
 p97
 sI36
 S"    response.write('</li>\\n              ', escape=False)"
@@ -230,7 +230,7 @@ sI44
 S"    response.write('\\n            This project currently has no rewards\\n            ', escape=False)"
 p106
 sI45
-S"    response.write(A('Add Reward',_href=URL('bootup','reward','create',args=[project.idproject])))"
+S"    response.write(A('Add Reward',_href=URL('reward','create',args=[project.idproject])))"
 p107
 sI46
 S"    response.write('\\n', escape=False)"

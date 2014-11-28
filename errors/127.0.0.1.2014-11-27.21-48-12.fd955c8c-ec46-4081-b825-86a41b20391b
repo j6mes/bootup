@@ -190,7 +190,7 @@ I46
 sg71
 (dp92
 I37
-S"    response.write(A('Register',_href=URL('bootup','user','register')))"
+S"    response.write(A('Register',_href=URL('user','register')))"
 p93
 sI38
 S"    response.write('</li>\\n              ', escape=False)"
@@ -223,7 +223,7 @@ sI47
 S'    response.write(\'\\n        <div class="project_fullwidth project_preview">\\n            <div class="container">\\n                This is a preview page of your project. <a href="\', escape=False)'
 p103
 sI48
-S"    response.write(URL('bootup','project','edit',args=[record.project.idproject]))"
+S"    response.write(URL('project','edit',args=[record.project.idproject]))"
 p104
 sI49
 S'    response.write(\'">Edit this project</a>\\n            </div>\\n        </div>\\n        \', escape=False)'
@@ -371,7 +371,7 @@ sS'IFRAME'
 p170
 S"<class 'gluon.html.IFRAME'>"
 p171
-sS'URL'
+sS'URL('
 p172
 S'<function URL>'
 p173
@@ -698,7 +698,7 @@ S"<class 'gluon.validators.IS_DATE'>"
 p332
 sS'menucategory'
 p333
-S"<Row {'name': 'Technology', 'idcategory': 9L, 'url': 'technology', 'id': 9L}>"
+S"<Row {'name': 'Technology', 'idcategory': 9L, 'URL(': 'technology', 'id': 9L}>"
 p334
 sS'IS_NOT_EMPTY'
 p335
@@ -760,9 +760,9 @@ sS'TD'
 p363
 S"<class 'gluon.html.TD'>"
 p364
-sS'IS_URL'
+sS'IS_URL('
 p365
-S"<class 'gluon.validators.IS_URL'>"
+S"<class 'gluon.validators.IS_URL('>"
 p366
 sS'notfundedprojects'
 p367

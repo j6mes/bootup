@@ -9,7 +9,7 @@ S'/Users/james/Documents/Dropbox/Uni/Year 4/iapt/assessment/web2py-2.9.11/web2py
 p5
 sS'code'
 p6
-S"db.define_table('category',\n                Field('idcategory',type='id'),\n                Field('name'),\n                Field('url'))\n\n"
+S"db.define_table('category',\n                Field('idcategory',type='id'),\n                Field('name'),\n                Field('URL('))\n\n"
 p7
 sS'snapshot'
 p8
@@ -207,7 +207,7 @@ sI3
 S"                Field('name'),"
 p99
 sI4
-S"                Field('url'))"
+S"                Field('URL('))"
 p100
 sI5
 S''
@@ -313,7 +313,7 @@ sS'TH'
 p148
 S"<class 'gluon.html.TH'>"
 p149
-sS'URL'
+sS'URL('
 p150
 S'<function URL>'
 p151
@@ -647,9 +647,9 @@ sS'TD'
 p314
 S"<class 'gluon.html.TD'>"
 p315
-sS'IS_URL'
+sS'IS_URL('
 p316
-S"<class 'gluon.validators.IS_URL'>"
+S"<class 'gluon.validators.IS_URL('>"
 p317
 sS'A'
 S"<class 'gluon.html.A'>"

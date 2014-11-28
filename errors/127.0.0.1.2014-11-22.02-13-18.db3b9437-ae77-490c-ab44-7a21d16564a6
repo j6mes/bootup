@@ -9,7 +9,7 @@ S'/Users/james/Documents/Dropbox/Uni/Year 4/iapt/assessment/web2py-2.9.11/web2py
 p5
 sS'code'
 p6
-S"from applications.bootup.models import db\ndb.define_table('Category',\n                Field('IdCategory',type='id'),\n                Field('Name'),\n                Field('Url'))"
+S"from applications.bootup.models import db\ndb.define_table('Category',\n                Field('IdCategory',type='id'),\n                Field('Name'),\n                Field('URL('))"
 p7
 sS'snapshot'
 p8
@@ -205,7 +205,7 @@ sI4
 S"                Field('Name'),"
 p97
 sI5
-S"                Field('Url'))"
+S"                Field('URL('))"
 p98
 ssg83
 S'()'

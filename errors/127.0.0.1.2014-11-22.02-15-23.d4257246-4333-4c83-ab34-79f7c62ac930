@@ -294,7 +294,7 @@ sI7533
 S'    __delitem__ = object.__delattr__'
 p126
 ssg83
-S"(self=<Row {'Name': 'Art', 'IdCategory': 1L, 'Url': 'art', 'id': 1L}>, k='name')"
+S"(self=<Row {'Name': 'Art', 'IdCategory': 1L, 'URL(': 'art', 'id': 1L}>, k='name')"
 p127
 sg85
 g20
@@ -343,7 +343,7 @@ S"'name'"
 p147
 sS'self'
 p148
-S"<Row {'Name': 'Art', 'IdCategory': 1L, 'Url': 'art', 'id': 1L}>"
+S"<Row {'Name': 'Art', 'IdCategory': 1L, 'URL(': 'art', 'id': 1L}>"
 p149
 sssS'traceback'
 p150

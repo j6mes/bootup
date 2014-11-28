@@ -204,7 +204,7 @@ sI87
 S'        db(db.reward.idreward == rewardid).delete()'
 p94
 sI88
-S"        redirect(URL('bootup','reward','view',args=[projectid]))"
+S"        redirect(URL('reward','view',args=[projectid]))"
 p95
 sI89
 S''
@@ -585,7 +585,7 @@ S'False'
 p237
 sS'self._colnames'
 p238
-S"['project.idproject', 'project.title', 'project.shortdescription', 'project.longdescription', 'project.story', 'project.goal', 'project.categoryid', 'project.managerid', 'project.imageurl', 'reward.idreward', 'reward.description', 'reward.projectid']"
+S"['project.idproject', 'project.title', 'project.shortdescription', 'project.longdescription', 'project.story', 'project.goal', 'project.categoryid', 'project.managerid', 'project.imageURL(', 'reward.idreward', 'reward.description', 'reward.projectid']"
 p239
 sS'processor'
 p240
@@ -690,7 +690,7 @@ p276
 sI2250
 S''
 ssg83
-S"(self=<gluon.dal.SQLiteAdapter object>, rows=[(12, u'wv83b2e0j711ia5', u'sb17od4fopfjdjrwf5', u'eacgeoyv1dig', u'8qldqpk2awhwne', 11, 7, 1, u'project.imageurl.8e9c221de1108b6a.323031342d30322d32342031322e34312e34342e6a7067.jpg', 4, u'test fsdfad', 12)], fields=[<gluon.dal.Field object>, <gluon.dal.Field object>, <gluon.dal.Field object>, <gluon.dal.Field object>, <gluon.dal.Field object>, <gluon.dal.Field object>, <gluon.dal.Field object>, <gluon.dal.Field object>, <gluon.dal.Field object>, <gluon.dal.Field object>, <gluon.dal.Field object>, <gluon.dal.Field object>], colnames=['project.idproject', 'project.title', 'project.shortdescription', 'project.longdescription', 'project.story', 'project.goal', 'project.categoryid', 'project.managerid', 'project.imageurl', 'reward.idreward', 'reward.description', 'reward.projectid'], blob_decode=True, cacheable=False)"
+S"(self=<gluon.dal.SQLiteAdapter object>, rows=[(12, u'wv83b2e0j711ia5', u'sb17od4fopfjdjrwf5', u'eacgeoyv1dig', u'8qldqpk2awhwne', 11, 7, 1, u'project.imageurl.8e9c221de1108b6a.323031342d30322d32342031322e34312e34342e6a7067.jpg', 4, u'test fsdfad', 12)], fields=[<gluon.dal.Field object>, <gluon.dal.Field object>, <gluon.dal.Field object>, <gluon.dal.Field object>, <gluon.dal.Field object>, <gluon.dal.Field object>, <gluon.dal.Field object>, <gluon.dal.Field object>, <gluon.dal.Field object>, <gluon.dal.Field object>, <gluon.dal.Field object>, <gluon.dal.Field object>], colnames=['project.idproject', 'project.title', 'project.shortdescription', 'project.longdescription', 'project.story', 'project.goal', 'project.categoryid', 'project.managerid', 'project.imageURL(', 'reward.idreward', 'reward.description', 'reward.projectid'], blob_decode=True, cacheable=False)"
 p277
 sg85
 S'parse'

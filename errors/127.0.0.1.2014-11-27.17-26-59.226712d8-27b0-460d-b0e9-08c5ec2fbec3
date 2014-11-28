@@ -207,7 +207,7 @@ sI133
 S'    if projectid is None:'
 p97
 sI124
-S"        redirect(URL('bootup','user','projects'))"
+S"        redirect(URL('user','projects'))"
 p98
 sI125
 S''
@@ -334,7 +334,7 @@ sS'TH'
 p155
 S"<class 'gluon.html.TH'>"
 p156
-sS'URL'
+sS'URL('
 p157
 S'<function URL>'
 p158
@@ -752,9 +752,9 @@ sS'TD'
 p363
 S"<class 'gluon.html.TD'>"
 p364
-sS'IS_URL'
+sS'IS_URL('
 p365
-S"<class 'gluon.validators.IS_URL'>"
+S"<class 'gluon.validators.IS_URL('>"
 p366
 sS'notfundedprojects'
 p367

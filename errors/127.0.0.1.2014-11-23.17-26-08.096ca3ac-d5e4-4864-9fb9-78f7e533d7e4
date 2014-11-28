@@ -301,7 +301,7 @@ sI17
 S'            if not self.is_logged_in():'
 p129
 sI18
-S"                redirect(URL('bootup','user','login'))"
+S"                redirect(URL('user','login'))"
 p130
 sI19
 S'                return'

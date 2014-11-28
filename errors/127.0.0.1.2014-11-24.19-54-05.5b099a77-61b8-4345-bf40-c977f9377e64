@@ -204,7 +204,7 @@ sI87
 S'        db(db.reward.idreward == rewardid).delete()'
 p94
 sI88
-S"     #   redirect(URL('bootup','reward','view',args=[projectid]))"
+S"     #   redirect(URL('reward','view',args=[projectid]))"
 p95
 sI89
 S''
@@ -318,7 +318,7 @@ sI87
 S'        db(db.reward.idreward == rewardid).delete()'
 p134
 sI88
-S"     #   redirect(URL('bootup','reward','view',args=[projectid]))"
+S"     #   redirect(URL('reward','view',args=[projectid]))"
 p135
 sI89
 S''

@@ -298,7 +298,7 @@ sI17
 S'            if not self.is_logged_in():'
 p126
 sI18
-S"                redirect(URL('bootup','user','login'))"
+S"                redirect(URL('user','login'))"
 p127
 sI19
 S'                return'
@@ -333,7 +333,7 @@ sS'global request'
 p138
 S"<Storage {'_vars': None, 'function': 'open', 'co...ment/web2py-2.9.11/web2py/applications/bootup/'}>"
 p139
-sS'global URL'
+sS'global URL('
 p140
 S'<function URL>'
 p141

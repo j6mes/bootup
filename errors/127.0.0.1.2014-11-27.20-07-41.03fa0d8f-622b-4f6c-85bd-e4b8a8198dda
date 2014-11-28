@@ -196,13 +196,13 @@ I32
 S"    response.write('\\n                    <li>', escape=False)"
 p94
 sI33
-S"    response.write(A('Login',_href=URL('bootup','user','login')))"
+S"    response.write(A('Login',_href=URL('user','login')))"
 p95
 sI34
 S"    response.write('</li>\\n                    <li>', escape=False)"
 p96
 sI35
-S"    response.write(A('Register',_href=URL('bootup','user','register')))"
+S"    response.write(A('Register',_href=URL('user','register')))"
 p97
 sI36
 S"    response.write('</li>\\n              ', escape=False)"
@@ -370,7 +370,7 @@ sS'IFRAME'
 p169
 S"<class 'gluon.html.IFRAME'>"
 p170
-sS'URL'
+sS'URL('
 p171
 S'<function URL>'
 p172
@@ -698,7 +698,7 @@ S"<class 'gluon.validators.IS_DATE'>"
 p332
 sS'menucategory'
 p333
-S"<Row {'name': 'Technology', 'idcategory': 9L, 'url': 'technology', 'id': 9L}>"
+S"<Row {'name': 'Technology', 'idcategory': 9L, 'URL(': 'technology', 'id': 9L}>"
 p334
 sS'IS_NOT_EMPTY'
 p335
@@ -760,9 +760,9 @@ sS'TD'
 p363
 S"<class 'gluon.html.TD'>"
 p364
-sS'IS_URL'
+sS'IS_URL('
 p365
-S"<class 'gluon.validators.IS_URL'>"
+S"<class 'gluon.validators.IS_URL('>"
 p366
 sS'notfundedprojects'
 p367

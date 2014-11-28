@@ -198,7 +198,7 @@ p92
 sI154
 S''
 sI155
-S"    form = BOOTUPFORM.confirm('Delete','btn-danger',{'Back':URL('bootup','user','projects')})"
+S"    form = BOOTUPFORM.confirm('Delete','btn-danger',{'Back':URL('user','projects')})"
 p93
 sI156
 S''

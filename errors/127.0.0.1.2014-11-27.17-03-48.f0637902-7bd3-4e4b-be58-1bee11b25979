@@ -198,7 +198,7 @@ p92
 sI154
 S''
 sI155
-S"    form = BOOTUPFORM.confirm('Delete','btn-danger',{'Back':URL('bootup','user','projects')})"
+S"    form = BOOTUPFORM.confirm('Delete','btn-danger',{'Back':URL('user','projects')})"
 p93
 sI156
 S''
@@ -298,7 +298,7 @@ sI17
 S'            if not self.is_logged_in():'
 p126
 sI18
-S"                redirect(URL('bootup','user','login'))"
+S"                redirect(URL('user','login'))"
 p127
 sI19
 S'                return'

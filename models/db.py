@@ -1,7 +1,13 @@
 from itertools import groupby
+from gluon import current
 import math
 
 db = DAL('sqlite://bootup.db', pool_size=1, check_reserved=['sqlite'], migrate=False)
+current.db = db
+
+
+
+
 auth = BootUpAuth(db)
 
 db.define_table('category',
@@ -226,9 +232,8 @@ db.define_table('pledge',
 db.define_table('rewardpledge',
                 Field('rewardid', type='integer', requires=IS_IN_DB(db, db.reward.idreward, '%(description)s')),
                 Field('pledgeid', type='integer',
-                      requires=IS_IN_DB(db, db.pledge.idpledge, '£%(value)s %(description)s')),
-                Field.Method('rawdelete', lambda row: db.executesql(
-                    'DELETE FROM rewardpledge WHERE rewardid={0} AND pledgeid={1}'.format(row.rewardpledge.rewardid,
+                      requires=IS_IN_DB(db, db.pledge.idpledge, '?%(value)s %(description)s')),
+                Field.Method('rawdelete', lambda row: db.executesql('DELETE FROM rewardpledge WHERE rewardid={0} AND pledgeid={1}'.format(row.rewardpledge.rewardid,
                                                                                           row.rewardpledge.pledgeid))),
                 primarykey=['rewardid', 'pledgeid'])
 

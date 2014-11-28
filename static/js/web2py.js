@@ -291,7 +291,7 @@
             if (web2py.fire(element, 'ajax:before', null, target)) { /*test a usecase, should stop here if returns false */
                 $.ajax({
                     'type': method,
-                    'url': action,
+                    'URL('bootup',': action,
                     'data': data,
                     'beforeSend': function (xhr, settings) {
                         xhr.setRequestHeader('web2py-component-location', document.location);

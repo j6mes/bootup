@@ -198,7 +198,7 @@ sI44
 S"    response.write('\\n            This project currently has no rewards\\n            ', escape=False)"
 p94
 sI45
-S"    response.write(A('Add Reward',_href=URL('bootup','reward','create',args=[project.idproject])))"
+S"    response.write(A('Add Reward',_href=URL('reward','create',args=[project.idproject])))"
 p95
 sI46
 S"    response.write('\\n', escape=False)"

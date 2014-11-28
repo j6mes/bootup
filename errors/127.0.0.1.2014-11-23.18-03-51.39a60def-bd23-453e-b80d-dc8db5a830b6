@@ -189,7 +189,7 @@ I42
 S'    response.write(\'<div class="project_summary">\\n\', escape=False)'
 p91
 sI43
-S"    response.write(H3(A(record.project.title, _href=URL('bootup','project','dashboard',args=[record.project.idproject]))))"
+S"    response.write(H3(A(record.project.title, _href=URL('project','dashboard',args=[record.project.idproject]))))"
 p92
 sI44
 S"    response.write('\\n\\n\\n<nav>\\n    ', escape=False)"

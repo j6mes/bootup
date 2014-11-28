@@ -199,7 +199,7 @@ p93
 sI50
 S''
 sI51
-S"    form = FORM.confirm('Delete',{'Back':URL('bootup','card','index')})"
+S"    form = FORM.confirm('Delete',{'Back':URL('card','index')})"
 p94
 sI52
 S'    if form.process().accepted:'
@@ -208,7 +208,7 @@ sI53
 S'        db(db.card.idcard==cardid).delete()'
 p96
 sI54
-S"        redirect(URL('bootup','card','index'))"
+S"        redirect(URL('card','index'))"
 p97
 sI55
 S'    return dict(form=form)'
@@ -300,7 +300,7 @@ sI17
 S'            if not self.is_logged_in():'
 p128
 sI18
-S"                redirect(URL('bootup','user','login'))"
+S"                redirect(URL('user','login'))"
 p129
 sI19
 S'                return'
@@ -360,7 +360,7 @@ sI35
 S'    if form.process(onvalidation=computedate).accepted:'
 p150
 sI36
-S"        redirect(URL('bootup','card','index'))"
+S"        redirect(URL('card','index'))"
 p151
 sI37
 S'    return dict(form=form)'

@@ -186,7 +186,7 @@ I70
 sg71
 (dp90
 I64
-S"        redirect(URL('bootup','reward','view',args=[projectid]))"
+S"        redirect(URL('reward','view',args=[projectid]))"
 p91
 sI65
 S'    return dict(form=form)'
@@ -278,7 +278,7 @@ S'/Users/james/Documents/Dropbox/Uni/Year 4/iapt/assessment/web2py-2.9.11/web2py
 p121
 sg64
 (dp122
-S'global URL'
+S'global URL('
 p123
 S'<function URL>'
 p124
@@ -297,7 +297,7 @@ I64
 sg71
 (dp129
 I64
-S"        redirect(URL('bootup','reward','view',args=[projectid]))"
+S"        redirect(URL('reward','view',args=[projectid]))"
 p130
 sI65
 S'    return dict(form=form)'

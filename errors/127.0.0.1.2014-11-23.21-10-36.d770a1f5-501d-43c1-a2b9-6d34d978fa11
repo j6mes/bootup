@@ -337,7 +337,7 @@ sS'TH'
 p156
 S"<class 'gluon.html.TH'>"
 p157
-sS'URL'
+sS'URL('
 p158
 S'<function URL>'
 p159
@@ -723,9 +723,9 @@ sS'TD'
 p348
 S"<class 'gluon.html.TD'>"
 p349
-sS'IS_URL'
+sS'IS_URL('
 p350
-S"<class 'gluon.validators.IS_URL'>"
+S"<class 'gluon.validators.IS_URL('>"
 p351
 sS'notfundedprojects'
 p352

@@ -204,7 +204,7 @@ sI87
 S'        del db.reward[rewardid]'
 p94
 sI88
-S"        redirect(URL('bootup','reward','view',args=[projectid]))"
+S"        redirect(URL('reward','view',args=[projectid]))"
 p95
 sI89
 S''
@@ -311,7 +311,7 @@ sI87
 S'        del db.reward[rewardid]'
 p131
 sI88
-S"        redirect(URL('bootup','reward','view',args=[projectid]))"
+S"        redirect(URL('reward','view',args=[projectid]))"
 p132
 sI89
 S''

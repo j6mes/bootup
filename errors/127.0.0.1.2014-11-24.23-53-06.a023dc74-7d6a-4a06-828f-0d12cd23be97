@@ -204,7 +204,7 @@ sI85
 S'        db(db.reward.idreward == rewardid).delete()'
 p94
 sI86
-S"        redirect(URL('bootup','reward','view',args=[projectid]))"
+S"        redirect(URL('reward','view',args=[projectid]))"
 p95
 sI87
 S''
@@ -298,7 +298,7 @@ sI17
 S'            if not self.is_logged_in():'
 p126
 sI18
-S"                redirect(URL('bootup','user','login'))"
+S"                redirect(URL('user','login'))"
 p127
 sI19
 S'                return'
@@ -373,7 +373,7 @@ sI60
 S'    if( form.process().accepted):'
 p153
 sI61
-S"        redirect(URL('bootup','reward','view',args=[pledge.pledge.projectid]))"
+S"        redirect(URL('reward','view',args=[pledge.pledge.projectid]))"
 p154
 sI62
 S'    return dict(form=form)'

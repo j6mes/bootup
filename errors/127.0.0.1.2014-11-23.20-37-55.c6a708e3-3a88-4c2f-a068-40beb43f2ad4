@@ -278,7 +278,7 @@ sg64
 (dp120
 S'category'
 p121
-S"<Row {'name': 'Art', 'idcategory': 1L, 'url': 'art', 'id': 1L}>"
+S"<Row {'name': 'Art', 'idcategory': 1L, 'URL(': 'art', 'id': 1L}>"
 p122
 sS'db.project'
 p123

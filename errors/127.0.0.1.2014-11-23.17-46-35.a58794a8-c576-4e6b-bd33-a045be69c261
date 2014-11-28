@@ -363,7 +363,7 @@ sS'IFRAME'
 p166
 S"<class 'gluon.html.IFRAME'>"
 p167
-sS'URL'
+sS'URL('
 p168
 S'<function URL>'
 p169
@@ -679,7 +679,7 @@ S"<class 'gluon.validators.IS_DATE'>"
 p323
 sS'menucategory'
 p324
-S"<Row {'name': 'Technology', 'idcategory': 9L, 'url': 'technology', 'id': 9L}>"
+S"<Row {'name': 'Technology', 'idcategory': 9L, 'URL(': 'technology', 'id': 9L}>"
 p325
 sS'IS_NOT_EMPTY'
 p326
@@ -741,9 +741,9 @@ sS'TD'
 p354
 S"<class 'gluon.html.TD'>"
 p355
-sS'IS_URL'
+sS'IS_URL('
 p356
-S"<class 'gluon.validators.IS_URL'>"
+S"<class 'gluon.validators.IS_URL('>"
 p357
 sS'notfundedprojects'
 p358

@@ -19,3 +19,6 @@ def view():
 
     return dict(category=category, projects=projects)
 
+
+def menu():
+    return dict(categories=db().select(db.category.ALL))

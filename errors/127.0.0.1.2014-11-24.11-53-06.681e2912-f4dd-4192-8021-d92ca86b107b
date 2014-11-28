@@ -194,7 +194,7 @@ I44
 sg75
 (dp94
 I35
-S"    response.write(A('Register',_href=URL('bootup','user','register')))"
+S"    response.write(A('Register',_href=URL('user','register')))"
 p95
 sI36
 S"    response.write('</li>\\n              ', escape=False)"

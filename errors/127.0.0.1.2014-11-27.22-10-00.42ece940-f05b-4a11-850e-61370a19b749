@@ -186,19 +186,19 @@ I64
 sg71
 (dp90
 I64
-S"response.write(URL('bootup','project','edit',args=[projectid]))"
+S"response.write(URL('project','edit',args=[projectid]))"
 p91
 sI65
 S'response.write(\'"><span class="step">1</span>Edit Project</a></div>\\n                    <div><a href="\', escape=False)'
 p92
 sI66
-S"response.write(URL('bootup','reward','view',args=[projectid]))"
+S"response.write(URL('reward','view',args=[projectid]))"
 p93
 sI67
 S'response.write(\'"><span class="step">2</span>Manage Rewards</a></div>\\n                    <div><a href="\', escape=False)'
 p94
 sI68
-S"response.write(URL('bootup','pledge','view',args=[projectid]))"
+S"response.write(URL('pledge','view',args=[projectid]))"
 p95
 sI69
 S'response.write(\'"><span class="step">3</span>Manage Pledge Levels</a></div>\\n\\n            </div>\', escape=False)'
@@ -216,13 +216,13 @@ sI55
 S"        response.write('</h4>\\n                        ', escape=False)"
 p100
 sI56
-S"        response.write(A('Edit',_href=URL('bootup','reward','edit',args=[reward.idreward])))"
+S"        response.write(A('Edit',_href=URL('reward','edit',args=[reward.idreward])))"
 p101
 sI57
 S"        response.write(' ', escape=False)"
 p102
 sI58
-S"        response.write(A('Delete',_href=URL('bootup','reward','delete',args=[reward.idreward])))"
+S"        response.write(A('Delete',_href=URL('reward','delete',args=[reward.idreward])))"
 p103
 sI59
 S"        response.write('\\n                        ', escape=False)"
@@ -357,7 +357,7 @@ sS'IFRAME'
 p164
 S"<class 'gluon.html.IFRAME'>"
 p165
-sS'URL'
+sS'URL('
 p166
 S'<function URL>'
 p167
@@ -685,7 +685,7 @@ S"<class 'gluon.validators.IS_DATE'>"
 p327
 sS'menucategory'
 p328
-S"<Row {'name': 'Technology', 'idcategory': 9L, 'url': 'technology', 'id': 9L}>"
+S"<Row {'name': 'Technology', 'idcategory': 9L, 'URL(': 'technology', 'id': 9L}>"
 p329
 sS'IS_NOT_EMPTY'
 p330
@@ -751,9 +751,9 @@ sS'TD'
 p360
 S"<class 'gluon.html.TD'>"
 p361
-sS'IS_URL'
+sS'IS_URL('
 p362
-S"<class 'gluon.validators.IS_URL'>"
+S"<class 'gluon.validators.IS_URL('>"
 p363
 sS'notfundedprojects'
 p364

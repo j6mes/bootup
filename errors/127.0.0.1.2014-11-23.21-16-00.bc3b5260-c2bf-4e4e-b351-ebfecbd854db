@@ -316,7 +316,7 @@ I85
 sg71
 (dp138
 I80
-S"    redirect(URL('bootup','project','index'))"
+S"    redirect(URL('project','index'))"
 p139
 sI81
 S''

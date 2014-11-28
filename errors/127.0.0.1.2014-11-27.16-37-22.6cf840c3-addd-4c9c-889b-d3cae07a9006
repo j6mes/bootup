@@ -191,7 +191,7 @@ p91
 sI139
 S''
 sI140
-S"    form = BOOTUPFORM.confirm('Delete',{'Back':URL('bootup','user','project')})"
+S"    form = BOOTUPFORM.confirm('Delete',{'Back':URL('user','project')})"
 p92
 sI141
 S''
@@ -298,7 +298,7 @@ sI17
 S'            if not self.is_logged_in():'
 p126
 sI18
-S"                redirect(URL('bootup','user','login'))"
+S"                redirect(URL('user','login'))"
 p127
 sI19
 S'                return'
@@ -323,7 +323,7 @@ S'/Users/james/Documents/Dropbox/Uni/Year 4/iapt/assessment/web2py-2.9.11/web2py
 p134
 sg64
 (dp135
-S'global URL'
+S'global URL('
 p136
 S'<function URL>'
 p137
@@ -356,7 +356,7 @@ p146
 sI117
 S''
 sI118
-S"    form = BOOTUPFORM.confirm('Close',{'Back':URL('bootup','user','project')})"
+S"    form = BOOTUPFORM.confirm('Close',{'Back':URL('user','project')})"
 p147
 sI119
 S'    if form.accepted:'
@@ -365,7 +365,7 @@ sI120
 S'        db.closedproject.insert(openprojectid=project.project.idproject)'
 p149
 sI121
-S"        redirect(URL('bootup','project','view',args=[projectid]))"
+S"        redirect(URL('project','view',args=[projectid]))"
 p150
 sI122
 S''

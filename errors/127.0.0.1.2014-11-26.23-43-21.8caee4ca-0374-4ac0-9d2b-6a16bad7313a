@@ -190,13 +190,13 @@ I42
 sg71
 (dp92
 I33
-S"    response.write(A('Login',_href=URL('bootup','user','login')))"
+S"    response.write(A('Login',_href=URL('user','login')))"
 p93
 sI34
 S"    response.write('</li>\\n                    <li>', escape=False)"
 p94
 sI35
-S"    response.write(A('Register',_href=URL('bootup','user','register')))"
+S"    response.write(A('Register',_href=URL('user','register')))"
 p95
 sI36
 S"    response.write('</li>\\n              ', escape=False)"

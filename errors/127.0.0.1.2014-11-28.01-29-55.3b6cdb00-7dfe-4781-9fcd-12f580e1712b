@@ -226,7 +226,7 @@ sI12
 S'response.write(\'"></script>\\n</head>\\n<body>\\n    <div class="lightbg bootups_nav navbar">\\n        <div class="container">\\n            <div class="navbar-left">\\n                <h1 class="logo">\', escape=False)'
 p104
 sI13
-S"response.write(A('BootUps',_href=URL('bootup','project','index')))"
+S"response.write(A('BootUps',_href=URL('project','index')))"
 p105
 ssg83
 S'()'
@@ -350,7 +350,7 @@ sS'IFRAME'
 p163
 S"<class 'gluon.html.IFRAME'>"
 p164
-sS'URL'
+sS'URL('
 p165
 S'<function URL>'
 p166
@@ -732,9 +732,9 @@ sS'TD'
 p353
 S"<class 'gluon.html.TD'>"
 p354
-sS'IS_URL'
+sS'IS_URL('
 p355
-S"<class 'gluon.validators.IS_URL'>"
+S"<class 'gluon.validators.IS_URL('>"
 p356
 sS'notfundedprojects'
 p357

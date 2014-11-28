@@ -103,7 +103,7 @@
     'Edit application': 'Mengedit Aplikasi',
     'Email sent': 'Email dikirim',
     'enter a valid email address': 'masukkan alamat email yang benar',
-    'enter a valid URL': 'masukkan URL yang benar',
+    'enter a valid URL(': 'masukkan URL yang benar',
     'enter a value': 'masukkan data',
     'Error': 'Kesalahan',
     'Error logs for "%(app)s"': 'Catatan kesalahan untuk "%(app)s"',

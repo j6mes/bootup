@@ -213,7 +213,7 @@ sI52
 S'            response.write(\'<div class="project_list">\\n\', escape=False)'
 p99
 sI53
-S"            response.write(H3(A(record.project.title, _href=URL('bootup','project','view',args=[record.project.idproject]))))"
+S"            response.write(H3(A(record.project.title, _href=URL('project','view',args=[record.project.idproject]))))"
 p100
 sI54
 S'            response.write(\'\\n\\n<div class="project_stats">&pound;\', escape=False)'

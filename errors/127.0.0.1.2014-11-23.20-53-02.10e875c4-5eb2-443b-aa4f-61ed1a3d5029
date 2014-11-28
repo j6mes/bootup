@@ -304,7 +304,7 @@ g103
 sS'upload'
 p132
 g103
-sS'global URL'
+sS'global URL('
 p133
 S'<function URL>'
 p134

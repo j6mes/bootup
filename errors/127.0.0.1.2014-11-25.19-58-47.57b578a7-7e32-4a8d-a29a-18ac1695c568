@@ -212,7 +212,7 @@ sI135
 S'        db(db.reward.idreward == rewardid).delete()'
 p98
 sI136
-S"        redirect(URL('bootup','reward','view',args=[projectid]))"
+S"        redirect(URL('reward','view',args=[projectid]))"
 p99
 sI137
 S''
@@ -306,7 +306,7 @@ sI17
 S'            if not self.is_logged_in():'
 p130
 sI18
-S"                redirect(URL('bootup','user','login'))"
+S"                redirect(URL('user','login'))"
 p131
 sI19
 S'                return'
@@ -363,7 +363,7 @@ sI21
 S'    if form.process().accepted:'
 p149
 sI22
-S"        redirect(URL('bootup','project','view',args=[pledge.project.idproject]))"
+S"        redirect(URL('project','view',args=[pledge.project.idproject]))"
 p150
 sI23
 S''

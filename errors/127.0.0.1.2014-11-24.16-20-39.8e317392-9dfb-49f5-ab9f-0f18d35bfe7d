@@ -301,7 +301,7 @@ sI17
 S'            if not self.is_logged_in():'
 p129
 sI18
-S"                redirect(URL('bootup','user','login'))"
+S"                redirect(URL('user','login'))"
 p130
 sI19
 S'                return'
@@ -358,7 +358,7 @@ I85
 sg71
 (dp152
 I80
-S"    redirect(URL('bootup','project','index'))"
+S"    redirect(URL('project','index'))"
 p153
 sI81
 S''

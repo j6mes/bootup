@@ -200,7 +200,7 @@ sI84
 S'    session.user = 0'
 p94
 sI85
-S"    redirect(URL('bootup','project','index'))"
+S"    redirect(URL('project','index'))"
 p95
 sI86
 S''

@@ -205,7 +205,7 @@ sI84
 S'    session.user = 0'
 p97
 sI85
-S"    redirect(URL('bootup','project','index'))"
+S"    redirect(URL('project','index'))"
 p98
 sI86
 S''
@@ -326,7 +326,7 @@ sS'TH'
 p151
 S"<class 'gluon.html.TH'>"
 p152
-sS'URL'
+sS'URL('
 p153
 S'<function URL>'
 p154
@@ -696,9 +696,9 @@ sS'TD'
 p335
 S"<class 'gluon.html.TD'>"
 p336
-sS'IS_URL'
+sS'IS_URL('
 p337
-S"<class 'gluon.validators.IS_URL'>"
+S"<class 'gluon.validators.IS_URL('>"
 p338
 sS'A'
 S"<class 'gluon.html.A'>"

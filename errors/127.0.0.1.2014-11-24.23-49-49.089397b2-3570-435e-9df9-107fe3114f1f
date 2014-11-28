@@ -228,7 +228,7 @@ sI85
 S'        db(db.reward.idreward == rewardid).delete()'
 p106
 sI86
-S"        redirect(URL('bootup','reward','view',args=[projectid]))"
+S"        redirect(URL('reward','view',args=[projectid]))"
 p107
 sI87
 S''
@@ -322,7 +322,7 @@ sI17
 S'            if not self.is_logged_in():'
 p138
 sI18
-S"                redirect(URL('bootup','user','login'))"
+S"                redirect(URL('user','login'))"
 p139
 sI19
 S'                return'
@@ -407,7 +407,7 @@ sI39
 S'        db.reward.insert(description=form.vars.description, value=form.vars.value, projectid=projectid)'
 p171
 sI40
-S"        redirect(URL('bootup','reward','view',args=[projectid]))"
+S"        redirect(URL('reward','view',args=[projectid]))"
 p172
 sI41
 S'    return dict(project=project, form=form)'

@@ -72,7 +72,7 @@
     'Email : ': 'Emel : ',
     'Email sent': 'Emel dihantar',
     'enter a valid email address': 'masukkan alamat emel yang benar',
-    'enter a valid URL': 'masukkan URL yang benar',
+    'enter a valid URL(': 'masukkan URL yang benar',
     'enter a value': 'masukkan data',
     'Error': 'Kesalahan',
     'Errors': 'Kesalahan',

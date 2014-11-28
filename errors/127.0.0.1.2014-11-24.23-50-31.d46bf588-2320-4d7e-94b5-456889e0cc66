@@ -198,7 +198,7 @@ sI44
 S"    response.write('\\n            This project currently has no pledge levels\\n            ', escape=False)"
 p94
 sI45
-S"    response.write(A('Add Reward',_href=URL('bootup','pledge','create',args=[project.idproject])))"
+S"    response.write(A('Add Reward',_href=URL('pledge','create',args=[project.idproject])))"
 p95
 sI46
 S"    response.write('\\n', escape=False)"
@@ -225,13 +225,13 @@ sI53
 S"        response.write('</h4>\\n            ', escape=False)"
 p103
 sI54
-S"        response.write(A('Edit',_href=URL('bootup','pledge','edit',args=[reward.idreward])))"
+S"        response.write(A('Edit',_href=URL('pledge','edit',args=[reward.idreward])))"
 p104
 sI55
 S"        response.write(' ', escape=False)"
 p105
 sI56
-S"        response.write(A('Delete',_href=URL('bootup','pledge','delete',args=[reward.idreward])))"
+S"        response.write(A('Delete',_href=URL('pledge','delete',args=[reward.idreward])))"
 p106
 sI57
 S"        response.write('\\n            ', escape=False)"

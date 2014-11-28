@@ -189,13 +189,13 @@ I32
 S"    response.write('\\n                    <li>', escape=False)"
 p91
 sI33
-S"    response.write(A('Login',_href=URL('bootup','user','login')))"
+S"    response.write(A('Login',_href=URL('user','login')))"
 p92
 sI34
 S"    response.write('</li>\\n                    <li>', escape=False)"
 p93
 sI35
-S"    response.write(A('Register',_href=URL('bootup','user','register')))"
+S"    response.write(A('Register',_href=URL('user','register')))"
 p94
 sI36
 S"    response.write('</li>\\n              ', escape=False)"

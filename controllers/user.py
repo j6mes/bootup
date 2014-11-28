@@ -72,7 +72,7 @@ def login():
     form = LOGINFORM.factory()
 
     if form.process().accepted:
-        redirect(URL('bootup', 'user', 'index'))
+        redirect(URL('bootup','user', 'index'))
 
     return dict(form=form)
 
@@ -80,7 +80,7 @@ def login():
 @auth.requires_login
 def logout():
     session.user = 0
-    redirect(URL('bootup', 'project', 'index'))
+    redirect(URL('bootup','project', 'index'))
 
 
 @auth.requires_login

@@ -1,7 +1,7 @@
 (dp1
 S'output'
 p2
-S"<type 'exceptions.Exception'> <Row {'project': {'categoryid': 8L, 'managerid': 1L, 'id': 11L, 'story': 'editedjliyt60bvsyf', 'goal': 100.0, 'title': 'edited hhjr0sy0a0', 'longdescription': 'edited2nx5nenipr', 'idproject': 11L, 'imageurl': 'project.imageurl.8e9c221de1108b6a.323031342d30322d32342031322e34312e34342e6a7067.jpg', 'shortdescription': 'edited v1bz6yb'}, 'pledge': {'description': 'tetstesteststes111', 'projectid': 11L, 'value': 1002.0, 'idpledge': 13L, 'id': 13L}}>"
+S"<type 'exceptions.Exception'> <Row {'project': {'categoryid': 8L, 'managerid': 1L, 'id': 11L, 'story': 'editedjliyt60bvsyf', 'goal': 100.0, 'title': 'edited hhjr0sy0a0', 'longdescription': 'edited2nx5nenipr', 'idproject': 11L, 'imageURL(': 'project.imageurl.8e9c221de1108b6a.323031342d30322d32342031322e34312e34342e6a7067.jpg', 'shortdescription': 'edited v1bz6yb'}, 'pledge': {'description': 'tetstesteststes111', 'projectid': 11L, 'value': 1002.0, 'idpledge': 13L, 'id': 13L}}>"
 p3
 sS'layer'
 p4
@@ -103,7 +103,7 @@ S'<built-in method __new__ of type object>'
 p53
 ssS'evalue'
 p54
-S"<Row {'project': {'categoryid': 8L, 'managerid': 1L, 'id': 11L, 'story': 'editedjliyt60bvsyf', 'goal': 100.0, 'title': 'edited hhjr0sy0a0', 'longdescription': 'edited2nx5nenipr', 'idproject': 11L, 'imageurl': 'project.imageurl.8e9c221de1108b6a.323031342d30322d32342031322e34312e34342e6a7067.jpg', 'shortdescription': 'edited v1bz6yb'}, 'pledge': {'description': 'tetstesteststes111', 'projectid': 11L, 'value': 1002.0, 'idpledge': 13L, 'id': 13L}}>"
+S"<Row {'project': {'categoryid': 8L, 'managerid': 1L, 'id': 11L, 'story': 'editedjliyt60bvsyf', 'goal': 100.0, 'title': 'edited hhjr0sy0a0', 'longdescription': 'edited2nx5nenipr', 'idproject': 11L, 'imageURL(': 'project.imageurl.8e9c221de1108b6a.323031342d30322d32342031322e34312e34342e6a7067.jpg', 'shortdescription': 'edited v1bz6yb'}, 'pledge': {'description': 'tetstesteststes111', 'projectid': 11L, 'value': 1002.0, 'idpledge': 13L, 'id': 13L}}>"
 p55
 sS'request'
 p56
@@ -189,7 +189,7 @@ I128
 S'        db(db.reward.idreward == rewardid).delete()'
 p91
 sI129
-S"        redirect(URL('bootup','reward','view',args=[projectid]))"
+S"        redirect(URL('reward','view',args=[projectid]))"
 p92
 sI130
 S''
@@ -298,7 +298,7 @@ sI17
 S'            if not self.is_logged_in():'
 p126
 sI18
-S"                redirect(URL('bootup','user','login'))"
+S"                redirect(URL('user','login'))"
 p127
 sI19
 S'                return'

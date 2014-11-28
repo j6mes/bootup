@@ -204,7 +204,7 @@ sI87
 S'        reward.reward.delete()'
 p94
 sI88
-S"        redirect(URL('bootup','reward','view',args=[projectid]))"
+S"        redirect(URL('reward','view',args=[projectid]))"
 p95
 sI89
 S''
@@ -310,7 +310,7 @@ sI87
 S'        reward.reward.delete()'
 p130
 sI88
-S"        redirect(URL('bootup','reward','view',args=[projectid]))"
+S"        redirect(URL('reward','view',args=[projectid]))"
 p131
 sI89
 S''

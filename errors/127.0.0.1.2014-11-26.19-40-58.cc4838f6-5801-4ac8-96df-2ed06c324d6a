@@ -9,7 +9,7 @@ S'/Users/james/Documents/Dropbox/Uni/Year 4/iapt/assessment/web2py-2.9.11/web2py
 p5
 sS'code'
 p6
-S"from applications.bootup.forms.bootupform import BOOTUPFORM\n\n@auth.requires_login\ndef create():\n    form = BOOTUPFORM(db.address)\n    if form.process().accepted:\n        redirect(URL('bootup','address','index'))\n\n    return dict(form=form)\n\n@auth.requires_login\ndef edit():\n    addressid = request.args(0)\n\n    if addressid is None:\n        raise HTTP(404,'No address id specified')\n\n\n    address = db((db.address.idaddress==addressid) & (db.address.userid == auth.user_id)).select(db.address.ALL).first()\n\n    if address is None:\n        raise HTTP(404,'Address not found')\n\n    form = BOOTUPFORM(db.address,address)\n\n    if form.process().accepted:\n        redirect(URL('bootup','address','index'))\n\n    return dict(form=form)\n\n@auth.requires_login\ndef delete():\n    addressid = request.args(0)\n\n    if addressid is None:\n        raise HTTP(404,'No address id specified')\n\n    address = db((db.address.idaddress==addressid) & (db.address.userid == auth.user_id)).select(db.address.ALL).first()\n\n    if address is None:\n        raise HTTP(404,'Address not found')\n\n    form = FORM.confirm('Delete',{'Back':URL('bootup','address','index')})\n\n    if form.accepted:\n        db(db.address.idaddress==addressid).delete()\n        redirect(URL('bootup','address','index'))\n\n    return dict(form=form)\n\n@auth.requires_login\ndef index():\n    addresses = db((db.address.userid == auth.user_id) & (db.country.code == db.address.countrycode)).select(db.address.ALL,db.country.ALL)\n    return dict(addresses=addresses)\nresponse._vars=response._caller(create)\n"
+S"from applications.bootup.forms.bootupform import BOOTUPFORM\n\n@auth.requires_login\ndef create():\n    form = BOOTUPFORM(db.address)\n    if form.process().accepted:\n        redirect(URL('address','index'))\n\n    return dict(form=form)\n\n@auth.requires_login\ndef edit():\n    addressid = request.args(0)\n\n    if addressid is None:\n        raise HTTP(404,'No address id specified')\n\n\n    address = db((db.address.idaddress==addressid) & (db.address.userid == auth.user_id)).select(db.address.ALL).first()\n\n    if address is None:\n        raise HTTP(404,'Address not found')\n\n    form = BOOTUPFORM(db.address,address)\n\n    if form.process().accepted:\n        redirect(URL('address','index'))\n\n    return dict(form=form)\n\n@auth.requires_login\ndef delete():\n    addressid = request.args(0)\n\n    if addressid is None:\n        raise HTTP(404,'No address id specified')\n\n    address = db((db.address.idaddress==addressid) & (db.address.userid == auth.user_id)).select(db.address.ALL).first()\n\n    if address is None:\n        raise HTTP(404,'Address not found')\n\n    form = FORM.confirm('Delete',{'Back':URL('address','index')})\n\n    if form.accepted:\n        db(db.address.idaddress==addressid).delete()\n        redirect(URL('address','index'))\n\n    return dict(form=form)\n\n@auth.requires_login\ndef index():\n    addresses = db((db.address.userid == auth.user_id) & (db.country.code == db.address.countrycode)).select(db.address.ALL,db.country.ALL)\n    return dict(addresses=addresses)\nresponse._vars=response._caller(create)\n"
 p7
 sS'snapshot'
 p8
@@ -200,7 +200,7 @@ sI46
 S'        db(db.address.idaddress==addressid).delete()'
 p96
 sI47
-S"        redirect(URL('bootup','address','index'))"
+S"        redirect(URL('address','index'))"
 p97
 sI48
 S''
@@ -308,7 +308,7 @@ sI17
 S'            if not self.is_logged_in():'
 p132
 sI18
-S"                redirect(URL('bootup','user','login'))"
+S"                redirect(URL('user','login'))"
 p133
 sI19
 S'                return'
@@ -363,7 +363,7 @@ sI6
 S'    if form.process().accepted:'
 p151
 sI7
-S"        redirect(URL('bootup','address','index'))"
+S"        redirect(URL('address','index'))"
 p152
 sI8
 S''

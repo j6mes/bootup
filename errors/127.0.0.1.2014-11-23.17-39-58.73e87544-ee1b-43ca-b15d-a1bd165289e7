@@ -186,7 +186,7 @@ I44
 sg71
 (dp90
 I35
-S"    response.write(A('Register',_href=URL('bootup','user','register')))"
+S"    response.write(A('Register',_href=URL('user','register')))"
 p91
 sI36
 S"    response.write('</li>\\n              ', escape=False)"
@@ -207,7 +207,7 @@ sI41
 S"    response.write('\\n                        ', escape=False)"
 p97
 sI42
-S"    response.write(H3(A(record.project.title, _href=URL('bootup','project','dashboard',args=[record.project.idproject]))))"
+S"    response.write(H3(A(record.project.title, _href=URL('project','dashboard',args=[record.project.idproject]))))"
 p98
 sI43
 S"    response.write('\\n\\n<nav>\\n    ', escape=False)"

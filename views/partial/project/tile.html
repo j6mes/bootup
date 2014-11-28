@@ -13,7 +13,7 @@
 
 
         <div class="project_image"><a href="{{=URL('bootup','project','view',args=[record.project.idproject])}}"><img
-                src="{{=URL('img',args=record.project.imageurl)}}"/></a></div>
+                src="{{=URL('project','img',args=record.project.imageurl)}}"/></a></div>
         <div class="project_tile_text">
             <div class="project_name">{{=H3(A(record.project.title, _href=URL('bootup','project','view',args=[record.project.idproject])))}}</div>
             <p>{{=record.project.shortdescription}}</p>
