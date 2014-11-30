@@ -4,9 +4,9 @@
 <div><span class="step">3</span>Manage Pledge Levels</div>
 <div><span class="step">4</span>Open Project</div>
 {{else:}}
-<div><a href="{{=URL('bootup','project','edit',args=[projectid])}}"><span class="step">1</span>Edit Project</a></div>
-<div><a href="{{=URL('bootup','reward','view',args=[projectid])}}"><span class="step">2</span>Manage Rewards</a></div>
-<div><a href="{{=URL('bootup','pledge','view',args=[projectid])}}"><span class="step">3</span>Manage Pledge Levels</a>
+<div><a href="{{=URL('project','edit',args=[projectid])}}"><span class="step">1</span>Edit Project</a></div>
+<div><a href="{{=URL('reward','view',args=[projectid])}}"><span class="step">2</span>Manage Rewards</a></div>
+<div><a href="{{=URL('pledge','view',args=[projectid])}}"><span class="step">3</span>Manage Pledge Levels</a>
 </div>
-<div><a href="{{=URL('bootup','project','open',args=[projectid])}}"><span class="step">4</span>Open Project</a></div>
+<div><a href="{{=URL('project','open',args=[projectid])}}"><span class="step">4</span>Open Project</a></div>
 {{pass}}

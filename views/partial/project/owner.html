@@ -1,25 +1,25 @@
 <div class="project_summary">
-{{=H3(A(record.project.title, _href=URL('bootup','project','view',args=[record.project.idproject])))}}
+{{=H3(A(record.project.title, _href=URL('project','view',args=[record.project.idproject])))}}
 
 
     <nav>
     {{if record.project.canedit():}}
-        {{=A("Edit",_href=URL('bootup','project','edit', args=[record.project.idproject])) }}
-        {{=A("Manage Rewards",_href=URL('bootup','reward','view',args=[record.project.idproject]))}}
-        {{=A("Manage Pledge Levels",_href=URL('bootup','pledge','view',args=[record.project.idproject]))}}
+        {{=A("Edit",_href=URL('project','edit', args=[record.project.idproject])) }}
+        {{=A("Manage Rewards",_href=URL('reward','view',args=[record.project.idproject]))}}
+        {{=A("Manage Pledge Levels",_href=URL('pledge','view',args=[record.project.idproject]))}}
     {{pass}}
 
     {{if record.project.candelete():}}
-        {{=A("Delete",_href=URL('bootup','project','delete', args=[record.project.idproject])) }}
+        {{=A("Delete",_href=URL('project','delete', args=[record.project.idproject])) }}
 
     {{pass}}
 
     {{if record.project.canopen():}}
-        {{=A("Open",_href=URL('bootup','project','open', args=[record.project.idproject])) }}
+        {{=A("Open",_href=URL('project','open', args=[record.project.idproject])) }}
     {{pass}}
 
     {{if record.project.canclose():}}
-        {{=A("Close",_href=URL('bootup','project','close', args=[record.project.idproject])) }}
+        {{=A("Close",_href=URL('project','close', args=[record.project.idproject])) }}
     {{pass}}
     </nav>
 

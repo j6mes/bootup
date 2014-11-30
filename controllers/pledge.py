@@ -12,6 +12,7 @@ def make():
     pledge = db((db.pledge.idpledge == pledgeid) & (db.project.idproject == db.pledge.projectid)).select(db.project.ALL,
                                                                                                          db.pledge.ALL).first()
 
+
     if pledge is None:
         raise HTTP(404, 'Pledge level does not exist')
 
@@ -21,11 +22,19 @@ def make():
     if pledge.project.hascontributed():
         raise HTTP(403, 'Already contributed')
 
+
+    addresses = db(db.address.userid==auth.user_id).count()
+    cards = db(db.card.userid==auth.user_id).count()
+
+    if addresses==0 or cards == 0:
+        raise HTTP(400, "Your profile is incomplete. Please add an address and a credit card")
+
+
     form = BOOTUPFORM.factory(db.booting)
     if form.process().accepted:
         db.booting.insert(openprojectid=pledge.project.idproject, pledgeid=pledgeid, addressid=form.vars.addressid,
                           cardid=form.vars.cardid, bootingdate=request.now, userid=auth.user_id)
-        redirect(URL('bootup','project', 'view', args=[pledge.project.idproject]))
+        redirect(URL('project', 'view', args=[pledge.project.idproject]))
 
     return dict(pledge=pledge, form=form)
 
@@ -81,7 +90,7 @@ def create():
             if int(dbreward.projectid) is int(projectid):
                 db.rewardpledge.insert(rewardid=reward, pledgeid=pledgeid)
 
-        redirect(URL('bootup','pledge', 'view', args=[projectid]))
+        redirect(URL('pledge', 'view', args=[projectid]))
     return dict(project=project, form=form, projectid=projectid)
 
 
@@ -123,8 +132,8 @@ def edit():
 
         db(db.pledge.idpledge == pledgeid).update(description=form.vars.description, value=form.vars.value)
 
-        redirect(URL('bootup','pledge', 'view', args=[pledge.pledge.projectid]))
-    return dict(form=form, projectid=projectid)
+        redirect(URL('pledge', 'view', args=[pledge.pledge.projectid]))
+    return dict(form=form, projectid=pledge.pledge.projectid)
 
 
 @onerror
@@ -149,6 +158,6 @@ def delete():
 
     if form.accepted:
         db(db.reward.idreward == rewardid).delete()
-        redirect(URL('bootup','reward', 'view', args=[projectid]))
+        redirect(URL('reward', 'view', args=[projectid]))
 
     return dict(form=form, projectid=projectid)

@@ -20,7 +20,7 @@ def index():
 def create():
     form = BOOTUPFORM(db.card)
     if form.process(onvalidation=computedate).accepted:
-        redirect(URL('bootup','card', 'index'))
+        redirect(URL('card', 'index'))
 
     return dict(form=form)
 
@@ -40,7 +40,7 @@ def edit():
 
     form = BOOTUPFORM(db.card, card)
     if form.process(onvalidation=computedate).accepted:
-        redirect(URL('bootup','card', 'index'))
+        redirect(URL('card', 'index'))
     return dict(form=form)
 
 
@@ -57,8 +57,8 @@ def delete():
     if card is None:
         raise HTTP(404, "Card not found")
 
-    form = FORM.confirm('Delete', {'Back': URL('bootup','card', 'index')})
+    form = FORM.confirm('Delete', {'Back': URL('card', 'index')})
     if form.process().accepted:
         db(db.card.idcard == cardid).delete()
-        redirect(URL('bootup','card', 'index'))
+        redirect(URL('card', 'index'))
     return dict(form=form)

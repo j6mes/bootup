@@ -3,7 +3,7 @@
 {{extend 'bootup.html'}}
 
 <h2>Pledge Levels for {{=project.title}}</h2>
-<div>{{=A('Add Pledge Level',_href=URL('bootup','pledge','create',args=[project.idproject]))}}</div>
+<div>{{=A('Add Pledge Level',_href=URL('pledge','create',args=[project.idproject]))}}</div>
 <div class="row">
     <div class="col-xs-12 col-xs-8 col-md-8 col-lg-8">
     {{pledges = project.pledges()
@@ -17,7 +17,7 @@
 
     for pledge in pledges:}}
         <h4>&pound;{{=pledge.pledge.value}} {{=pledge.pledge.description}}</h4>
-    {{=A('Edit',_href=URL('bootup','pledge','edit',args=[pledge.pledge.idpledge]))}} {{=A('Delete',_href=URL('bootup','pledge','delete',args=[pledge.pledge.idpledge]))}}
+    {{=A('Edit',_href=URL('pledge','edit',args=[pledge.pledge.idpledge]))}} {{=A('Delete',_href=URL('pledge','delete',args=[pledge.pledge.idpledge]))}}
     {{pass}}
     {{pass}}
 

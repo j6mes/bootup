@@ -40,7 +40,7 @@ def create():
     form = BOOTUPFORM.factory(db.reward)
     if ( form.process().accepted):
         db.reward.insert(description=form.vars.description, projectid=projectid)
-        redirect(URL('bootup','reward', 'view', args=[projectid]))
+        redirect(URL('reward', 'view', args=[projectid]))
     return dict(project=project, form=form, projectid=projectid)
 
 
@@ -63,7 +63,7 @@ def edit():
 
     form = BOOTUPFORM(db.reward, record=reward.reward)
     if ( form.process().accepted):
-        redirect(URL('bootup','reward', 'view', args=[reward.reward.projectid]))
+        redirect(URL('reward', 'view', args=[reward.reward.projectid]))
     return dict(form=form, projectid=reward.reward.projectid)
 
 
@@ -89,6 +89,6 @@ def delete():
 
     if form.accepted:
         db(db.reward.idreward == rewardid).delete()
-        redirect(URL('bootup','reward', 'view', args=[projectid]))
+        redirect(URL('reward', 'view', args=[projectid]))
 
     return dict(form=form, projectid=projectid)

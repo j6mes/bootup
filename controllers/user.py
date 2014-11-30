@@ -7,7 +7,7 @@ class REGISTRATIONFORM(BOOTUPFORM):
     @staticmethod
     def factory():
         return REGISTRATIONFORM(
-            DAL(None).define_table('user', db.user, Field('password', type="password"),
+            DAL(None).define_table('user', db.user, Field('password', type="password",requires=IS_LENGTH(minsize=6, error_message="Password must be at least 6 characters long")),
                                    Field('confirmpassword', type='password', label="Confirm Password",
                                          requires=IS_EQUAL_TO(request.vars.password,
                                                               error_message="Passwords do not match")),
@@ -55,6 +55,35 @@ class LOGINFORM(BOOTUPFORM):
                                                 Field('password', type='password')
         ), **kwargs)
 
+class CHANGEPASSWORDFORM(BOOTUPFORM):
+    def checkuser(self, form):
+        user = db(db.credential.userid == auth.user_id).select(db.credential.ALL).first()
+
+        if hashlib.sha256(hashlib.sha256(
+                form.vars.oldpassword).hexdigest() + user.passwordsalt).hexdigest() != user.passwordhash:
+            form.errors.oldpassword = "Incorrect password"
+        else:
+            credentialvars = dict()
+            credentialvars['passwordsalt'] = os.urandom(12).encode('base_64')
+            credentialvars['passwordhash'] = hashlib.sha256(
+                hashlib.sha256(form.vars.password).hexdigest() + credentialvars['passwordsalt']).hexdigest()
+            db(db.credential.userid==auth.user_id).update(**credentialvars)
+
+
+    def process(self, **kwargs):
+        return super(CHANGEPASSWORDFORM, self).process(onvalidation=self.checkuser, **kwargs)
+
+    @staticmethod
+    def factory(**kwargs):
+        return CHANGEPASSWORDFORM(DAL(None).define_table("no_table",
+                                                Field('oldpassword',type='password',label="Old Password"),
+                                                Field('password', type='password',label="New Password",requires=IS_LENGTH(minsize=6, error_message="Password must be at least 6 characters long")),
+                                                Field('confirmpassword',type='password',label="Confirm Password",requires=IS_EQUAL_TO(request.vars.password,
+                                                              error_message="Passwords do not match"))
+        ), **kwargs)
+
+
+
 
 def register():
     form = REGISTRATIONFORM.factory()
@@ -72,7 +101,7 @@ def login():
     form = LOGINFORM.factory()
 
     if form.process().accepted:
-        redirect(URL('bootup','user', 'index'))
+        redirect(URL('user', 'index'))
 
     return dict(form=form)
 
@@ -80,7 +109,7 @@ def login():
 @auth.requires_login
 def logout():
     session.user = 0
-    redirect(URL('bootup','project', 'index'))
+    redirect(URL('project', 'index'))
 
 
 @auth.requires_login
@@ -104,3 +133,21 @@ def projects():
 
     projects = db(qry & projectstats).select(db.project.ALL, db.projectstat.ALL)
     return dict(projects=projects)
+
+@auth.requires_login
+def edit():
+    user = db(db.user.iduser==auth.user_id).select(db.user.ALL).first()
+    form = BOOTUPFORM(db.user,user)
+
+    if form.process().accepted:
+        redirect(URL('user','index'))
+    return dict(form=form)
+
+
+@auth.requires_login
+def password():
+    form = CHANGEPASSWORDFORM.factory()
+
+    if form.process().accepted:
+        redirect(URL('user','index'))
+    return dict(form=form)

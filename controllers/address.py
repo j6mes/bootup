@@ -10,7 +10,7 @@ def setuserid(form):
 def create():
     form = BOOTUPFORM(db.address)
     if form.process(onvalidation=setuserid).accepted:
-        redirect(URL('bootup','address', 'index'))
+        redirect(URL('address', 'index'))
 
     return dict(form=form)
 
@@ -32,7 +32,7 @@ def edit():
     form = BOOTUPFORM(db.address, address)
 
     if form.process().accepted:
-        redirect(URL('bootup','address', 'index'))
+        redirect(URL('address', 'index'))
 
     return dict(form=form)
 
@@ -51,11 +51,11 @@ def delete():
     if address is None:
         raise HTTP(404, 'Address not found')
 
-    form = FORM.confirm('Delete', {'Back': URL('bootup','address', 'index')})
+    form = FORM.confirm('Delete', {'Back': URL('address', 'index')})
 
     if form.accepted:
         db(db.address.idaddress == addressid).delete()
-        redirect(URL('bootup','address', 'index'))
+        redirect(URL('address', 'index'))
 
     return dict(form=form)
 

@@ -6,10 +6,19 @@
 <div class="project_fullwidth project_preview">
     <div class="container">
         This is a preview page of your project. <a
-            href="{{=URL('bootup','project','edit',args=[record.project.idproject])}}">Edit this project</a>
+            href="{{=URL('project','edit',args=[record.project.idproject])}}">Edit this project</a>
     </div>
 </div>
 {{pass}}
+
+{{if record.project.hascontributed(): }}
+    <div class="project_fullwidth project_pledged">
+    <div class="container">
+        You have contributed to this project
+    </div>
+</div>
+{{pass}}
+
 
 <div class="project_fullwidth ">
     <div class="container">
@@ -37,7 +46,7 @@
                                      style="width:{{=record.projectstat.limitedprogress}}%"></div>
                             </div>
                             {{if record.projectstat.totalvalue==0:}}<a
-                                    href="{{=URL('bootup','project','pledge',args=[record.project.idproject])}}">Why not
+                                    href="{{=URL('project','pledge',args=[record.project.idproject])}}">Why not
                             be the first to pledge &raquo;</a>{{pass}}
                         </div>
 

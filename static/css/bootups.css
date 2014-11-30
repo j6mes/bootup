@@ -160,26 +160,46 @@ http://css-tricks.com/examples/ShapesOfCSS/
 }
 
 .project_tile {
-    margin-bottom: 60px;
-    min-height: 400px;
+    margin-bottom: 30px;
+    height: 500px;
 
 }
 
 .project_tile_inner {
     border: 1px solid #ccc;
-    max-height: 400px;
+    height: 500px;
 }
 
 .project_tile_text, .project_tile_text p, .project_tile_text .project_stats {
     padding: 10px;
 }
 
-.project_image img {
+.project_page .project_image img {
     width: 100% !important;
     z-index: 1;
 
     position: relative;
 }
+
+
+.project_tile .project_image {
+    width:100%;
+    position: relative;
+
+  height: 300px;
+  overflow: hidden;
+}
+.project_tile .project_image img {
+    position: absolute;
+  left: 50%;
+  top: 50%;
+  height: 100%;
+  width: auto;
+  -webkit-transform: translate(-50%,-50%);
+      -ms-transform: translate(-50%,-50%);
+          transform: translate(-50%,-50%);
+}
+
 
 .project_summary_image .project_image img {
     width: 200px !important;
@@ -412,6 +432,20 @@ http://css-tricks.com/examples/ShapesOfCSS/
     color: #ffffff;
     background-color: #ee4444;
 }
+
+
+.project_pledged {
+    background-color: #2FC42F;
+    padding: 15px;
+
+}
+
+.project_pledged .container, .project_pledged .container a {
+    text-align: center;
+    color: #ffffff;
+    background-color: #2FC42F;
+}
+
 
 .step {
     border-radius: 40px;

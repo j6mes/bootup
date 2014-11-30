@@ -2,7 +2,7 @@
 
 
 {{if not record.project.hascontributed(): }}
-    <a href="{{=URL('bootup','pledge','make',args=[pledge.pledge.idpledge])}}">
+    <a href="{{=URL('pledge','make',args=[pledge.pledge.idpledge])}}">
     {{pass}}
         <div class="sidebyside">
             <div class="sidebysideitem pledge_value">&pound;{{=pledge.pledge.value}}</div>

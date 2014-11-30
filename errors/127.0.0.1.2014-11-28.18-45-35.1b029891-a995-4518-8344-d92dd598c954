@@ -1,0 +1,487 @@
+(dp1
+S'output'
+p2
+S"<type 'exceptions.TypeError'> super(type, obj): obj must be an instance or subtype of type"
+p3
+sS'layer'
+p4
+S'/Users/james/Documents/Dropbox/Uni/Year 4/iapt/assessment/web2py/web2py/applications/bootup/controllers/user.py'
+p5
+sS'code'
+p6
+S'import hashlib, os\n\nfrom applications.bootup.forms.bootupform import BOOTUPFORM\n\n\nclass REGISTRATIONFORM(BOOTUPFORM):\n    @staticmethod\n    def factory():\n        return REGISTRATIONFORM(\n            DAL(None).define_table(\'user\', db.user, Field(\'password\', type="password",requires=IS_LENGTH(minsize=6, error_message="Password must be at least 6 characters long")),\n                                   Field(\'confirmpassword\', type=\'password\', label="Confirm Password",\n                                         requires=IS_EQUAL_TO(request.vars.password,\n                                                              error_message="Passwords do not match")),\n                                   db.address))\n\n\n    def insertuserinfo(self, form):\n        user = db.user.insert(**db.user._filter_fields(form.vars))\n        form.vars.userid = user[\'iduser\']\n\n        db.address.insert(**db.address._filter_fields(form.vars))\n\n        credentialvars = dict()\n        credentialvars[\'userid\'] = user[\'iduser\']\n        credentialvars[\'passwordsalt\'] = os.urandom(12).encode(\'base_64\')\n        credentialvars[\'passwordhash\'] = hashlib.sha256(\n            hashlib.sha256(form.vars.password).hexdigest() + credentialvars[\'passwordsalt\']).hexdigest()\n        db.credential.update_or_insert(**credentialvars)\n\n\n    def process(self, **kwargs):\n        return super(REGISTRATIONFORM, self).process(onvalidation=self.insertuserinfo, **kwargs)\n\n\nclass LOGINFORM(BOOTUPFORM):\n    def checkuser(self, form):\n        user = db((db.credential.userid == db.user.iduser) & (db.user.username.like(form.vars.username))).select(\n            db.user.iduser, db.credential.passwordsalt, db.credential.passwordhash).first()\n        if user is None:\n            form.errors.username = "User is not registered"\n        elif hashlib.sha256(hashlib.sha256(\n                form.vars.password).hexdigest() + user.credential.passwordsalt).hexdigest() != user.credential.passwordhash:\n            form.errors.password = "Incorrect password"\n        else:\n            session.user = user.user.iduser\n\n\n    def process(self, **kwargs):\n        return super(LOGINFORM, self).process(onvalidation=self.checkuser, **kwargs)\n\n    @staticmethod\n    def factory(**kwargs):\n        return LOGINFORM(DAL(None).define_table("no_table",\n                                                Field(\'username\'),\n                                                Field(\'password\', type=\'password\')\n        ), **kwargs)\n\nclass CHANGEPASSWORDFORM(BOOTUPFORM):\n    def checkuser(self, form):\n        user = db(db.credential.userid == auth.user_id).select(db.credential.passwordsalt, db.credential.passwordhash).first()\n\n        if hashlib.sha256(hashlib.sha256(\n                form.vars.oldpassword).hexdigest() + user.credential.passwordsalt).hexdigest() != user.credential.passwordhash:\n            form.errors.oldpassword = "Incorrect password"\n\n        credentialvars = dict()\n        credentialvars[\'userid\'] = user[\'iduser\']\n        credentialvars[\'passwordsalt\'] = os.urandom(12).encode(\'base_64\')\n        credentialvars[\'passwordhash\'] = hashlib.sha256(\n            hashlib.sha256(form.vars.password).hexdigest() + credentialvars[\'passwordsalt\']).hexdigest()\n        db.credential.update_or_insert(**credentialvars)\n\n\n    def process(self, **kwargs):\n        return super(LOGINFORM, self).process(onvalidation=self.checkuser, **kwargs)\n\n    @staticmethod\n    def factory(**kwargs):\n        return CHANGEPASSWORDFORM(DAL(None).define_table("no_table",\n                                                Field(\'oldpassword\',type=\'password\'),\n                                                Field(\'password\', type=\'password\',label="New Password",requires=IS_LENGTH(minsize=6, error_message="Password must be at least 6 characters long")),\n                                                Field(\'confirmpassword\',type=\'password\',label="Confirm Password",requires=IS_EQUAL_TO(request.vars.password,\n                                                              error_message="Passwords do not match"))\n        ), **kwargs)\n\n\n\n\ndef register():\n    form = REGISTRATIONFORM.factory()\n\n    message = ""\n\n    if form.process().accepted:\n        message = \'form accepted\'\n    elif form.errors:\n        message = \'form has errors\'\n    return dict(form=form, message=message)\n\n\ndef login():\n    form = LOGINFORM.factory()\n\n    if form.process().accepted:\n        redirect(URL(\'user\', \'index\'))\n\n    return dict(form=form)\n\n\n@auth.requires_login\ndef logout():\n    session.user = 0\n    redirect(URL(\'project\', \'index\'))\n\n\n@auth.requires_login\ndef index():\n    projects = db(db.user.iduser == auth.user_id).select().first().expectedrewards()\n    return dict(projects=projects)\n\n\n@auth.requires_login\ndef projects():\n    qry = myprojects\n\n    if (request.args(0) == "not_started"):\n        qry &= notstartedprojects\n    elif (request.args(0) == "opened"):\n        qry &= openprojects\n    elif (request.args(0) == "not_funded"):\n        qry &= closedprojects & notfundedprojects\n    elif (request.args(0) == "funded"):\n        qry &= closedprojects & fundedprojects\n\n    projects = db(qry & projectstats).select(db.project.ALL, db.projectstat.ALL)\n    return dict(projects=projects)\n\n@auth.requires_login\ndef edit():\n    user = db(db.user.iduser==auth.user_id).select(db.user.ALL).first()\n    form = BOOTUPFORM(db.user,user)\n\n    if form.process().accepted:\n        redirect(URL(\'user\',\'index\'))\n    return dict(form=form)\n\n\n@auth.requires_login\ndef password():\n    form = CHANGEPASSWORDFORM.factory()\n\n    if form.process().accepted:\n        redirect(URL(\'user\',\'index\'))\n    return dict(form=form)\nresponse._vars=response._caller(password)\n'
+p7
+sS'snapshot'
+p8
+(dp9
+S'exception'
+p10
+(dp11
+S'__hash__'
+p12
+S"<method-wrapper '__hash__' of exceptions.TypeError object>"
+p13
+sS'__setattr__'
+p14
+S"<method-wrapper '__setattr__' of exceptions.TypeError object>"
+p15
+sS'__reduce_ex__'
+p16
+S'<built-in method __reduce_ex__ of exceptions.TypeError object>'
+p17
+sS'__getslice__'
+p18
+S"<method-wrapper '__getslice__' of exceptions.TypeError object>"
+p19
+sS'__getitem__'
+p20
+S"<method-wrapper '__getitem__' of exceptions.TypeError object>"
+p21
+sS'__setstate__'
+p22
+S'<built-in method __setstate__ of exceptions.TypeError object>'
+p23
+sS'args'
+p24
+S"('super(type, obj): obj must be an instance or subtype of type',)"
+p25
+sS'__reduce__'
+p26
+S'<built-in method __reduce__ of exceptions.TypeError object>'
+p27
+sS'__str__'
+p28
+S"<method-wrapper '__str__' of exceptions.TypeError object>"
+p29
+sS'__format__'
+p30
+S'<built-in method __format__ of exceptions.TypeError object>'
+p31
+sS'__getattribute__'
+p32
+S"<method-wrapper '__getattribute__' of exceptions.TypeError object>"
+p33
+sS'__class__'
+p34
+S"<type 'exceptions.TypeError'>"
+p35
+sS'__unicode__'
+p36
+S'<built-in method __unicode__ of exceptions.TypeError object>'
+p37
+sS'__delattr__'
+p38
+S"<method-wrapper '__delattr__' of exceptions.TypeError object>"
+p39
+sS'__subclasshook__'
+p40
+S'<built-in method __subclasshook__ of type object>'
+p41
+sS'__repr__'
+p42
+S"<method-wrapper '__repr__' of exceptions.TypeError object>"
+p43
+sS'__dict__'
+p44
+S'{}'
+p45
+sS'__sizeof__'
+p46
+S'<built-in method __sizeof__ of exceptions.TypeError object>'
+p47
+sS'__doc__'
+p48
+S"'Inappropriate argument type.'"
+p49
+sS'__init__'
+p50
+S"<method-wrapper '__init__' of exceptions.TypeError object>"
+p51
+sS'__new__'
+p52
+S'<built-in method __new__ of type object>'
+p53
+ssS'evalue'
+p54
+S'super(type, obj): obj must be an instance or subtype of type'
+p55
+sS'request'
+p56
+cgluon.html
+XML_unpickle
+p57
+(S's\xa5b\x00\x00<div><table><tr><td style="font-weight:bold;vertical-align:top;">ajax</td><td style="vertical-align:top;">:</td><td><div>False</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">application</td><td style="vertical-align:top;">:</td><td><div>bootup</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">args</td><td style="vertical-align:top;">:</td><td><div><table></table></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">cid</td><td style="vertical-align:top;">:</td><td><div>None</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">client</td><td style="vertical-align:top;">:</td><td><div>127.0.0.1</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">controller</td><td style="vertical-align:top;">:</td><td><div>user</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">cookies</td><td style="vertical-align:top;">:</td><td><div><table><tr><td style="font-weight:bold;vertical-align:top;">session_id_admin</td><td style="vertical-align:top;">:</td><td><div>127.0.0.1-35d96a8e-19a2-4e59-b8b0-f6d48a3b342a<table><tr><td style="font-weight:bold;vertical-align:top;">comment</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">domain</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">expires</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">httponly</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">max-age</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">path</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">secure</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">version</td><td style="vertical-align:top;">:</td><td><div></div></td></tr></table></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">session_id_bootup</td><td style="vertical-align:top;">:</td><td><div>127.0.0.1-1df8b906-85be-4427-aa82-8ca4bec859ca<table><tr><td style="font-weight:bold;vertical-align:top;">comment</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">domain</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">expires</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">httponly</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">max-age</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">path</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">secure</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">version</td><td style="vertical-align:top;">:</td><td><div></div></td></tr></table></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">session_id_test</td><td style="vertical-align:top;">:</td><td><div>127.0.0.1-828bfb30-9d54-4ab5-a9f7-069b81aa7ef1<table><tr><td style="font-weight:bold;vertical-align:top;">comment</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">domain</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">expires</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">httponly</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">max-age</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">path</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">secure</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">version</td><td style="vertical-align:top;">:</td><td><div></div></td></tr></table></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">session_id_welcome</td><td style="vertical-align:top;">:</td><td><div>127.0.0.1-89be5aca-28d6-4382-a0af-9382ea5c21b5<table><tr><td style="font-weight:bold;vertical-align:top;">comment</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">domain</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">expires</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">httponly</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">max-age</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">path</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">secure</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">version</td><td style="vertical-align:top;">:</td><td><div></div></td></tr></table></div></td></tr></table></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">env</td><td style="vertical-align:top;">:</td><td><div><table><tr><td style="font-weight:bold;vertical-align:top;">HTTP_ACCEPT</td><td style="vertical-align:top;">:</td><td><div>text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">HTTP_ACCEPT_ENCODING</td><td style="vertical-align:top;">:</td><td><div>gzip,deflate,sdch</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">HTTP_ACCEPT_LANGUAGE</td><td style="vertical-align:top;">:</td><td><div>en-US,en;q=0.8</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">HTTP_CONNECTION</td><td style="vertical-align:top;">:</td><td><div>keep-alive</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">HTTP_COOKIE</td><td style="vertical-align:top;">:</td><td><div>session_id_test=127.0.0.1-828bfb30-9d54-4ab5-a9f7-069b81aa7ef1; session_id_admin=127.0.0.1-35d96a8e-19a2-4e59-b8b0-f6d48a3b342a; session_id_welcome=127.0.0.1-89be5aca-28d6-4382-a0af-9382ea5c21b5; session_id_bootup=127.0.0.1-1df8b906-85be-4427-aa82-8ca4bec859ca</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">HTTP_HOST</td><td style="vertical-align:top;">:</td><td><div>127.0.0.1:8000</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">HTTP_REFERER</td><td style="vertical-align:top;">:</td><td><div>http://127.0.0.1:8000/bootup/user/index</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">HTTP_USER_AGENT</td><td style="vertical-align:top;">:</td><td><div>Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/38.0.2125.122 Safari/537.36</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">PATH_INFO</td><td style="vertical-align:top;">:</td><td><div>/bootup/user/password</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">QUERY_STRING</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">REMOTE_ADDR</td><td style="vertical-align:top;">:</td><td><div>127.0.0.1</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">REMOTE_PORT</td><td style="vertical-align:top;">:</td><td><div>60959</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">REQUEST_METHOD</td><td style="vertical-align:top;">:</td><td><div>GET</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">SCRIPT_NAME</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">SERVER_NAME</td><td style="vertical-align:top;">:</td><td><div>nas10-240-51-102.york.ac.uk</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">SERVER_PORT</td><td style="vertical-align:top;">:</td><td><div>8000</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">SERVER_PROTOCOL</td><td style="vertical-align:top;">:</td><td><div>HTTP/1.1</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">SERVER_SOFTWARE</td><td style="vertical-align:top;">:</td><td><div>Rocket 1.2.6</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">app_folders</td><td style="vertical-align:top;">:</td><td><div>set([&#x27;/Users/james/Documents/Dropbox/Uni/Year 4/iapt/assessment/web2py/web2py/applications/welcome/&#x27;, &#x27;/Users/james/Documents/Dropbox/Uni/Year 4/iapt/assessment/web2py/web2py/applications/bootup/&#x27;])</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">applications_parent</td><td style="vertical-align:top;">:</td><td><div>/Users/james/Documents/Dropbox/Uni/Year 4/iapt/assessment/web2py/web2py</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">cmd_args</td><td style="vertical-align:top;">:</td><td><div><table></table></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">cmd_options</td><td style="vertical-align:top;">:</td><td><div>&lt;Values at 0x10a86c2d8: {&#x27;verbose&#x27;: False, &#x27;ip&#x27;: &#x27;127.0.0.1&#x27;, &#x27;debuglevel&#x27;: 30, &#x27;with_scheduler&#x27;: False, &#x27;ips&#x27;: [&#x27;10.240.51.102&#x27;], &#x27;shutdown_timeout&#x27;: 5, &#x27;taskbar&#x27;: False, &#x27;with_coverage&#x27;: False, &#x27;scheduler_groups&#x27;: None, &#x27;port&#x27;: 8000, &#x27;maxthreads&#x27;: None, &#x27;softcron&#x27;: False, &#x27;server_name&#x27;: &#x27;nas10-240-51-102.york.ac.uk&#x27;, &#x27;bpython&#x27;: False, &#x27;nogui&#x27;: False, &#x27;pid_filename&#x27;: &#x27;httpserver.pid&#x27;, &#x27;extcron&#x27;: False, &#x27;runcron&#x27;: False, &#x27;run_system_tests&#x27;: False, &#x27;test&#x27;: None, &#x27;folder&#x27;: &#x27;/Users/james/Documents/Dropbox/Uni/Year 4/iapt/assessment/web2py/web2py&#x27;, &#x27;config&#x27;: &#x27;&#x27;, &#x27;minthreads&#x27;: None, &#x27;shell&#x27;: None, &#x27;run&#x27;: &#x27;&#x27;, &#x27;log_filename&#x27;: &#x27;httpserver.log&#x27;, &#x27;profiler_dir&#x27;: None, &#x27;args&#x27;: [&#x27;&#x27;], &#x27;socket_timeout&#x27;: 5, &#x27;ssl_ca_certificate&#x27;: None, &#x27;scheduler&#x27;: None, &#x27;interfaces&#x27;: None, &#x27;ssl_private_key&#x27;: &#x27;&#x27;, &#x27;gae&#x27;: None, &#x27;password&#x27;: &#x27;&lt;ask&gt;&#x27;, &#x27;request_queue_size&#x27;: 5, &#x27;ssl_certificate&#x27;: &#x27;&#x27;, &#x27;cronjob&#x27;: False, &#x27;numthreads&#x27;: None, &#x27;quiet&#x27;: False, &#x27;import_models&#x27;: False, &#x27;timeout&#x27;: 10, &#x27;plain&#x27;: False, &#x27;nobanner&#x27;: False}&gt;</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">db_sessions</td><td style="vertical-align:top;">:</td><td><div>set([])</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">debugging</td><td style="vertical-align:top;">:</td><td><div>False</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">gluon_parent</td><td style="vertical-align:top;">:</td><td><div>/Users/james/Documents/Dropbox/Uni/Year 4/iapt/assessment/web2py/web2py</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">http_accept</td><td style="vertical-align:top;">:</td><td><div>text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">http_accept_encoding</td><td style="vertical-align:top;">:</td><td><div>gzip,deflate,sdch</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">http_accept_language</td><td style="vertical-align:top;">:</td><td><div>en-US,en;q=0.8</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">http_connection</td><td style="vertical-align:top;">:</td><td><div>keep-alive</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">http_cookie</td><td style="vertical-align:top;">:</td><td><div>session_id_test=127.0.0.1-828bfb30-9d54-4ab5-a9f7-069b81aa7ef1; session_id_admin=127.0.0.1-35d96a8e-19a2-4e59-b8b0-f6d48a3b342a; session_id_welcome=127.0.0.1-89be5aca-28d6-4382-a0af-9382ea5c21b5; session_id_bootup=127.0.0.1-1df8b906-85be-4427-aa82-8ca4bec859ca</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">http_host</td><td style="vertical-align:top;">:</td><td><div>127.0.0.1:8000</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">http_referer</td><td style="vertical-align:top;">:</td><td><div>http://127.0.0.1:8000/bootup/user/index</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">http_user_agent</td><td style="vertical-align:top;">:</td><td><div>Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/38.0.2125.122 Safari/537.36</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">is_jython</td><td style="vertical-align:top;">:</td><td><div>False</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">is_pypy</td><td style="vertical-align:top;">:</td><td><div>False</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">is_source</td><td style="vertical-align:top;">:</td><td><div>True</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">local_hosts</td><td style="vertical-align:top;">:</td><td><div><table><tr><td><div>10.240.51.102</div></td></tr><tr><td><div>::1</div></td></tr><tr><td><div>::ffff:127.0.0.1</div></td></tr><tr><td><div>127.0.0.1</div></td></tr><tr><td><div>nas10-240-51-102.york.ac.uk</div></td></tr></table></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">path_info</td><td style="vertical-align:top;">:</td><td><div>/bootup/user/password</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">query_string</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">remote_addr</td><td style="vertical-align:top;">:</td><td><div>127.0.0.1</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">remote_port</td><td style="vertical-align:top;">:</td><td><div>60959</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">request_method</td><td style="vertical-align:top;">:</td><td><div>GET</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">request_uri</td><td style="vertical-align:top;">:</td><td><div>/bootup/user/password</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">script_name</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">server_name</td><td style="vertical-align:top;">:</td><td><div>nas10-240-51-102.york.ac.uk</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">server_port</td><td style="vertical-align:top;">:</td><td><div>8000</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">server_protocol</td><td style="vertical-align:top;">:</td><td><div>HTTP/1.1</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">server_software</td><td style="vertical-align:top;">:</td><td><div>Rocket 1.2.6</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">web2py_path</td><td style="vertical-align:top;">:</td><td><div>/Users/james/Documents/Dropbox/Uni/Year 4/iapt/assessment/web2py/web2py</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">web2py_version</td><td style="vertical-align:top;">:</td><td><div>2.9.11-stable+timestamp.2014.09.15.23.35.11</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">wsgi.errors</td><td style="vertical-align:top;">:</td><td><div>&lt;open file &#x27;&lt;stderr&gt;&#x27;, mode &#x27;w&#x27; at 0x1091751e0&gt;</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">wsgi.file_wrapper</td><td style="vertical-align:top;">:</td><td><div>&lt;class wsgiref.util.FileWrapper at 0x109d84e88&gt;</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">wsgi.input</td><td style="vertical-align:top;">:</td><td><div>&lt;socket._fileobject object at 0x11359cad0&gt;</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">wsgi.multiprocess</td><td style="vertical-align:top;">:</td><td><div>False</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">wsgi.multithread</td><td style="vertical-align:top;">:</td><td><div>True</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">wsgi.run_once</td><td style="vertical-align:top;">:</td><td><div>False</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">wsgi.url_scheme</td><td style="vertical-align:top;">:</td><td><div>http</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">wsgi.version</td><td style="vertical-align:top;">:</td><td><div><table><tr><td><div>1</div></td></tr><tr><td><div>0</div></td></tr></table></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">wsgi_errors</td><td style="vertical-align:top;">:</td><td><div>&lt;open file &#x27;&lt;stderr&gt;&#x27;, mode &#x27;w&#x27; at 0x1091751e0&gt;</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">wsgi_file_wrapper</td><td style="vertical-align:top;">:</td><td><div>&lt;class wsgiref.util.FileWrapper at 0x109d84e88&gt;</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">wsgi_input</td><td style="vertical-align:top;">:</td><td><div>&lt;socket._fileobject object at 0x11359cad0&gt;</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">wsgi_multiprocess</td><td style="vertical-align:top;">:</td><td><div>False</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">wsgi_multithread</td><td style="vertical-align:top;">:</td><td><div>True</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">wsgi_run_once</td><td style="vertical-align:top;">:</td><td><div>False</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">wsgi_url_scheme</td><td style="vertical-align:top;">:</td><td><div>http</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">wsgi_version</td><td style="vertical-align:top;">:</td><td><div><table><tr><td><div>1</div></td></tr><tr><td><div>0</div></td></tr></table></div></td></tr></table></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">extension</td><td style="vertical-align:top;">:</td><td><div>html</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">folder</td><td style="vertical-align:top;">:</td><td><div>/Users/james/Documents/Dropbox/Uni/Year 4/iapt/assessment/web2py/web2py/applications/bootup/</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">function</td><td style="vertical-align:top;">:</td><td><div>password</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">global_settings</td><td style="vertical-align:top;">:</td><td><div><table><tr><td style="font-weight:bold;vertical-align:top;">app_folders</td><td style="vertical-align:top;">:</td><td><div>set([&#x27;/Users/james/Documents/Dropbox/Uni/Year 4/iapt/assessment/web2py/web2py/applications/welcome/&#x27;, &#x27;/Users/james/Documents/Dropbox/Uni/Year 4/iapt/assessment/web2py/web2py/applications/bootup/&#x27;])</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">applications_parent</td><td style="vertical-align:top;">:</td><td><div>/Users/james/Documents/Dropbox/Uni/Year 4/iapt/assessment/web2py/web2py</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">cmd_args</td><td style="vertical-align:top;">:</td><td><div><table></table></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">cmd_options</td><td style="vertical-align:top;">:</td><td><div>&lt;Values at 0x10a86c2d8: {&#x27;verbose&#x27;: False, &#x27;ip&#x27;: &#x27;127.0.0.1&#x27;, &#x27;debuglevel&#x27;: 30, &#x27;with_scheduler&#x27;: False, &#x27;ips&#x27;: [&#x27;10.240.51.102&#x27;], &#x27;shutdown_timeout&#x27;: 5, &#x27;taskbar&#x27;: False, &#x27;with_coverage&#x27;: False, &#x27;scheduler_groups&#x27;: None, &#x27;port&#x27;: 8000, &#x27;maxthreads&#x27;: None, &#x27;softcron&#x27;: False, &#x27;server_name&#x27;: &#x27;nas10-240-51-102.york.ac.uk&#x27;, &#x27;bpython&#x27;: False, &#x27;nogui&#x27;: False, &#x27;pid_filename&#x27;: &#x27;httpserver.pid&#x27;, &#x27;extcron&#x27;: False, &#x27;runcron&#x27;: False, &#x27;run_system_tests&#x27;: False, &#x27;test&#x27;: None, &#x27;folder&#x27;: &#x27;/Users/james/Documents/Dropbox/Uni/Year 4/iapt/assessment/web2py/web2py&#x27;, &#x27;config&#x27;: &#x27;&#x27;, &#x27;minthreads&#x27;: None, &#x27;shell&#x27;: None, &#x27;run&#x27;: &#x27;&#x27;, &#x27;log_filename&#x27;: &#x27;httpserver.log&#x27;, &#x27;profiler_dir&#x27;: None, &#x27;args&#x27;: [&#x27;&#x27;], &#x27;socket_timeout&#x27;: 5, &#x27;ssl_ca_certificate&#x27;: None, &#x27;scheduler&#x27;: None, &#x27;interfaces&#x27;: None, &#x27;ssl_private_key&#x27;: &#x27;&#x27;, &#x27;gae&#x27;: None, &#x27;password&#x27;: &#x27;&lt;ask&gt;&#x27;, &#x27;request_queue_size&#x27;: 5, &#x27;ssl_certificate&#x27;: &#x27;&#x27;, &#x27;cronjob&#x27;: False, &#x27;numthreads&#x27;: None, &#x27;quiet&#x27;: False, &#x27;import_models&#x27;: False, &#x27;timeout&#x27;: 10, &#x27;plain&#x27;: False, &#x27;nobanner&#x27;: False}&gt;</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">db_sessions</td><td style="vertical-align:top;">:</td><td><div>set([])</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">debugging</td><td style="vertical-align:top;">:</td><td><div>False</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">gluon_parent</td><td style="vertical-align:top;">:</td><td><div>/Users/james/Documents/Dropbox/Uni/Year 4/iapt/assessment/web2py/web2py</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">is_jython</td><td style="vertical-align:top;">:</td><td><div>False</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">is_pypy</td><td style="vertical-align:top;">:</td><td><div>False</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">is_source</td><td style="vertical-align:top;">:</td><td><div>True</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">local_hosts</td><td style="vertical-align:top;">:</td><td><div><table><tr><td><div>10.240.51.102</div></td></tr><tr><td><div>::1</div></td></tr><tr><td><div>::ffff:127.0.0.1</div></td></tr><tr><td><div>127.0.0.1</div></td></tr><tr><td><div>nas10-240-51-102.york.ac.uk</div></td></tr></table></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">web2py_version</td><td style="vertical-align:top;">:</td><td><div>2.9.11-stable+timestamp.2014.09.15.23.35.11</div></td></tr></table></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">is_https</td><td style="vertical-align:top;">:</td><td><div>False</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">is_local</td><td style="vertical-align:top;">:</td><td><div>True</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">is_restful</td><td style="vertical-align:top;">:</td><td><div>False</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">is_sheduler</td><td style="vertical-align:top;">:</td><td><div>None</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">is_shell</td><td style="vertical-align:top;">:</td><td><div>None</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">now</td><td style="vertical-align:top;">:</td><td><div>datetime.datetime(2014, 11, 28, 18, 45, 35, 677277)</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">raw_args</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">raw_extension</td><td style="vertical-align:top;">:</td><td><div>None</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">url</td><td style="vertical-align:top;">:</td><td><div>/bootup/user/password</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">utcnow</td><td style="vertical-align:top;">:</td><td><div>datetime.datetime(2014, 11, 28, 18, 45, 35, 677296)</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">uuid</td><td style="vertical-align:top;">:</td><td><div>bootup/127.0.0.1.2014-11-28.18-45-35.1b029891-a995-4518-8344-d92dd598c954</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">wsgi</td><td style="vertical-align:top;">:</td><td><div>&lt;gluon.main.LazyWSGI object at 0x110a1fd90&gt;</div></td></tr></table></div>'
+tRp58
+sS'frames'
+p59
+(lp60
+(dp61
+S'file'
+p62
+S'/Users/james/Documents/Dropbox/Uni/Year 4/iapt/assessment/web2py/web2py/gluon/restricted.py'
+p63
+sS'dump'
+p64
+(dp65
+S'environment'
+p66
+S"{'A': <class 'gluon.html.A'>, 'ANY_OF': <class 'gluon.validators.ANY_OF'>, 'ASSIGNJS': <function ASSIGNJS>, 'B': <class 'gluon.html.B'>, 'BEAUTIFY': <class 'gluon.html.BEAUTIFY'>, 'BODY': <class 'gluon.html.BODY'>, 'BOOTUPFORM': <class 'applications.bootup.forms.bootupform.BOOTUPFORM'>, 'BR': <class 'gluon.html.BR'>, 'BUTTON': <class 'gluon.html.BUTTON'>, 'BootUpAuth': <class __restricted__.BootUpAuth>, ...}"
+p67
+sS'ccode'
+p68
+S'<code object <module> at 0x1109da630, file "/Use...applications/bootup/controllers/user.py", line 1>'
+p69
+ssS'lnum'
+p70
+I224
+sS'lines'
+p71
+(dp72
+I224
+S'        exec ccode in environment'
+p73
+sI225
+S'    except HTTP:'
+p74
+sI226
+S'        raise'
+p75
+sI227
+S'    except RestrictedError:'
+p76
+sI228
+S'        # do not encapsulate (obfuscate) the original RestrictedError'
+p77
+sI219
+S'    try:'
+p78
+sI220
+S'        if isinstance(code, types.CodeType):'
+p79
+sI221
+S'            ccode = code'
+p80
+sI222
+S'        else:'
+p81
+sI223
+S'            ccode = compile2(code, layer)'
+p82
+ssS'call'
+p83
+S"(code='import hashlib, os\\n\\nfrom applications.bootup.for...=form)\\nresponse._vars=response._caller(password)\\n', environment={'A': <class 'gluon.html.A'>, 'ANY_OF': <class 'gluon.validators.ANY_OF'>, 'ASSIGNJS': <function ASSIGNJS>, 'B': <class 'gluon.html.B'>, 'BEAUTIFY': <class 'gluon.html.BEAUTIFY'>, 'BODY': <class 'gluon.html.BODY'>, 'BOOTUPFORM': <class 'applications.bootup.forms.bootupform.BOOTUPFORM'>, 'BR': <class 'gluon.html.BR'>, 'BUTTON': <class 'gluon.html.BUTTON'>, 'BootUpAuth': <class __restricted__.BootUpAuth>, ...}, layer='/Users/james/Documents/Dropbox/Uni/Year 4/iapt/a...py/web2py/applications/bootup/controllers/user.py')"
+p84
+sS'func'
+p85
+S'restricted'
+p86
+sa(dp87
+g62
+S'/Users/james/Documents/Dropbox/Uni/Year 4/iapt/assessment/web2py/web2py/applications/bootup/controllers/user.py'
+p88
+sg64
+(dp89
+sg70
+I155
+sg71
+(dp90
+I145
+S'    return dict(form=form)'
+p91
+sI146
+S''
+sI147
+S''
+sI148
+S'@auth.requires_login'
+p92
+sI149
+S'def password():'
+p93
+sI150
+S'    form = CHANGEPASSWORDFORM.factory()'
+p94
+sI151
+S''
+sI152
+S'    if form.process().accepted:'
+p95
+sI153
+S"        redirect(URL('user','index'))"
+p96
+sI154
+S'    return dict(form=form)'
+p97
+ssg83
+S'()'
+p98
+sg85
+S'<module>'
+p99
+sa(dp100
+g62
+S'/Users/james/Documents/Dropbox/Uni/Year 4/iapt/assessment/web2py/web2py/gluon/globals.py'
+p101
+sg64
+(dp102
+S'self'
+p103
+S'undefined'
+p104
+sS'f'
+S'<function _a>'
+p105
+ssg70
+I392
+sg71
+(dp106
+I387
+S"        self.flash = ''            # used by the default view layout"
+p107
+sI388
+S'        self.meta = Storage()      # used by web2py_ajax.html'
+p108
+sI389
+S'        self.menu = []             # used by the default view layout'
+p109
+sI390
+S'        self.files = []            # used by web2py_ajax.html'
+p110
+sI391
+S'        self._vars = None'
+p111
+sI392
+S'        self._caller = lambda f: f()'
+p112
+sI393
+S'        self._view_environment = None'
+p113
+sI394
+S'        self._custom_commit = None'
+p114
+sI395
+S'        self._custom_rollback = None'
+p115
+sI396
+S"        self.generic_patterns = ['*']"
+p116
+ssg83
+S'(f=<function _a>)'
+p117
+sg85
+S'<lambda>'
+p118
+sa(dp119
+g62
+S'/Users/james/Documents/Dropbox/Uni/Year 4/iapt/assessment/web2py/web2py/applications/bootup/models/auth.py'
+p120
+sg64
+(dp121
+S'args'
+p122
+S'()'
+p123
+sS'fn'
+p124
+S'<function password>'
+p125
+sS'kwargs'
+p126
+g45
+ssg70
+I21
+sg71
+(dp127
+I15
+S''
+sI16
+S'    def requires_login(self, fn):'
+p128
+sI17
+S'        def _a(*args, **kwargs):'
+p129
+sI18
+S'            if not self.is_logged_in():'
+p130
+sI19
+S"                redirect(URL('user', 'login'))"
+p131
+sI20
+S'                return'
+p132
+sI21
+S'            return fn(*args, **kwargs)'
+p133
+sI22
+S''
+sI23
+S'        return _a'
+p134
+sI24
+S''
+ssg83
+S'(*args=(), **kwargs={})'
+p135
+sg85
+S'_a'
+p136
+sa(dp137
+g62
+S'/Users/james/Documents/Dropbox/Uni/Year 4/iapt/assessment/web2py/web2py/applications/bootup/controllers/user.py'
+p138
+sg64
+(dp139
+S'form.process'
+p140
+S'<bound method CHANGEPASSWORDFORM.process of <__restricted__.CHANGEPASSWORDFORM object>>'
+p141
+sS').accepted'
+p142
+g104
+sS'form'
+p143
+S'<__restricted__.CHANGEPASSWORDFORM object>'
+p144
+ssg70
+I152
+sg71
+(dp145
+I145
+S'    return dict(form=form)'
+p146
+sI146
+S''
+sI147
+S''
+sI148
+S'@auth.requires_login'
+p147
+sI149
+S'def password():'
+p148
+sI150
+S'    form = CHANGEPASSWORDFORM.factory()'
+p149
+sI151
+S''
+sI152
+S'    if form.process().accepted:'
+p150
+sI153
+S"        redirect(URL('user','index'))"
+p151
+sI154
+S'    return dict(form=form)'
+p152
+ssg83
+S'()'
+p153
+sg85
+S'password'
+p154
+sa(dp155
+g62
+S'/Users/james/Documents/Dropbox/Uni/Year 4/iapt/assessment/web2py/web2py/applications/bootup/controllers/user.py'
+p156
+sg64
+(dp157
+S'self.checkuser'
+p158
+S'<bound method CHANGEPASSWORDFORM.checkuser of <__restricted__.CHANGEPASSWORDFORM object>>'
+p159
+sS'self'
+p160
+S'<__restricted__.CHANGEPASSWORDFORM object>'
+p161
+sS'global LOGINFORM'
+p162
+S"<class '__restricted__.LOGINFORM'>"
+p163
+sS').process'
+p164
+S'<bound method CHANGEPASSWORDFORM.process of <__restricted__.CHANGEPASSWORDFORM object>>'
+p165
+sS'onvalidation'
+p166
+g104
+sS'kwargs'
+p167
+g45
+sS'builtinsuper'
+p168
+S"<type 'super'>"
+p169
+ssg70
+I75
+sg71
+(dp170
+I70
+S"            hashlib.sha256(form.vars.password).hexdigest() + credentialvars['passwordsalt']).hexdigest()"
+p171
+sI71
+S'        db.credential.update_or_insert(**credentialvars)'
+p172
+sI72
+S''
+sI73
+S''
+sI74
+S'    def process(self, **kwargs):'
+p173
+sI75
+S'        return super(LOGINFORM, self).process(onvalidation=self.checkuser, **kwargs)'
+p174
+sI76
+S''
+sI77
+S'    @staticmethod'
+p175
+sI78
+S'    def factory(**kwargs):'
+p176
+sI79
+S'        return CHANGEPASSWORDFORM(DAL(None).define_table("no_table",'
+p177
+ssg83
+S'(self=<__restricted__.CHANGEPASSWORDFORM object>, **kwargs={})'
+p178
+sg85
+S'process'
+p179
+sasS'pyver'
+p180
+S'Python 2.7.5: /usr/bin/python (prefix: /System/Library/Frameworks/Python.framework/Versions/2.7)'
+p181
+sS'session'
+p182
+g57
+(S's\x99\x00\x00\x00<div><table><tr><td style="font-weight:bold;vertical-align:top;">user</td><td style="vertical-align:top;">:</td><td><div>1L</div></td></tr></table></div>'
+tRp183
+sS'etype'
+p184
+S"<type 'exceptions.TypeError'>"
+p185
+sS'date'
+p186
+S'Fri Nov 28 18:45:35 2014'
+p187
+sS'response'
+p188
+g57
+(S'sG\x18\x00\x00<div><table><tr><td style="font-weight:bold;vertical-align:top;">body</td><td style="vertical-align:top;">:</td><td><div>&lt;cStringIO.StringO object at 0x1135fa110&gt;</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">cookies</td><td style="vertical-align:top;">:</td><td><div><table><tr><td style="font-weight:bold;vertical-align:top;">session_id_bootup</td><td style="vertical-align:top;">:</td><td><div>127.0.0.1-1df8b906-85be-4427-aa82-8ca4bec859ca<table><tr><td style="font-weight:bold;vertical-align:top;">comment</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">domain</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">expires</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">httponly</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">max-age</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">path</td><td style="vertical-align:top;">:</td><td><div>/</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">secure</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">version</td><td style="vertical-align:top;">:</td><td><div></div></td></tr></table></div></td></tr></table></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">delimiters</td><td style="vertical-align:top;">:</td><td><div><table><tr><td><div>{{</div></td></tr><tr><td><div>}}</div></td></tr></table></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">files</td><td style="vertical-align:top;">:</td><td><div><table></table></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">flash</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">form_label_separator</td><td style="vertical-align:top;">:</td><td><div>: </div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">formstyle</td><td style="vertical-align:top;">:</td><td><div>table3cols</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">generic_patterns</td><td style="vertical-align:top;">:</td><td><div><table><tr><td><div>*</div></td></tr></table></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">headers</td><td style="vertical-align:top;">:</td><td><div><table><tr><td style="font-weight:bold;vertical-align:top;">X-Powered-By</td><td style="vertical-align:top;">:</td><td><div>web2py</div></td></tr></table></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">menu</td><td style="vertical-align:top;">:</td><td><div><table></table></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">meta</td><td style="vertical-align:top;">:</td><td><div><table></table></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">models_to_run</td><td style="vertical-align:top;">:</td><td><div><table><tr><td><div>^\\w+\\.py$</div></td></tr><tr><td><div>^user/\\w+\\.py$</div></td></tr><tr><td><div>^user/password/\\w+\\.py$</div></td></tr></table></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">postprocessing</td><td style="vertical-align:top;">:</td><td><div><table></table></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">session_client</td><td style="vertical-align:top;">:</td><td><div>127.0.0.1</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">session_cookie_compression_level</td><td style="vertical-align:top;">:</td><td><div>None</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">session_cookie_expires</td><td style="vertical-align:top;">:</td><td><div>None</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">session_cookie_key</td><td style="vertical-align:top;">:</td><td><div>None</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">session_data_name</td><td style="vertical-align:top;">:</td><td><div>session_data_bootup</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">session_file</td><td style="vertical-align:top;">:</td><td><div>&lt;open file &#x27;/Users/james/Documents/Dropbox/Uni/Year 4/iapt/assessment/web2py/web2py/applications/bootup/sessions/077/117/127.0.0.1-1df8b906-85be-4427-aa82-8ca4bec859ca&#x27;, mode &#x27;rb+&#x27; at 0x10c11bf60&gt;</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">session_filename</td><td style="vertical-align:top;">:</td><td><div>/Users/james/Documents/Dropbox/Uni/Year 4/iapt/assessment/web2py/web2py/applications/bootup/sessions/127.0.0.1-1df8b906-85be-4427-aa82-8ca4bec859ca</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">session_hash</td><td style="vertical-align:top;">:</td><td><div>d5e02c72d82e25f5c64c27c0536b51fc</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">session_id</td><td style="vertical-align:top;">:</td><td><div>127.0.0.1-1df8b906-85be-4427-aa82-8ca4bec859ca</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">session_id_name</td><td style="vertical-align:top;">:</td><td><div>session_id_bootup</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">session_locked</td><td style="vertical-align:top;">:</td><td><div>True</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">session_masterapp</td><td style="vertical-align:top;">:</td><td><div>bootup</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">session_new</td><td style="vertical-align:top;">:</td><td><div>False</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">session_storage_type</td><td style="vertical-align:top;">:</td><td><div>file</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">status</td><td style="vertical-align:top;">:</td><td><div>200</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">view</td><td style="vertical-align:top;">:</td><td><div>user/password.html</div></td></tr></table></div>'
+tRp189
+sS'locals'
+p190
+(dp191
+S'self'
+p192
+S'<__restricted__.CHANGEPASSWORDFORM object>'
+p193
+sS'kwargs'
+p194
+g45
+sssS'traceback'
+p195
+S'Traceback (most recent call last):\n  File "/Users/james/Documents/Dropbox/Uni/Year 4/iapt/assessment/web2py/web2py/gluon/restricted.py", line 224, in restricted\n    exec ccode in environment\n  File "/Users/james/Documents/Dropbox/Uni/Year 4/iapt/assessment/web2py/web2py/applications/bootup/controllers/user.py", line 155, in <module>\n  File "/Users/james/Documents/Dropbox/Uni/Year 4/iapt/assessment/web2py/web2py/gluon/globals.py", line 392, in <lambda>\n    self._caller = lambda f: f()\n  File "/Users/james/Documents/Dropbox/Uni/Year 4/iapt/assessment/web2py/web2py/applications/bootup/models/auth.py", line 21, in _a\n    return fn(*args, **kwargs)\n  File "/Users/james/Documents/Dropbox/Uni/Year 4/iapt/assessment/web2py/web2py/applications/bootup/controllers/user.py", line 152, in password\n    if form.process().accepted:\n  File "/Users/james/Documents/Dropbox/Uni/Year 4/iapt/assessment/web2py/web2py/applications/bootup/controllers/user.py", line 75, in process\n    return super(LOGINFORM, self).process(onvalidation=self.checkuser, **kwargs)\nTypeError: super(type, obj): obj must be an instance or subtype of type\n'
+p196
+s.

@@ -1,13 +1,13 @@
 <div class="project_summary">
 
-{{=H3(A(record.project.title, _href=URL('bootup','project','view',args=[record.project.idproject])))}}
+{{=H3(A(record.project.title, _href=URL('project','view',args=[record.project.idproject])))}}
 
 
     <div class="sidebyside">
         <div class="sidebysideitem project_summary_image">
             <div class="project_image"><a
-                    href="{{=URL('bootup','project','view',args=[record.project.idproject])}}"><img
-                    src="{{=URL('bootup','project','img',args=record.project.imageurl)}}"/></a></div>
+                    href="{{=URL('project','view',args=[record.project.idproject])}}"><img
+                    src="{{=URL('project','img',args=record.project.imageurl)}}"/></a></div>
         </div>
 
         <div class="sidebysideitem">

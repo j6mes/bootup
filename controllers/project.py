@@ -9,7 +9,7 @@ def create():
     form = BOOTUPFORM(db.project)
     message = ""
     if form.process().accepted:
-        redirect(URL('bootup','user', 'projects'))
+        redirect(URL('user', 'projects'))
     return dict(form=form, message=message)
 
 
@@ -71,6 +71,8 @@ def pledge():
     if projectid is None:
         raise HTTP(404, "Project not found")
 
+
+
     project = db((openprojects | closedprojects | myprojects) & projectstats & includeopendate & (
     db.user.iduser == db.project.managerid) & (db.project.idproject == projectid)).select(db.project.ALL,
                                                                                           db.projectstat.ALL,
@@ -78,6 +80,12 @@ def pledge():
                                                                                           db.user.ALL).first()
     if project is None:
         raise HTTP(404, "Project not found")
+
+    addresses = db(db.address.userid==auth.user_id).count()
+    cards = db(db.card.userid==auth.user_id).count()
+
+    if addresses==0 or cards == 0:
+        raise HTTP(400, "Your profile is incomplete. Please add an address and a credit card")
 
     return dict(record=project)
 
@@ -101,7 +109,7 @@ def edit():
     form = BOOTUPFORM(db.project, db(db.project.idproject == projectid).select(db.project.ALL).first(), upload=URL(img))
     message = ""
     if form.process().accepted:
-        redirect(URL('bootup','project', 'view', args=[projectid]))
+        redirect(URL('project', 'view', args=[projectid]))
     elif form.errors:
         message = 'form has errors'
 
@@ -129,14 +137,14 @@ def open():
 
     projectopened = db(db.openproject.projectid == projectid).count() > 0
 
-    form = BOOTUPFORM.confirm('Open', 'btn-primary', {'Back': URL('bootup','user', 'projects')})
+    form = BOOTUPFORM.confirm('Open', 'btn-primary', {'Back': URL('user', 'projects')})
     if form.accepted:
         if projectopened:
             db(db.closedproject.openprojectid == project.idproject).delete()
         else:
             db.openproject.insert(projectid=project.idproject)
 
-        redirect(URL('bootup','project', 'view', args=[projectid]))
+        redirect(URL('project', 'view', args=[projectid]))
 
     return dict(project=project, form=form)
 
@@ -158,10 +166,10 @@ def close():
     if not project.project.canclose():
         raise HTTP(403, "Can't close this project")
 
-    form = BOOTUPFORM.confirm('Close', 'btn-warning', {'Back': URL('bootup','user', 'projects')})
+    form = BOOTUPFORM.confirm('Close', 'btn-warning', {'Back': URL('user', 'projects')})
     if form.accepted:
         db.closedproject.insert(openprojectid=project.project.idproject)
-        redirect(URL('bootup','user', 'projects'))
+        redirect(URL('user', 'projects'))
 
     return dict(record=project, form=form)
 
@@ -182,7 +190,7 @@ def delete():
     if not project.candelete():
         raise HTTP(403, "Can't delete this project")
 
-    form = BOOTUPFORM.confirm('Delete', 'btn-danger', {'Back': URL('bootup','user', 'projects')})
+    form = BOOTUPFORM.confirm('Delete', 'btn-danger', {'Back': URL('user', 'projects')})
 
     if form.accepted:
         db(db.project.idproject == projectid).delete()

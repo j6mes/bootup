@@ -28,7 +28,7 @@
                                      style="width:{{=record.projectstat.limitedprogress}}%"></div>
                             </div>
                             {{if record.projectstat.totalvalue==0:}}<a
-                                    href="{{=URL('bootup','project','pledge',args=[record.project.idproject])}}">Why not
+                                    href="{{=URL('project','pledge',args=[record.project.idproject])}}">Why not
                             be the first to pledge &raquo;</a>{{pass}}
                         </div>
 

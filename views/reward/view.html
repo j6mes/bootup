@@ -3,7 +3,7 @@
 {{extend 'bootup.html'}}
 
 <h2>Rewards for {{=project.title}}</h2>
-<div>{{=A('Add Reward',_href=URL('bootup','reward','create',args=[project.idproject]))}}</div>
+<div>{{=A('Add Reward',_href=URL('reward','create',args=[project.idproject]))}}</div>
 
 <div class="row">
     <div class="col-xs-12 col-sm-8 col-md-8 col-lg-8">
@@ -18,7 +18,7 @@
 
     for reward in rewards:}}
         <h4>{{=reward.description}}</h4>
-    {{=A('Edit',_href=URL('bootup','reward','edit',args=[reward.idreward]))}} {{=A('Delete',_href=URL('bootup','reward','delete',args=[reward.idreward]))}}
+    {{=A('Edit',_href=URL('reward','edit',args=[reward.idreward]))}} {{=A('Delete',_href=URL('reward','delete',args=[reward.idreward]))}}
     {{pass}}
     {{pass}}
     </div>
