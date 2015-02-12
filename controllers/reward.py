@@ -1,65 +1,47 @@
-from applications.bootup.forms.bootupform import BOOTUPFORM
-from applications.bootup.modules.error import onerror
+"""
+Y8142984
+
+The reward controller is used to edit a projects rweards.
+All methods are guarded by auth.requires_login.
+
+The project/reward is loaded from the @LoadProject and @loadreward decorators
+
+Like the pledge view, the LoadProject decorators are parameterised to allow access to the page to be limited for
+editing/pledging
+"""
+
+from bootupform import BOOTUPFORM
+from error import pretty_errors
+from decorators import LoadProject, loadreward
 
 
-@onerror
+@pretty_errors
 @auth.requires_login
+@LoadProject(allow_preview=True, requires_edit=True)
 def view():
-    projectid = request.args(0)
+    project = request.vars['project'].project
 
-    if projectid is None:
-        raise HTTP(404, "No project specified")
-
-    project = db(myprojects & (db.project.idproject == projectid)).select(db.project.ALL).first()
-
-    if project is None:
-        raise HTTP(404, "Project does not exist")
-
-    if not project.canedit():
-        raise HTTP(403, "Cannot edit this project")
-
-    return dict(project=project, projectid=projectid)
+    return dict(project=project, projectid=project.idproject)
 
 
-@onerror
+@pretty_errors
 @auth.requires_login
+@LoadProject(allow_preview=True, requires_edit=True)
 def create():
-    projectid = request.args(0)
-
-    if projectid is None:
-        raise HTTP(404, "No project specified")
-
-    project = db(myprojects & (db.project.idproject == projectid)).select(db.project.ALL).first()
-
-    if project is None:
-        raise HTTP(404, "Project does not exist")
-
-    if not project.canedit():
-        raise HTTP(403, "Cannot edit this project")
+    project = request.vars['project'].project
 
     form = BOOTUPFORM.factory(db.reward)
     if ( form.process().accepted):
-        db.reward.insert(description=form.vars.description, projectid=projectid)
-        redirect(URL('reward', 'view', args=[projectid]))
-    return dict(project=project, form=form, projectid=projectid)
+        db.reward.insert(description=form.vars.description, projectid=project.idproject)
+        redirect(URL('reward', 'view', args=[project.idproject]))
+    return dict(project=project, form=form, projectid=project.idproject)
 
 
-@onerror
+@pretty_errors
 @auth.requires_login
+@loadreward
 def edit():
-    rewardid = request.args(0)
-
-    if rewardid is None:
-        raise HTTP(404, "No project specified")
-
-    reward = db((db.reward.idreward == rewardid) & myprojects & (db.project.idproject == db.reward.projectid)).select(
-        db.project.ALL, db.reward.ALL).first()
-
-    if reward is None:
-        raise HTTP(404, "Reward does not exist")
-
-    if not reward.project.canedit():
-        raise HTTP(403, "Cannot edit this project")
+    reward = request.vars['reward']
 
     form = BOOTUPFORM(db.reward, record=reward.reward)
     if ( form.process().accepted):
@@ -67,28 +49,18 @@ def edit():
     return dict(form=form, projectid=reward.reward.projectid)
 
 
-@onerror
+@pretty_errors
 @auth.requires_login
+@loadreward
 def delete():
-    rewardid = request.args(0)
+    reward = request.vars['reward']
 
-    if rewardid is None:
-        raise HTTP(404, "No project specified")
+    form = BOOTUPFORM.confirm('Delete', 'btn-danger', {'Back': URL('pledge', 'view', args=[reward.project.idproject])})
 
-    reward = db((db.reward.idreward == rewardid) & myprojects & (db.project.idproject == db.reward.projectid)).select(
-        db.project.ALL, db.reward.ALL).first()
-
-    if reward is None:
-        raise HTTP(404, "Reward does not exist")
-
-    if not reward.project.canedit():
-        raise HTTP(403, "Cannot edit this project")
-
-    form = FORM.confirm('Delete', {'Back': URL(request.env.http_referrer)})
     projectid = reward.reward.projectid
 
     if form.accepted:
-        db(db.reward.idreward == rewardid).delete()
+        reward.reward.rawdelete()
         redirect(URL('reward', 'view', args=[projectid]))
 
     return dict(form=form, projectid=projectid)

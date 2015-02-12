@@ -1,0 +1,19 @@
+{{=form}}
+    
+    <script>
+        /*
+        Grey out the form fields if the user choses to use an existing address
+         */
+        onAddressChange = function() {
+        if($('[name=addressid] option:selected').val()!="") {
+               $('[name=street],[name=city],[name=postcode],[name=countrycode]').attr('disabled','disabled')
+           } else {
+               $('[name=street],[name=city],[name=postcode],[name=countrycode]').removeAttr('disabled')
+           }
+        }
+        $(document).ready(function(){
+           $('[name=addressid]').change(onAddressChange)
+           $('[name=addressid]').init(onAddressChange)
+    
+        });
+    </script>

@@ -1,3 +1,14 @@
-{{for menucategory in categories: }}
-<li>{{=A(menucategory.name, _href=URL('category','view',args=[menucategory.url])) }}</li>
-{{pass}}
+<!-- Create project is included here too as web2py creates a div around a LOAD(), which causes the menu not to display -->
+
+<ul class="nav navbar-header navbar-nav">
+    <li>{{=A('Create Project',_href=URL('project','create'))}}</li>
+    <li class="dropdown">
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Discover
+            BootUps <span class="caret"></span></a>
+        <ul class="dropdown-menu" role="menu">
+        {{for menucategory in categories: }}
+            <li>{{=A(menucategory.name, _href=URL('category','view',args=[menucategory.url])) }}</li>
+        {{pass}}
+        </ul>
+    </li>
+</ul>

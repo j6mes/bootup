@@ -15,7 +15,7 @@
                 {{=DIV(record.address.postcode)}}
                 {{=DIV(record.country.name)}}
                 {{=A('Edit',_href=URL('address','edit',args=[record.address.idaddress]))}}
-                {{=A('Delete',_href=URL('address','delete',args=[record.address.idaddress]))}}
+                {{if len(addresses)>1:}}{{=A('Delete',_href=URL('address','delete',args=[record.address.idaddress]))}}{{pass}}
             </div>
         {{pass}}
 

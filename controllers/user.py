@@ -1,88 +1,11 @@
-import hashlib, os
+"""
+Y8142984
 
-from applications.bootup.forms.bootupform import BOOTUPFORM
+User controller allows registration, login and editing account and listing expected rewards and dashboard projects
+"""
 
-
-class REGISTRATIONFORM(BOOTUPFORM):
-    @staticmethod
-    def factory():
-        return REGISTRATIONFORM(
-            DAL(None).define_table('user', db.user, Field('password', type="password",requires=IS_LENGTH(minsize=6, error_message="Password must be at least 6 characters long")),
-                                   Field('confirmpassword', type='password', label="Confirm Password",
-                                         requires=IS_EQUAL_TO(request.vars.password,
-                                                              error_message="Passwords do not match")),
-                                   db.address))
-
-
-    def insertuserinfo(self, form):
-        user = db.user.insert(**db.user._filter_fields(form.vars))
-        form.vars.userid = user['iduser']
-
-        db.address.insert(**db.address._filter_fields(form.vars))
-
-        credentialvars = dict()
-        credentialvars['userid'] = user['iduser']
-        credentialvars['passwordsalt'] = os.urandom(12).encode('base_64')
-        credentialvars['passwordhash'] = hashlib.sha256(
-            hashlib.sha256(form.vars.password).hexdigest() + credentialvars['passwordsalt']).hexdigest()
-        db.credential.update_or_insert(**credentialvars)
-
-
-    def process(self, **kwargs):
-        return super(REGISTRATIONFORM, self).process(onvalidation=self.insertuserinfo, **kwargs)
-
-
-class LOGINFORM(BOOTUPFORM):
-    def checkuser(self, form):
-        user = db((db.credential.userid == db.user.iduser) & (db.user.username.like(form.vars.username))).select(
-            db.user.iduser, db.credential.passwordsalt, db.credential.passwordhash).first()
-        if user is None:
-            form.errors.username = "User is not registered"
-        elif hashlib.sha256(hashlib.sha256(
-                form.vars.password).hexdigest() + user.credential.passwordsalt).hexdigest() != user.credential.passwordhash:
-            form.errors.password = "Incorrect password"
-        else:
-            session.user = user.user.iduser
-
-
-    def process(self, **kwargs):
-        return super(LOGINFORM, self).process(onvalidation=self.checkuser, **kwargs)
-
-    @staticmethod
-    def factory(**kwargs):
-        return LOGINFORM(DAL(None).define_table("no_table",
-                                                Field('username'),
-                                                Field('password', type='password')
-        ), **kwargs)
-
-class CHANGEPASSWORDFORM(BOOTUPFORM):
-    def checkuser(self, form):
-        user = db(db.credential.userid == auth.user_id).select(db.credential.ALL).first()
-
-        if hashlib.sha256(hashlib.sha256(
-                form.vars.oldpassword).hexdigest() + user.passwordsalt).hexdigest() != user.passwordhash:
-            form.errors.oldpassword = "Incorrect password"
-        else:
-            credentialvars = dict()
-            credentialvars['passwordsalt'] = os.urandom(12).encode('base_64')
-            credentialvars['passwordhash'] = hashlib.sha256(
-                hashlib.sha256(form.vars.password).hexdigest() + credentialvars['passwordsalt']).hexdigest()
-            db(db.credential.userid==auth.user_id).update(**credentialvars)
-
-
-    def process(self, **kwargs):
-        return super(CHANGEPASSWORDFORM, self).process(onvalidation=self.checkuser, **kwargs)
-
-    @staticmethod
-    def factory(**kwargs):
-        return CHANGEPASSWORDFORM(DAL(None).define_table("no_table",
-                                                Field('oldpassword',type='password',label="Old Password"),
-                                                Field('password', type='password',label="New Password",requires=IS_LENGTH(minsize=6, error_message="Password must be at least 6 characters long")),
-                                                Field('confirmpassword',type='password',label="Confirm Password",requires=IS_EQUAL_TO(request.vars.password,
-                                                              error_message="Passwords do not match"))
-        ), **kwargs)
-
-
+from bootupform import BOOTUPFORM
+from userform import REGISTRATIONFORM, LOGINFORM, CHANGEPASSWORDFORM, computebirthdate
 
 
 def register():
@@ -91,9 +14,7 @@ def register():
     message = ""
 
     if form.process().accepted:
-        message = 'form accepted'
-    elif form.errors:
-        message = 'form has errors'
+        redirect(URL('card', 'register'))
     return dict(form=form, message=message)
 
 
@@ -108,7 +29,7 @@ def login():
 
 @auth.requires_login
 def logout():
-    session.user = 0
+    auth.logout()
     redirect(URL('project', 'index'))
 
 
@@ -122,6 +43,7 @@ def index():
 def projects():
     qry = myprojects
 
+    #Fitler the projects on dashboard if request args allow
     if (request.args(0) == "not_started"):
         qry &= notstartedprojects
     elif (request.args(0) == "opened"):
@@ -131,16 +53,17 @@ def projects():
     elif (request.args(0) == "funded"):
         qry &= closedprojects & fundedprojects
 
-    projects = db(qry & projectstats).select(db.project.ALL, db.projectstat.ALL)
+    projects = db(qry & joinprojectstats).select(db.project.ALL, db.projectstat.ALL)
     return dict(projects=projects)
+
 
 @auth.requires_login
 def edit():
-    user = db(db.user.iduser==auth.user_id).select(db.user.ALL).first()
-    form = BOOTUPFORM(db.user,user)
+    user = db(db.user.iduser == auth.user_id).select(db.user.ALL).first()
+    form = BOOTUPFORM(db.user, user)
 
-    if form.process().accepted:
-        redirect(URL('user','index'))
+    if form.process(onvalidation=computebirthdate).accepted:
+        redirect(URL('user', 'index'))
     return dict(form=form)
 
 
@@ -149,5 +72,5 @@ def password():
     form = CHANGEPASSWORDFORM.factory()
 
     if form.process().accepted:
-        redirect(URL('user','index'))
+        redirect(URL('user', 'index'))
     return dict(form=form)

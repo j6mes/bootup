@@ -77,6 +77,10 @@
             {{=XML(record.project.story.replace('\n','<br>'),sanitize=True)}}
 
                 <h3>Project Backers</h3>
+
+                {{if record.projectstat.totalvalue==0:}}This project currently has no backers. <a
+                                    href="{{=URL('project','pledge',args=[record.project.idproject])}}">Why not
+                            be the first to pledge &raquo;</a>{{pass}}
             {{for username, expectedrewards in record.project.expectedrewards():}}
             {{rewards = list(expectedrewards)}}
                 <div class="pledge_summary">

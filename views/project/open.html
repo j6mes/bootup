@@ -1,5 +1,19 @@
 {{title = "Open Project"}}
 {{extend 'bootup.html'}}
 <h3>Open project</h3>
-<p>Once a project has been opened, it cannot be edited</p>
-<div class="confirmation_form">{{=form}}</div>
+
+
+
+
+
+<div class="row">
+    <div class="col-xs-12 col-sm-8 col-md-8 col-lg-8">
+        <p>Once a project has been opened, it cannot be edited</p>
+        <div class="confirmation_form">{{=form}}</div>
+
+    </div>
+
+    <div class="col-xs-12 col-xs-4 col-md-4 col-lg-4">
+    {{include='partial/project/stepbystep.html'}}
+    </div>
+</div>

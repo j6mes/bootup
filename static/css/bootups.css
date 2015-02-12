@@ -1,8 +1,57 @@
+/*
+    A small number of fonts from the Google font library
+*/
+@font-face {
+    font-family: 'Droid Sans';
+    font-style: normal;
+    font-weight: 400;
+    src: local('Droid Sans'), local('DroidSans'), url(../fonts/droid-sans.woff2) format('woff2');
+    unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2212, U+2215, U+E0FF, U+EFFD, U+F000;
+}
+
+@font-face {
+  font-family: 'Droid Sans';
+  font-style: normal;
+  font-weight: 700;
+  src: local('Droid Sans Bold'), local('DroidSans-Bold'), url(../fonts/droid-sans-bold.woff2) format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2212, U+2215, U+E0FF, U+EFFD, U+F000;
+}
+
+@font-face {
+  font-family: 'Pacifico';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Pacifico Regular'), local('Pacifico-Regular'), url(../fonts/pacifico.woff2) format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2212, U+2215, U+E0FF, U+EFFD, U+F000;
+}
+
+
+
+
+
+
+
+/*
+    BootUp CSS
+*/
 body {
     background-color: #f8f8f8;
     color: #444444;
     font-family: 'Droid Sans', sans-serif;
 }
+
+html, body
+{
+    height: 100%;
+}
+
+.container[role=main]  {
+    min-height: 100%;
+    margin-top:-175px;
+    padding-top:175px;
+    padding-bottom:60px;
+}
+
 
 .whitebg {
     background-color: #ffffff;
@@ -58,7 +107,7 @@ h1.logo a:hover {
 }
 
 /*
-Adapted from burst-12 exmaple:
+Rosette: Adapted from burst-12 example:
 http://css-tricks.com/examples/ShapesOfCSS/
 */
 .rosette {
@@ -163,14 +212,16 @@ http://css-tricks.com/examples/ShapesOfCSS/
     margin-bottom: 30px;
     height: 500px;
 
+
 }
 
 .project_tile_inner {
     border: 1px solid #ccc;
     height: 500px;
+    box-shadow: 0px 4px 10px #eeeeee;
 }
 
-.project_tile_text, .project_tile_text p, .project_tile_text .project_stats {
+.project_tile_text, .project_tile_text p, .project_tile_text .project_stats, .project_tile h3 {
     padding: 10px;
 }
 
@@ -195,6 +246,7 @@ http://css-tricks.com/examples/ShapesOfCSS/
   top: 50%;
   height: 100%;
   width: auto;
+    border-bottom:1px solid #ccc;
   -webkit-transform: translate(-50%,-50%);
       -ms-transform: translate(-50%,-50%);
           transform: translate(-50%,-50%);
@@ -216,8 +268,15 @@ http://css-tricks.com/examples/ShapesOfCSS/
 }
 
 .project_stats {
-    font-size: 11px;
+    font-size: 10px;
     color: #999;
+
+}
+
+.project_tile .project_stats {
+        position: absolute;
+
+    bottom:0px;
 }
 
 .project_name h3 {
@@ -229,7 +288,7 @@ http://css-tricks.com/examples/ShapesOfCSS/
     color: #999999;
 }
 
-.project_fullwidth {
+.project_fullwidth .row {
     border-bottom: solid 1px #e7e7e7;
 
 }
@@ -237,7 +296,8 @@ http://css-tricks.com/examples/ShapesOfCSS/
 .project_box {
     border: 10px #f8f8f8 solid;
     padding: 15px;
-    margin-bottom: 40px;
+    margin-bottom: 50px;
+    box-shadow: 0px 4px 10px #eeeeee;
 }
 
 .project_box_bigline, .project_box h3 {
@@ -252,6 +312,11 @@ http://css-tricks.com/examples/ShapesOfCSS/
     text-align: center;
     padding: 10px;
     padding-top: 0;
+}
+
+.project_page .project_image {
+    box-shadow: 0px 4px 10px #eeeeee;
+    margin-bottom:50px;
 }
 
 .sidebyside {
@@ -309,7 +374,7 @@ http://css-tricks.com/examples/ShapesOfCSS/
 }
 
 .project_page {
-    padding-top: 20px;
+    padding-top: 50px;
 }
 
 .project_page .project_column_left {
@@ -355,6 +420,7 @@ http://css-tricks.com/examples/ShapesOfCSS/
     text-align: center;
     text-transform: uppercase !important;
     margin: 20px;
+    box-shadow: 0px 2px 4px #cccccc;
 }
 
 .calltoaction:hover {
@@ -381,6 +447,7 @@ http://css-tricks.com/examples/ShapesOfCSS/
     border-radius: 12px;
     margin-top: 10px;
     margin-bottom: 10px;
+    box-shadow: 0px 2px 4px #eee;
 }
 
 .project_progress_bar {
@@ -458,3 +525,9 @@ http://css-tricks.com/examples/ShapesOfCSS/
     font-weight: bold;
     display: inline-block;
 }
+
+.active_step {
+    background-color: #5382BE;
+    color: #fafafa;
+}
+

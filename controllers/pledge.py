@@ -1,163 +1,120 @@
-from applications.bootup.forms.bootupform import BOOTUPFORM
-from applications.bootup.modules.error import onerror
+"""
+Y8142984
+
+The pledge controller is used to edit a projects pledges.
+All methods are guarded by auth.requires_login.
+
+The project/pledge is loaded from the @LoadProject and @LoadPledge decorators
+
+The LoadPledge and LoadProject decorators are parameterised to allow access to the page to be limited for
+editing/pledging
+"""
+w
+
+from bootupform import BOOTUPFORM
+from error import pretty_errors
+from decorators import LoadPledge, LoadProject
 
 
-@onerror
+@pretty_errors
 @auth.requires_login
+@LoadPledge(requires_pledge=True)
 def make():
-    pledgeid = request.args(0)
-    if pledgeid is None:
-        raise HTTP(404, 'No pledge specified')
-
-    pledge = db((db.pledge.idpledge == pledgeid) & (db.project.idproject == db.pledge.projectid)).select(db.project.ALL,
-                                                                                                         db.pledge.ALL).first()
-
-
-    if pledge is None:
-        raise HTTP(404, 'Pledge level does not exist')
-
-    if not pledge.project.canpledge():
-        raise HTTP(403, 'Project is not open for pledges')
-
-    if pledge.project.hascontributed():
-        raise HTTP(403, 'Already contributed')
-
-
-    addresses = db(db.address.userid==auth.user_id).count()
-    cards = db(db.card.userid==auth.user_id).count()
-
-    if addresses==0 or cards == 0:
-        raise HTTP(400, "Your profile is incomplete. Please add an address and a credit card")
-
+    pledge = request.vars['pledge']
 
     form = BOOTUPFORM.factory(db.booting)
     if form.process().accepted:
-        db.booting.insert(openprojectid=pledge.project.idproject, pledgeid=pledgeid, addressid=form.vars.addressid,
+        db.booting.insert(openprojectid=pledge.project.idproject, pledgeid=pledge.pledge.idpledge,
+                          addressid=form.vars.addressid,
                           cardid=form.vars.cardid, bootingdate=request.now, userid=auth.user_id)
         redirect(URL('project', 'view', args=[pledge.project.idproject]))
 
     return dict(pledge=pledge, form=form)
 
 
-@onerror
+@pretty_errors
 @auth.requires_login
+@LoadProject(allow_preview=True, requires_edit=True)
 def view():
-    projectid = request.args(0)
-
-    if projectid is None:
-        raise HTTP(404, "No project specified")
-
-    project = db(myprojects & (db.project.idproject == projectid)).select(db.project.ALL).first()
-
-    if project is None:
-        raise HTTP(404, "Project does not exist")
-
-    if not project.canedit():
-        raise HTTP(403, "Cannot edit this project")
-
-    return dict(project=project, projectid=projectid)
+    project = request.vars['project'].project
+    return dict(project=project, projectid=project.idproject)
 
 
-@onerror
+@pretty_errors
 @auth.requires_login
+@LoadProject(allow_preview=True, requires_edit=True)
 def create():
-    projectid = request.args(0)
+    project = request.vars['project'].project
 
-    if projectid is None:
-        raise HTTP(404, "No project specified")
-
-    project = db(myprojects & (db.project.idproject == projectid)).select(db.project.ALL).first()
-
-    if project is None:
-        raise HTTP(404, "Project does not exist")
-
-    if not project.canedit():
-        raise HTTP(403, "Cannot edit this project")
-
-    form = BOOTUPFORM.factory(db.pledge, Field('rewards', requires=IS_IN_DB(db(db.reward.projectid == projectid),
-                                                                            db.reward.idreward, '%(description)s',
-                                                                            multiple=[1, 9999],
-                                                                            error_message="Please select at least one reward")))
+    form = BOOTUPFORM.factory(db.pledge,
+                              Field('rewards', requires=IS_IN_DB(db(db.reward.projectid == project.idproject),
+                                                                 db.reward.idreward, '%(description)s',
+                                                                 multiple=[1, 9999],
+                                                                 error_message="Please select at least one reward")))
 
     if ( form.process().accepted):
-
         pledgeid = db.pledge.insert(idpledge=None, description=form.vars.description, value=form.vars.value,
-                                    projectid=projectid)
+                                    projectid=project.idproject)
 
+        """
+        For each reward that was selected in the form, if the reward project matches ours, create a rewardpledge
+        """
         for reward in form.vars.rewards:
             reward = int(reward)
             dbreward = db(db.reward.idreward == reward).select(db.reward.ALL).first()
-            if int(dbreward.projectid) is int(projectid):
+            if int(dbreward.projectid) is int(project.idproject):
                 db.rewardpledge.insert(rewardid=reward, pledgeid=pledgeid)
 
-        redirect(URL('pledge', 'view', args=[projectid]))
-    return dict(project=project, form=form, projectid=projectid)
+        redirect(URL('pledge', 'view', args=[project.idproject]))
+    return dict(project=project, form=form, projectid=project.idproject)
 
 
-@onerror
+@pretty_errors
 @auth.requires_login
+@LoadPledge(requires_edit=True)
 def edit():
-    pledgeid = request.args(0)
+    pledge = request.vars['pledge']
 
-    if pledgeid is None:
-        raise HTTP(404, "No project specified")
+    record = pledge.pledge
+    record.rewards = pledge.pledge.rewardids()
 
-    pledge = db((db.pledge.idpledge == pledgeid) & myprojects & (db.project.idproject == db.pledge.projectid)).select(
-        db.project.ALL, db.pledge.ALL).first()
-
-    if pledge is None:
-        raise HTTP(404, "Reward does not exist")
-
-    if not pledge.project.canedit():
-        raise HTTP(403, "Cannot edit this project")
-
-    record = dict(description=pledge.pledge.description, value=pledge.pledge.value, rewards=pledge.pledge.rewardids(),
-                  projectid=pledge.pledge.projectid, id=13)
     form = BOOTUPFORM.factory(db.pledge,
                               Field('rewards', requires=IS_IN_DB(db(db.reward.projectid == pledge.pledge.projectid),
                                                                  db.reward.idreward, '%(description)s',
                                                                  multiple=[1, 9999],
                                                                  error_message="Please select at least one reward")),
                               record=record)
+    """
+    As we're have to remove the rewardpledges ourselves, the simplest action is to delete all reward pledges
+    then create a new set of rewardpledges for the items that the user has chosen in the form
+    """
     if ( form.process().accepted):
         for reward in pledge.pledge.rewardids():
             db((db.rewardpledge.pledgeid == int(pledge.pledge.idpledge)) & (
-            db.rewardpledge.rewardid == int(reward))).select(db.rewardpledge.ALL).first().rawdelete()
+                db.rewardpledge.rewardid == int(reward))).select(db.rewardpledge.ALL).first().rawdelete()
 
         for reward in form.vars.rewards:
             reward = int(reward)
             dbreward = db(db.reward.idreward == reward).select(db.reward.ALL).first()
             if int(dbreward.projectid) is int(pledge.pledge.projectid):
-                db.rewardpledge.insert(rewardid=reward, pledgeid=pledgeid)
+                db.rewardpledge.insert(rewardid=reward, pledgeid=pledge.pledge.idpledge)
 
-        db(db.pledge.idpledge == pledgeid).update(description=form.vars.description, value=form.vars.value)
+        db(db.pledge.idpledge == pledge.pledge.idpledge).update(description=form.vars.description,
+                                                                value=form.vars.value)
 
         redirect(URL('pledge', 'view', args=[pledge.pledge.projectid]))
     return dict(form=form, projectid=pledge.pledge.projectid)
 
 
-@onerror
+@pretty_errors
 @auth.requires_login
+@LoadPledge(requires_edit=True)
 def delete():
-    rewardid = request.args(0)
+    pledge = request.vars['pledge']
 
-    if rewardid is None:
-        raise HTTP(404, "No project specified")
-
-    reward = db((db.reward.idreward == rewardid) & myprojects & (db.project.idproject == db.reward.projectid)).select(
-        db.project.ALL, db.reward.ALL).first()
-
-    if reward is None:
-        raise HTTP(404, "Reward does not exist")
-
-    if not reward.project.canedit():
-        raise HTTP(403, "Cannot edit this project")
-
-    form = FORM.confirm('Delete', {'Back': URL(request.env.http_referrer)})
-    projectid = reward.reward.projectid
-
+    form = BOOTUPFORM.confirm('Delete', 'btn-danger', {'Back': URL('pledge', 'view', args=[pledge.project.idproject])})
     if form.accepted:
-        db(db.reward.idreward == rewardid).delete()
-        redirect(URL('reward', 'view', args=[projectid]))
+        db(db.pledege.idpledge == pledge.pledge.idpledge).delete()
+        redirect(URL('pledge', 'view', args=[pledge.pledge.idpledge]))
 
-    return dict(form=form, projectid=projectid)
+    return dict(form=form)

@@ -1,14 +1,18 @@
-{{title="Delete Card"}}
-
+{{title="Add Card"}}
+{{step=2}}
 {{extend 'bootup.html'}}
-<h2>Delete Card</h2>
+<h2>Sign Up to BootUps. Step 2</h2>
+
 <div class="row">
     <div class="col-xs-12 col-sm-8 col-md-8 col-lg-8">
-    <div class="confirmation_form">{{=form}}</div>
+        {{include 'partial/card/form.html'}}
     </div>
 
 
     <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
-    {{include 'partial/user/sidebar.html'}}
+    {{include 'partial/user/register.html'}}
     </div>
 </div>
+
+
+

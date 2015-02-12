@@ -1,10 +1,18 @@
 {{title="Register"}}
+{{step=1}}
 {{extend 'bootup.html'}}
 
-<h2>Register</h2>
+<h2>Sign Up to BootUps</h2>
 <div class="row">
     <div class="col-xs-12 col-xs-8 col-md-8 col-lg-8">
+    <p>Welcome to BootUps! It's good to see that you're signing up for an account. We need to know a few basic details
+    about who you are and how you can fund these projects. Once you've completed this 2 page form, you'll be good to
+        go!
+    </p>
     {{=message}}
+
     {{=form}}</div>
-    <div class="col-xs-12 col-xs-4 col-md-4 col-lg-4"></div>
+    <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+    {{include 'partial/user/register.html'}}
+    </div>
 </div>

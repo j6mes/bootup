@@ -11,9 +11,9 @@
         {{for record in cards:}}
             <div class="address_item">
             {{=DIV(record.number)}}
-                {{=DIV(record.expdate)}}
+               {{=DIV( "Expires: " +record.display_expdate())}}
                 {{=A('Edit',_href=URL('card','edit',args=[record.idcard]))}}
-                {{=A('Delete',_href=URL('card','delete',args=[record.idcard]))}}
+                {{if len(cards)>1:}}{{=A('Delete',_href=URL('card','delete',args=[record.idcard]))}}{{pass}}
             </div>
         {{pass}}
 

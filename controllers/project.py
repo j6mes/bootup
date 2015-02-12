@@ -1,7 +1,65 @@
-from applications.bootup.forms.bootupform import BOOTUPFORM
-from applications.bootup.modules.error import onerror
-from applications.bootup.modules.decorators import includemenu
+"""
+Y8142984
 
+The project controller is used to display and edit a project
+All private methods are guarded by auth.requires_login and additional constraints in LoadProject
+"""
+
+from bootupform import BOOTUPFORM
+from error import pretty_errors
+from decorators import LoadProject
+
+#Used to download the image from the uploads folder
+def img():
+    return response.download(request, db)
+
+
+
+#Limiting by 6 instead of 5 here because projects are displayed in a 2x3 grid (hope you dont mind)
+def index():
+    closest = db(openprojects & notfundedprojects & joinprojectstats & joinopenproject & joinmanager) \
+        .select(db.project.ALL, db.projectstat.ALL, db.openproject.ALL, db.user.ALL,
+                orderby=~db.projectstat.progress, limitby=(0, 6))
+
+    newest = db(openprojects & notfundedprojects & joinprojectstats & joinopenproject & joinmanager) \
+        .select(db.project.ALL, db.projectstat.ALL, db.openproject.ALL, db.user.ALL,
+                orderby=~db.openproject.opendate, limitby=(0, 6))
+
+    return dict(closest=closest, newest=newest)
+
+#use the query string ?q={query} rather than python request args here as this is semantically correct
+def search():
+    if (request.vars['q'] is None or len(request.vars['q'].strip()) == 0):
+        return dict()
+    else:
+        q = request.vars['q'].strip()
+
+    qry = searchableprojects & (
+    db.project.title.like('%' + q + '%') | (db.project.shortdescription.like('%' + q + '%'))) \
+          & joinprojectstats & joinopenproject & joinmanager
+
+    projects = db(qry).select(db.project.ALL, db.projectstat.ALL, db.openproject.ALL, db.user.ALL)
+
+    return dict(projects=projects, query=q)
+
+
+@pretty_errors
+@LoadProject(allow_preview=True)
+def view():
+    return dict(record=request.vars['project'], preview=request.vars['preview'])
+
+
+@pretty_errors
+@auth.requires_login
+@LoadProject(requires_pledge=True)
+def pledge():
+    addresses = db(db.address.userid == auth.user_id).count()
+    cards = db(db.card.userid == auth.user_id).count()
+
+    if addresses == 0 or cards == 0:
+        raise HTTP(400, "Your profile is incomplete. Please add an address and a credit card")
+
+    return dict(record=request.vars['project'])
 
 
 @auth.requires_login
@@ -13,158 +71,45 @@ def create():
     return dict(form=form, message=message)
 
 
-def img():
-    return response.download(request, db)
-
-def index():
-    closest = db((openprojects & projectstats) & notfundedprojects & includeopendate & (
-    db.user.iduser == db.project.managerid)).select(db.project.ALL, db.projectstat.ALL, db.openproject.ALL, db.user.ALL,
-                                                    orderby=~db.projectstat.progress, limitby=(0, 6))
-    newest = db((openprojects & projectstats) & notfundedprojects & includeopendate & (
-    db.user.iduser == db.project.managerid)).select(db.project.ALL, db.projectstat.ALL, db.openproject.ALL, db.user.ALL,
-                                                    orderby=~db.openproject.opendate, limitby=(0, 6))
-    return dict(closest=closest, newest=newest)
-
-
-def search():
-    if (request.vars['q'] is None or len(request.vars['q'].strip()) == 0):
-        return dict()
-    else:
-        q = request.vars['q'].strip()
-
-    searchtype = (openprojects | closedprojects)
-    qry = searchtype & (
-    db.project.title.like('%' + q + '%') | (db.project.shortdescription.like('%' + q + '%'))) & projectstats & includeopendate & (db.project.managerid == db.user.iduser)
-    projects = db(qry).select(db.project.ALL, db.projectstat.ALL,db.openproject.ALL, db.user.ALL)
-    return dict(projects=projects, query=q)
-
-
-@onerror
-def view():
-    projectid = request.args(0)
-
-    if projectid is None:
-        raise HTTP(404, "Project not found")
-
-    preview = False
-    project = db(
-        (openprojects | closedprojects) & projectstats & includeopendate & (db.user.iduser == db.project.managerid) & (
-        db.project.idproject == projectid)).select(db.project.ALL, db.projectstat.ALL, db.openproject.ALL,
-                                                   db.user.ALL).first()
-
-    if project is None:
-        project = db(myprojects & projectstats & (db.user.iduser == db.project.managerid) & (
-        db.project.idproject == projectid)).select(db.project.ALL, db.projectstat.ALL, db.user.ALL).first()
-        preview = True
-
-    if project is None:
-        raise HTTP(404, "Project not found")
-
-    return dict(record=project, preview=preview)
-
-
-@onerror
+@pretty_errors
 @auth.requires_login
-def pledge():
-    projectid = request.args(0)
-
-    if projectid is None:
-        raise HTTP(404, "Project not found")
-
-
-
-    project = db((openprojects | closedprojects | myprojects) & projectstats & includeopendate & (
-    db.user.iduser == db.project.managerid) & (db.project.idproject == projectid)).select(db.project.ALL,
-                                                                                          db.projectstat.ALL,
-                                                                                          db.openproject.ALL,
-                                                                                          db.user.ALL).first()
-    if project is None:
-        raise HTTP(404, "Project not found")
-
-    addresses = db(db.address.userid==auth.user_id).count()
-    cards = db(db.card.userid==auth.user_id).count()
-
-    if addresses==0 or cards == 0:
-        raise HTTP(400, "Your profile is incomplete. Please add an address and a credit card")
-
-    return dict(record=project)
-
-
-@onerror
-@auth.requires_login
+@LoadProject(allow_preview=True, requires_edit=True)
 def edit():
-    projectid = request.args(0)
+    project = request.vars['project']
 
-    if projectid is None:
-        raise HTTP(404, "No project specified")
-
-    project = db(myprojects & (db.project.idproject == projectid)).select(db.project.ALL).first()
-
-    if project is None:
-        raise HTTP(404, "Project not found")
-
-    if not project.canedit():
-        raise HTTP(403, "Can't edit this project")
-
-    form = BOOTUPFORM(db.project, db(db.project.idproject == projectid).select(db.project.ALL).first(), upload=URL(img))
+    form = BOOTUPFORM(db.project, project.project, upload=URL(img))
     message = ""
     if form.process().accepted:
-        redirect(URL('project', 'view', args=[projectid]))
-    elif form.errors:
-        message = 'form has errors'
+        redirect(URL('project', 'view', args=[project.project.idproject]))
 
-    return dict(form=form, message=message, projectid=projectid)
+    return dict(form=form, message=message, projectid=project.project.idproject)
 
 
-@onerror
+@pretty_errors
 @auth.requires_login
+@LoadProject(allow_preview=True, requires_open=True)
 def open():
-    projectid = request.args(0)
-
-    if projectid is None:
-        raise HTTP(404, "No project specified")
-
-    project = db((myprojects) & (db.project.idproject == projectid)).select(db.project.ALL).first()
-
-    if project is None:
-        raise HTTP(404, "Project not found")
-
-    if not project.canopen():
-        raise HTTP(403, "Can't open this project")
-
-    if len(project.pledges()) == 0:
-        raise HTTP(400, "Project needs pledges.")
-
-    projectopened = db(db.openproject.projectid == projectid).count() > 0
+    project = request.vars['project']
 
     form = BOOTUPFORM.confirm('Open', 'btn-primary', {'Back': URL('user', 'projects')})
     if form.accepted:
-        if projectopened:
-            db(db.closedproject.openprojectid == project.idproject).delete()
+        # If the project has previously been opened, we delete the projectclosed record, otherwise create an openproject
+        #record
+        if db(db.openproject.projectid == project.project.idproject).count() > 0:
+            db(db.closedproject.openprojectid == project.project.idproject).delete()
         else:
-            db.openproject.insert(projectid=project.idproject)
+            db.openproject.insert(projectid=project.project.idproject)
 
-        redirect(URL('project', 'view', args=[projectid]))
+        redirect(URL('project', 'view', args=[project.project.idproject]))
 
     return dict(project=project, form=form)
 
 
-@onerror
+@pretty_errors
 @auth.requires_login
+@LoadProject(requires_close=True)
 def close():
-    projectid = request.args(0)
-
-    if projectid is None:
-        raise HTTP(404, "No project specified")
-
-    project = db((myprojects) & (db.project.idproject == projectid) & projectstats).select(db.project.ALL,
-                                                                                           db.projectstat.ALL).first()
-
-    if project is None:
-        raise HTTP(404, "Project not found")
-
-    if not project.project.canclose():
-        raise HTTP(403, "Can't close this project")
+    project = request.vars['project']
 
     form = BOOTUPFORM.confirm('Close', 'btn-warning', {'Back': URL('user', 'projects')})
     if form.accepted:
@@ -174,27 +119,16 @@ def close():
     return dict(record=project, form=form)
 
 
-@onerror
+@pretty_errors
 @auth.requires_login
+@LoadProject(allow_preview=True, requires_delete=True)
 def delete():
-    projectid = request.args(0)
-
-    if projectid is None:
-        raise HTTP(404, "No project specified")
-
-    project = db((myprojects) & (db.project.idproject == projectid)).select(db.project.ALL).first()
-
-    if project is None:
-        raise HTTP(404, "Project not found")
-
-    if not project.candelete():
-        raise HTTP(403, "Can't delete this project")
-
+    project = request.vars['project']
     form = BOOTUPFORM.confirm('Delete', 'btn-danger', {'Back': URL('user', 'projects')})
 
     if form.accepted:
-        db(db.project.idproject == projectid).delete()
-        redirect('bootup', 'user', 'projects')
+        project.project.rawdelete()
+        redirect(URL('user', 'projects'))
 
     return dict(project=project, form=form)
 

@@ -1,14 +1,20 @@
-import calendar
-from datetime import date, datetime
-from applications.bootup.forms.bootupform import BOOTUPFORM
-from applications.bootup.modules.error import onerror
+"""
+Y8142984
 
+The card controller is used to set a users cards.
+All methods are guarded by auth.requires_login.
 
-def computedate(form):
-    form.vars.expdate = date(int(str(request.now.year)[0:2] + form.vars.expdate_year), int(form.vars.expdate_month),
-                             calendar.monthrange(int(str(request.now.year)[0:2] + form.vars.expdate_year),
-                                                 int(form.vars.expdate_month))[1])
+The custom CARDREGISTERFROM is used by both the creation of a card and the registration form.
 
+The loadcard is loaded from the @loadcard decorator
+Where @loadcard is used, the pretty_errors decorator is also used which catches HTTP errors (like 404) and displays
+a pretty error message
+"""
+
+from bootupform import BOOTUPFORM
+from userform import CARDREGISTERFORM, computedate
+from error import pretty_errors
+from decorators import loadcard
 
 @auth.requires_login
 def index():
@@ -18,25 +24,27 @@ def index():
 
 @auth.requires_login
 def create():
-    form = BOOTUPFORM(db.card)
-    if form.process(onvalidation=computedate).accepted:
-        redirect(URL('card', 'index'))
+    form = CARDREGISTERFORM.factory(redirect_url=URL('card', 'index'))
+    if form.process().accepted:
+        pass
 
     return dict(form=form)
 
 
-@onerror
 @auth.requires_login
+def register():
+    form = CARDREGISTERFORM.factory(redirect_url=URL('project', 'index'))
+    if form.process().accepted:
+        pass
+
+    return dict(form=form)
+
+
+@pretty_errors
+@auth.requires_login
+@loadcard
 def edit():
-    cardid = request.args(0)
-
-    if cardid is None:
-        raise HTTP(404, "No card id is set")
-
-    card = db((db.card.userid == auth.user_id) & (db.card.idcard == cardid)).select(db.card.ALL).first()
-
-    if card is None:
-        raise HTTP(404, "Card not found")
+    card = request.vars['address']
 
     form = BOOTUPFORM(db.card, card)
     if form.process(onvalidation=computedate).accepted:
@@ -44,21 +52,15 @@ def edit():
     return dict(form=form)
 
 
-@onerror
+@pretty_errors
 @auth.requires_login
+@loadcard
 def delete():
-    cardid = request.args(0)
+    card = request.vars['card']
 
-    if cardid is None:
-        raise HTTP(404, "No card id is set")
+    form = BOOTUPFORM.confirm('Delete', 'btn-danger', {'Back': URL('card', 'index')})
+    if form.accepted:
+        db(db.card.idcard == card.idcard).delete()
 
-    card = db((db.card.userid == auth.user_id) & (db.card.idcard == cardid)).select(db.card.ALL).first()
-
-    if card is None:
-        raise HTTP(404, "Card not found")
-
-    form = FORM.confirm('Delete', {'Back': URL('card', 'index')})
-    if form.process().accepted:
-        db(db.card.idcard == cardid).delete()
         redirect(URL('card', 'index'))
     return dict(form=form)

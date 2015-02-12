@@ -1,7 +1,7 @@
 from gluon import HTTP, LOAD, current
 
 
-def onerror(function):
+def pretty_errors(function):
     def _a(*args, **kwargs):
         try:
             return function(*args, **kwargs)

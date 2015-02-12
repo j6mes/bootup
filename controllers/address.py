@@ -1,33 +1,40 @@
-from applications.bootup.forms.bootupform import BOOTUPFORM
-from applications.bootup.modules.error import onerror
+"""
+Y8142984
+
+The address controller is used to edit addresses when a user is logged in.
+All methods are guarded by auth.requires_login.
+
+The address is loaded from the @loadaddress decorator
+Where @loadaddress is used, the pretty_errors decorator is also used which catches HTTP errors (like 404) and displays
+a pretty error message
+"""
+
+from bootupform import BOOTUPFORM
+from error import pretty_errors
+from decorators import loadaddress
 
 
-def setuserid(form):
-    form.vars.userid = auth.user_id
+@auth.requires_login
+def index():
+    addresses = db(myaddresses & joincountry).select(
+        db.address.ALL, db.country.ALL)
+    return dict(addresses=addresses)
 
 
 @auth.requires_login
 def create():
     form = BOOTUPFORM(db.address)
-    if form.process(onvalidation=setuserid).accepted:
+    if form.process().accepted:
         redirect(URL('address', 'index'))
 
     return dict(form=form)
 
 
-@onerror
+@pretty_errors
 @auth.requires_login
+@loadaddress
 def edit():
-    addressid = request.args(0)
-
-    if addressid is None:
-        raise HTTP(404, 'No address id specified')
-
-    address = db((db.address.idaddress == addressid) & (db.address.userid == auth.user_id)).select(
-        db.address.ALL).first()
-
-    if address is None:
-        raise HTTP(404, 'Address not found')
+    address = request.vars['address']
 
     form = BOOTUPFORM(db.address, address)
 
@@ -37,31 +44,17 @@ def edit():
     return dict(form=form)
 
 
-@onerror
+@pretty_errors
 @auth.requires_login
+@loadaddress
 def delete():
-    addressid = request.args(0)
+    address = request.vars['address']
 
-    if addressid is None:
-        raise HTTP(404, 'No address id specified')
-
-    address = db((db.address.idaddress == addressid) & (db.address.userid == auth.user_id)).select(
-        db.address.ALL).first()
-
-    if address is None:
-        raise HTTP(404, 'Address not found')
-
-    form = FORM.confirm('Delete', {'Back': URL('address', 'index')})
-
+    form = BOOTUPFORM.confirm('Delete', 'btn-danger', {'Back': URL('card', 'index')})
     if form.accepted:
-        db(db.address.idaddress == addressid).delete()
+        db(db.address.idaddress == address.idaddress).delete()
         redirect(URL('address', 'index'))
 
     return dict(form=form)
 
 
-@auth.requires_login
-def index():
-    addresses = db((db.address.userid == auth.user_id) & (db.country.code == db.address.countrycode)).select(
-        db.address.ALL, db.country.ALL)
-    return dict(addresses=addresses)
